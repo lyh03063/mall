@@ -1,10 +1,7 @@
 <template>
   <div class="login-box">
-<<<<<<< HEAD
-    <div class="FS18 FWB LH50 PL20" id="id1">用户登录 戴</div>
-=======
-    <div class="FS18 FWB LH50 PL20" id="id1">用户登录XQL20190610</div>
->>>>>>> eb4c43b7b9abc258cd3291cbfdb62df0adef4037
+
+    <div class="FS18 FWB LH50 PL20" id="id1">用户登录 戴国欣111111</div>
     <el-form
       :model="ruleForm"
       status-icon
