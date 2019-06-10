@@ -1,7 +1,7 @@
 <template>
   <div class="login-box">
 
-    <div class="FS18 FWB LH50 PL20" id="id1">用户登录 戴国欣111111</div>
+    <div class="FS18 FWB LH50 PL20" id="id1">用户登录 戴国欣</div>
     <el-form
       :model="ruleForm"
       status-icon
