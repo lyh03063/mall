@@ -77,11 +77,11 @@ export default {
     }
   },
   beforeCreate() {
-    if (localStorage.isLogin == "1") {
-      //如果未登录
-      this.$router.push({ path: "/listHome" }); //跳转到后台首页
-    }
-    console.log("beforeCreate-this.msg", this.msg);
+    // if (localStorage.isLogin == "1") {
+    //   //如果未登录
+    //   this.$router.push({ path: "/listHome" }); //跳转到后台首页
+    // }
+    // console.log("beforeCreate-this.msg", this.msg);
   },
   created() {
     console.log("created-this.msg", this.msg);

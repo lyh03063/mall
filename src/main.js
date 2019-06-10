@@ -5,11 +5,10 @@ import space from './components/space/index.js';   //默认情况下找的是ind
 Vue.use(space);   //必须有install
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-import listCategory from "./page/list-category";
-import listProduct from "./page/list-product";
-import listHome from "./page/list-home";
-import login from "./login";
-import manage from "./manage";
+
+import Home from "./page/home";
+import login from "./page/login";
+
 
 
 
@@ -17,28 +16,10 @@ import manage from "./manage";
 // 3. 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({
   routes: [
-    { path: '/', redirect: '/login' },
-   
+    { path: '/', redirect: '/home' },
     { path: '/login', component: login },
-    {
-      path: '/manage', 
-      component: manage,
-      redirect: '/listHome', //跳转
-      children: [//子路由
-        {
-          path: '/listHome',
-          component: listHome
-        },
-        {
-          path: '/listProduct',
-          component: listProduct
-        },
-        {
-          path: '/listCategory',
-          component: listCategory
-        }
-      ]
-    },
+    { path: '/home', component: Home },
+    
   ]
 })
 
