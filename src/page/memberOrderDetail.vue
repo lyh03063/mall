@@ -1,5 +1,5 @@
 <template>
-  <div class="main">订单详情 戴广泽</div>
+  <div class="main">订单详情 戴广泽 dai</div>
 </template>
 
 
