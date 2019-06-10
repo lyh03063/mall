@@ -1,7 +1,6 @@
 <template>
   <div class="main">
     翁大将军的购物车
-
   </div>
 </template>
 
