@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    商城首页-林晓聪
+    商城首页-林晓聪改
   </div>
 </template>
 
