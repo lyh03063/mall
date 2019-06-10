@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    确认订单
+    翁大将军的确认订单
   </div>
 </template>
 

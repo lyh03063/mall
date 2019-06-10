@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    购物车11222
+    翁大将军的购物车
   </div>
 </template>
 
