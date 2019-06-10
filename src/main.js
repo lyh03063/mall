@@ -8,6 +8,18 @@ Vue.use(VueRouter)
 
 import Home from "./page/home";
 import login from "./page/login";
+import commodityList from "./page/commodityList";
+import commodityDetail from "./page/commodityDetail";
+import cart from "./page/cart";
+import confirmOrder from "./page/confirmOrder";
+import memberCenter from "./page/memberCenter";
+import memberSetting from "./page/memberSetting";
+import pswModify from "./page/pswModify";
+import memberAddress from "./page/memberAddress";
+import memberOrder from "./page/memberOrder";
+import memberOrderDetail from "./page/memberOrderDetail";
+import register from "./page/register";
+
 
 
 
@@ -19,6 +31,19 @@ const router = new VueRouter({
     { path: '/', redirect: '/home' },
     { path: '/login', component: login },
     { path: '/home', component: Home },
+    { path: '/commodityList', component: commodityList },
+    { path: '/commodityDetail', component: commodityDetail },
+    { path: '/cart', component: cart },
+    { path: '/confirmOrder', component: confirmOrder },
+    { path: '/memberCenter', component: memberCenter },
+    { path: '/memberSetting', component: memberSetting },
+    { path: '/pswModify', component: pswModify },
+    { path: '/memberAddress', component: memberAddress },
+    { path: '/memberOrder', component: memberOrder },
+    { path: '/memberOrderDetail', component: memberOrderDetail },
+    { path: '/register', component: register },
+  
+
     
   ]
 })
