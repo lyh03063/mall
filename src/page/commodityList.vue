@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     commodityList
-  修改1111111
+  修改11111
   </div>
 </template>
 
