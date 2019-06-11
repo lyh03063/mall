@@ -1,6 +1,10 @@
 <template>
   <div class="main">
     商城首页
+    cdc111
+    注册页XQL20190610
+    cdc1112131
+
   </div>
 </template>
 
