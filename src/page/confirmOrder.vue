@@ -8,10 +8,10 @@
         <ul :cf="title" class="address">
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
-          <div>
+           
             <li>收货人：{{title.name}}</li>
             <li class="FS14">收货地址：{{title.address}}</li>
-          </div>
+     
         </ul>
       </router-link>
       <div class="line"></div>
@@ -187,6 +187,7 @@ export default {
   font-size: 16px;
   li {
     padding-bottom: 5px;
+    padding-left: 20px;
   }
   p {
     float: right;

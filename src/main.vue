@@ -1,8 +1,13 @@
 <template>
+
   <div class>
     <router-view></router-view>
     <div class="foot">有赞提供技术支持</div>
   </div>
+
+
+
+
 </template>
 
 <script>
