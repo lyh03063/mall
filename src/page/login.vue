@@ -1,34 +1,46 @@
 <template>
-  <div class="login-box">
-
-    <div id="id1">用户登录</div>
-    <el-form
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      ref="ruleForm"
-      label-width="0"
-      class="demo-ruleForm login-form"
-    >
-    <div prop="user">
-<div prop="user">
-   <div>+86<input v-model.trim="ruleForm.user" placeholder="用户名"/></div>
-</div>
-<div prop="pass">
- 
-     <input type="password" placeholder="密码" v-model.trim="ruleForm.pass"/>
-</div>
-</div>
-
-     
-      <el-form-item >
-        <el-input  autocomplete="off"></el-input>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" class="WP100" @click="submitForm('ruleForm')">登录</el-button>
-      </el-form-item>
-    </el-form>
+  <div id="app">
+    <div class="login-big-box">
+      <el-row>
+        <el-col :span="24">
+          <div class="login-box">
+            <h1>帐号密码登录</h1>
+            <h2>为了你的帐号安全，请用手机号登录</h2>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row class="login-public">
+        <el-col :span="4">
+          <span>中国+86</span>
+        </el-col>
+        <el-col :span="1">
+          <div class="cut-off-rule"></div>
+        </el-col>
+        <el-col :span="19">
+          <input type="text" placeholder="请输入帐号" v-model="user" clearable>
+        </el-col>
+      </el-row>
+      <el-row class="login-public">
+        <el-col>
+          <el-input type="text" placeholder="请输入密码" v-model="password" clearable></el-input>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col>滑动框</el-col>
+      </el-row>
+      <el-row>
+        <el-col>
+          <div style="height:30px;line-height:30px;">
+            <a href="JavaScript" style="float:left">验证码登录</a>
+            <a href="JavaScript" style="float:right">忘记密码 免费注册</a>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <footer class="login-foot">
+      登录既代表同意
+      <a href="JavaScript">《用户使用协议》</a>
+    </footer>
   </div>
 </template>
 
@@ -102,24 +114,69 @@ export default {
   mounted() {
     let dom = document.getElementById("id1");
     console.log("mounted-dom", dom);
-
-    
   }
 };
 </script>
-<style type="text/css" scoped>
+<style lang="scss">
+$loginUserHeight: 40px;
+$loginUserWidth: 100%;
+.login-foot {
+  display:block;
+  text-align: center;
+  color: #bbbbc2;
+  margin: auto;
+  a{
+    color: #bbbbc2
+  }
+}
+.login-big-box {
+  padding: 0px 20px;
+}
+.login-big-box {
+  min-height: 420px;
+  max-height: 850px;
+}
+.login-public {
+  //这里的公共指的是用户名和密码的
+  text-align: center;
+  height: $loginUserHeight;
+  border-bottom: 1px #f2f2f2 solid;
+  line-height: $loginUserHeight;
+  margin: 10px 0;
+  font-size: 14px;
+  padding: 0px;
+  input {
+    border: none;
+    outline: none;
+    width: $loginUserWidth;
+    height: 35px;
+  }
+}
+.cut-off-rule {
+  width: 1px;
+  height: 20px;
+  background: #f2f2f2;
+  margin: 10px 10px;
+}
+
 .login-box {
   width: 100%;
-  height: 278px;
-  /* border: 1px solid #ccc;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  margin-left: -192px;
-  margin-top: -139px; */
+
+  h1 {
+    padding: 10px 20px;
+    font-size: 28px;
+    font-weight: 400;
+  }
+  h2 {
+    color: #999999;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 400;
+  }
 }
 .login-form {
   width: 330px;
   margin: 0 auto;
 }
+@import "../assets/css/util.scss"; //导入公共样式文件
 </style>
