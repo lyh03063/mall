@@ -1,7 +1,7 @@
 <template>
   <div class="login-box">
 
-    <div id="id1">用户登录</div>
+    <div class="FS18 FWB LH50 PL20" id="id1">用户登录 戴国欣</div>
     <el-form
       :model="ruleForm"
       status-icon
@@ -10,19 +10,11 @@
       label-width="0"
       class="demo-ruleForm login-form"
     >
-    <div prop="user">
-<div prop="user">
-   <div>+86<input v-model.trim="ruleForm.user" placeholder="用户名"/></div>
-</div>
-<div prop="pass">
- 
-     <input type="password" placeholder="密码" v-model.trim="ruleForm.pass"/>
-</div>
-</div>
-
-     
-      <el-form-item >
-        <el-input  autocomplete="off"></el-input>
+      <el-form-item prop="user">
+        <el-input v-model.trim="ruleForm.user" placeholder="用户名"></el-input>
+      </el-form-item>
+      <el-form-item prop="pass">
+        <el-input type="password" placeholder="密码" v-model.trim="ruleForm.pass" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -109,14 +101,14 @@ export default {
 </script>
 <style type="text/css" scoped>
 .login-box {
-  width: 100%;
+  width: 384px;
   height: 278px;
-  /* border: 1px solid #ccc;
+  border: 1px solid #ccc;
   position: fixed;
   left: 50%;
   top: 50%;
   margin-left: -192px;
-  margin-top: -139px; */
+  margin-top: -139px;
 }
 .login-form {
   width: 330px;
