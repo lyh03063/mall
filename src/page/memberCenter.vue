@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{userPhone}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list[0].phone}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
@@ -139,11 +139,35 @@
 export default {
   data() {
     return {
-      userPhone: ""
+      list:[{phone:""}],
     };
   },
   created() {
-    this.userPhone = "123456789";
+  },
+  methods: {
+    getProList() {
+      //获取产品列表函数
+      axios({
+        //请求接口
+        method: "post",
+        url: "http://120.76.160.41:3000/crossList?page=mabang-member",
+        data: this.Objparma //传递参数
+      })
+        .then(response => {
+          //这有函数，不知道this指向谁
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
+          this.list = list;
+          this.page = page;
+          this.allCount = page.allCount;
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    }, 
+  },
+  mounted() {
+    this.getProList(); 
   }
 };
 </script>
