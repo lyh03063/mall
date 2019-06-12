@@ -118,15 +118,12 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-<<<<<<< HEAD
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 49,
-=======
+
+
             "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
+
           cartProductNumber: 2 //产品选中的数量
         },
         {
@@ -135,15 +132,12 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-<<<<<<< HEAD
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 99,
-=======
+
+
             "2【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "2-6种时令水果大切盘，鲜切水果",
           price: 30,
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
+
           cartProductNumber: 2
         },
         {
@@ -152,11 +146,7 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-<<<<<<< HEAD
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 100,
-=======
+
             "3【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "3-6种时令水果大切盘，鲜切水果",
           price: 40,
@@ -182,8 +172,7 @@ export default {
           name:
             "5【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "5-6种时令水果大切盘，鲜切水果",
-          price: 60,
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
+
           cartProductNumber: 10
         }
       ]
