@@ -5,7 +5,7 @@
       <el-col :span="24">
         <div class="grid-content bg-purple-wihte">
           <!-- 列表头部切换开始 -->
-          <div>
+          <div class="ordertab">
             <el-tabs :tab-position="tabPosition">
               <!-- 全部订单 -->
               <el-tab-pane label="全部">
