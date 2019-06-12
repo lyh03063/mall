@@ -1,0 +1,160 @@
+/*----------------- 头部和页脚layout布局样式开始 ---------------- */
+.order-main .el-row {
+    margin-bottom: 20px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.order-main .el-col {
+    border-radius: 4px;
+}
+
+.order-bg-purple-wihte {
+    // background           : #99a9bf;
+    background              : #FFFFFF;
+}
+
+.order-grid-content {
+    border-radius: 4px;
+    min-height   : 50px;
+}
+
+.order-row-bg {
+    padding         : 10px 0;
+    background-color: #f9fafc;
+}
+
+.order-tab {
+    background-color: #ffffff
+}
+
+@media screen and (min-width: 375px) {
+    .order-tab .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav {
+        width          : 100%;
+        display        : flex;
+        justify-content: space-around;
+    }
+
+    .order-tab .el-tabs__active-bar {
+        width             : 0 !important;
+        // transform      : translateX(20%) !important
+    }
+
+}
+
+/*----------------- 头部和页脚layout布局样式结束 ---------------- */
+
+
+/*----------------- 头部样式开始 ---------------- */
+
+
+//订单列表
+.order-list-item__order-list {
+    font-size : 14px;
+    background: #fff;
+}
+
+.order-cap-order-item {
+    line-height: 20px;
+    font-size  : 14px;
+    padding    : 0 15px 10px;
+}
+
+// 订单头部店铺名称,交易情况
+.order-list-item__header {
+    padding    : 10px 15px 0;
+    font-size  : 14px;
+    line-height: 24px;
+    background : #fff;
+    color      : #743333;
+}
+
+.order-list-item__header__state {
+    float: right;
+    color: #FF4444;
+}
+
+// 订单列表中的头部订单编号
+.order-cap-order-item__head {
+    color      : #999;
+    font-size  : 12px;
+    line-height: 18px;
+}
+
+// 订单列表中的内容
+.order-cap-order-item__body {
+    background-color: #FAFAFA
+}
+
+// 订单列表中的内容-----商品图片
+.order-card__header {
+    width : 100%;
+    height: 100px;
+}
+
+.order-card__thumb img {
+    width : 90px;
+    height: 90px;
+    float : left
+}
+
+// 订单列表中的内容-----商品描述
+.order-card__content {}
+
+.order-card__title {
+    line-height: 16px;
+    max-height : 32px;
+    font-weight: 700;
+    overflow   : hidden;
+}
+
+.order-card__desc {
+    color     : #7d7e80;
+    max-height: 20px;
+}
+
+.order-ellipsis {
+    overflow     : hidden;
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+}
+
+.order-card__bottom {}
+
+.order-card__num {
+    float: right;
+}
+
+// 订单列表中的页脚
+.order-cap-order-item__footer {}
+
+.order-cap-order-item__more {
+    color           : #3283fa;
+    position        : relative;
+    padding         : 15px;
+    text-align      : center;
+    background-color: #ffffff
+}
+
+.order-cap-order-item__total-price {
+    position  : relative;
+    padding   : 10px 15px;
+    text-align: right;
+}
+
+// 订单页脚 
+.order-list-item__footer {
+    padding   : 10px 15px;
+    text-align: right;
+    font-size : 14px;
+    background: #fff;
+}
+
+.order-button__text {
+    float: right;
+}
+
+
+/*----------------- 头部样式结束 ---------------- */
