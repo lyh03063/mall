@@ -256,6 +256,7 @@ export default {
 body {
   background-color: #f8f8f8;
 }
+
 .main {
   max-width: 640px;
   width: 100%;
