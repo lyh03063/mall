@@ -1,86 +1,97 @@
 <template>
   <div class="main">
-    <el-container>
-      <div class="leftMenu">
-        <a href="#seasonal" class="leftMenu-title">应季尝鲜区</a>
-        <a href="#entrance" class="leftMenu-title">进口区</a>
-        <a href="#domestic" class="leftMenu-title">国产区</a>
-        <a href="#freshCut" class="leftMenu-title">果盘鲜切</a>
-        <a href="#snacks" class="leftMenu-title">零食</a>
-      </div>
-      <main>
+    <el-tabs tab-position="left">
+      <el-tab-pane label="应季尝鲜区">
         <ul class="product-list">
-          <a class="product-title" name="seasonal">应季尝鲜区</a>
+          <div class="product-title">应季尝鲜区</div>
           <li class="product-group" v-for="(seasonal,index) in seasonalList" :key="index">
             <img class="product-img" :src="seasonal.imgUrl">
-            <p class="product-intro">{{seasonal.intro}}</p>
-            <p class="product-groupTitle">{{seasonal.groupTitle}}</p>
-            <div class="FL">
-              <div class="product-info">
-                {{seasonal.info}}
-                <i class="el-icon-circle-plus-outline product-icon"></i>
+            <div class="product-text">
+              <p class="product-intro">{{seasonal.intro}}</p>
+              <p class="product-groupTitle">{{seasonal.groupTitle}}</p>
+              <div class="FL">
+                <div class="product-info">
+                  {{seasonal.info}}
+                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                </div>
               </div>
             </div>
           </li>
         </ul>
+      </el-tab-pane>
+      <el-tab-pane label="进口区">
         <ul class="product-list">
-          <a class="product-title" name="entrance">进口区</a>
+          <div class="product-title">进口区</div>
           <li class="product-group" v-for="(entrance,index) in entranceList" :key="index">
             <img class="product-img" :src="entrance.imgUrl">
-            <p class="product-intro">{{entrance.intro}}</p>
-            <p class="product-groupTitle">{{entrance.groupTitle}}</p>
-            <div class="FL">
-              <div class="product-info">
-                {{entrance.info}}
-                <i class="el-icon-circle-plus-outline product-icon"></i>
+            <div class="product-text">
+              <p class="product-intro">{{entrance.intro}}</p>
+              <p class="product-groupTitle">{{entrance.groupTitle}}</p>
+              <div class="FL">
+                <div class="product-info">
+                  {{entrance.info}}
+                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                </div>
               </div>
             </div>
           </li>
         </ul>
+      </el-tab-pane>
+      <el-tab-pane label="国产区">
         <ul class="product-list">
-          <a class="product-title" name="domestic">国产区</a>
+          <div class="product-title">国产区</div>
           <li class="product-group" v-for="(domestic,index) in domesticList" :key="index">
             <img class="product-img" :src="domestic.imgUrl">
-            <p class="product-intro">{{domestic.intro}}</p>
-            <p class="product-groupTitle">{{domestic.groupTitle}}</p>
-            <div class="FL">
-              <div class="product-info">
-                {{domestic.info}}
-                <i class="el-icon-circle-plus-outline product-icon"></i>
+            <div class="product-text">
+              <p class="product-intro">{{domestic.intro}}</p>
+              <p class="product-groupTitle">{{domestic.groupTitle}}</p>
+              <div class="FL">
+                <div class="product-info">
+                  {{domestic.info}}
+                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                </div>
               </div>
             </div>
           </li>
         </ul>
+      </el-tab-pane>
+      <el-tab-pane label="果盘鲜切">
         <ul class="product-list">
-          <a class="product-title" name="freshCut">果盘鲜切</a>
+          <div class="product-title" name="freshCut">果盘鲜切</div>
           <li class="product-group" v-for="(freshCut,index) in freshCutList" :key="index">
             <img class="product-img" :src="freshCut.imgUrl">
-            <p class="product-intro">{{freshCut.intro}}</p>
-            <p class="product-groupTitle">{{freshCut.groupTitle}}</p>
-            <div class="FL">
-              <div class="product-info">
-                {{freshCut.info}}
-                <i class="el-icon-circle-plus-outline product-icon"></i>
+            <div class="product-text">
+              <p class="product-intro">{{freshCut.intro}}</p>
+              <p class="product-groupTitle">{{freshCut.groupTitle}}</p>
+              <div class="FL">
+                <div class="product-info">
+                  {{freshCut.info}}
+                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                </div>
               </div>
             </div>
           </li>
         </ul>
+      </el-tab-pane>
+      <el-tab-pane label="零食">
         <ul class="product-list">
-          <a class="product-title" name="snacks">零食</a>
+          <div class="product-title" name="snacks">零食</div>
           <li class="product-group" v-for="(snacks,index) in snacksList" :key="index">
             <img class="product-img" :src="snacks.imgUrl">
-            <p class="product-intro">{{snacks.intro}}</p>
-            <p class="product-groupTitle">{{snacks.groupTitle}}</p>
-            <div class="FL">
-              <div class="product-info">
-                {{snacks.info}}
-                <i class="el-icon-circle-plus-outline product-icon"></i>
+            <div class="product-text">
+              <p class="product-intro">{{snacks.intro}}</p>
+              <p class="product-groupTitle">{{snacks.groupTitle}}</p>
+              <div class="FL">
+                <div class="product-info">
+                  {{snacks.info}}
+                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                </div>
               </div>
             </div>
           </li>
         </ul>
-      </main>
-    </el-container>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -91,7 +102,6 @@ export default {
   props: {},
   data: function() {
     return {
-      activeMenuIndex: "1",
       seasonalList: [
         {
           imgUrl:
@@ -236,41 +246,24 @@ export default {
       ]
     };
   },
-  methods: {
-    menuSelect(index, indexPath) {
-      this.activeMenuIndex = index;
-      console.log("index", index);
-      console.log("indexPath", indexPath);
-    }
-  },
+  methods: {},
   created() {}
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 @import "../assets/css/util.scss"; //导入公共样式文件
 body {
   background-color: #f8f8f8;
 }
 .main {
-  max-width: 540px;
+  max-width: 640px;
+  width: 100%;
   margin: 0 auto;
 }
 
-.leftMenu {
-  width: 80px;
-  height: 328px;
-}
-.leftMenu-title {
-  display: block;
-  height: 66px;
-  font-size: 12px;
-  color: #999;
-  text-align: center;
-  line-height: 66px;
-}
-
 .product-list {
+  width: 100%;
   padding: 10px 10px 0 10px;
   background-color: #fff;
 }
@@ -281,19 +274,22 @@ body {
   padding-bottom: 10px;
 }
 .product-group {
-  width: 275px;
-  height: 98px;
+  width: 100%;
+  overflow: hidden;
   background-color: #fff;
+  margin-bottom: 10px;
 }
 .product-img {
-  width: 88px;
-  height: 88px;
+  width: 30%;
   float: left;
 }
-.product-intro {
+.product-text {
   float: left;
-  width: 173px;
-  max-height: 40px;
+  width: 60%;
+}
+.product-intro {
+  width: 100%;
+
   padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -302,12 +298,12 @@ body {
   -webkit-box-orient: vertical;
 }
 .product-groupTitle {
-  width: 173px;
+  width: 100%;
   max-height: 40px;
   font-size: 12px;
   color: #999;
   padding: 5px 10px;
-  float: left;
+
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -315,16 +311,14 @@ body {
   -webkit-box-orient: vertical;
 }
 .product-info {
-  width: 173px;
+  width: 150px;
   max-height: 40px;
   font-size: 16px;
   color: #f00;
   padding: 0 0 0 10px;
-  float: left;
 }
 .product-icon {
   font-size: 24px;
   float: right;
 }
-
 </style>
