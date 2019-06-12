@@ -26,18 +26,15 @@
     background-color: #f9fafc;
 }
 
-
-
 @media screen and (min-width: 375px) {
-
     // 屏幕宽度大于375px
-    .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav {
+    .ordertab .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav {
         width          : 100%;
         display        : flex;
         justify-content: space-around;
     }
 
-    .el-tabs__active-bar {
+    .ordertab .el-tabs__active-bar {
         width             : 20% !important;
         // transform      : translateX(20%) !important
     }

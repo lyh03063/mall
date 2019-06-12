@@ -68,7 +68,7 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
-    activeMenuIndex: "",//当前激活的菜单index
+    activeMenuIndex: "1",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
     }
