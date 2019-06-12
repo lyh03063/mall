@@ -132,8 +132,11 @@
         <div class></div>
       </el-col>
     </el-row>
-     <portal></portal>
+    <div style="margin:-20px;">
+ <portal></portal>
+    </div>
   </div>
+   
 </template>
 
 <script>
