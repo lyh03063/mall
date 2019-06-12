@@ -13,7 +13,7 @@
 
 <script>
 import listAdded from "../components/list-address/listAdded";
-import listModify from "../components/list-address/listModify";
+import listModify from "../components/list-address/listAddModify";
 export default {
   components: { listAdded },
   data() {
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     form(formName) {
-      this.$router.push({ path: "/listModify" }); //跳转到listAdded
+      this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
     },
 
     submitForm(formName) {
@@ -59,6 +59,7 @@ export default {
   },
   mounted() {
     this.getProList();
+    
   }
 };
 </script>
