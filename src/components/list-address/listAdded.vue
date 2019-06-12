@@ -1,25 +1,29 @@
 <template>
   <div class="main">
-    <el-form
-      :model="ruleForm"
-      :rules="rules"
-      ref="ruleForm"
-      label-width="50px"
-      class="demo-ruleForm"
-    >
-      <el-form-item label="姓名" prop="name">
+    <el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="50px" class="demo-ruleForm" >
+      <template v-for="item in formItems" >
+      <el-form-item label="姓名" prop="name" :key="item.name">
         <el-input v-model="ruleForm.name" placeholder="收货人姓名"></el-input>
       </el-form-item>
-      <el-form-item label="电话" prop="phone">
+      <el-form-item label="电话" prop="phone" :key="item.phone">
         <el-input v-model="ruleForm.phone" placeholder="收货人手机号"></el-input>
       </el-form-item>
-      <el-form-item label="地区" prop="region">
-        <el-input v-model="ruleForm.region" placeholder="选择省/市/区"></el-input>
-      </el-form-item>
-      <el-form-item label="详细地址" prop="detailed">
-        <el-input type="textarea" v-model="ruleForm.detailed" placeholder="街道门牌、楼层房间号等信息"></el-input>
-      </el-form-item>
+      <el-form-item label="地区" prop="area" :key="item.area">
 
+        <el-cascader :options="options">
+      <template slot-scope="{ node, data }">
+        <div class="block">
+
+</div>
+       <span>{{ data.label }}</span>
+      <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
+           </template>
+</el-cascader>
+      </el-form-item>
+      <el-form-item label="详细地址" prop="extend" :key="item.extend">
+        <el-input type="textarea" v-model="ruleForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
+      </el-form-item>
+        </template>
       <div class="preserve" @click="addedForm('ruleForm')">保存并使用</div>
     </el-form>
   </div>
@@ -28,49 +32,55 @@
 <script>
 export default {
   components: {},
-
   data() {
     return {
+     
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "000",
         list: "http://120.76.160.41:3000/crossList?page=mabang-address",
-        delete: "000"
+        delete: "http://120.76.160.41:3000/crossDelete?page=mabang-address"
       },
       ruleForm: {
         name: "",
         phone: "",
-        region: "",
-        detailed: ""
+        area: "",
+        extend: "",
+        userName:""
       },
+       //--------新增、修改表单字段数组------
+         formItems:[
+           { 
+            prop:"name",
+            type:"input",   
+         }],
+         
+       //验证表单
       rules: {
         name: [
           {
-            required: true,
-            message: "请填写收货人姓名",
-            trigger: "blur",
-            placeholder: "收货人姓名"
+            required: true, message: "请填写收货人姓名",trigger: "blur", placeholder: "收货人姓名"
           },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ],
         phone: [
           { required: true, message: "请输入收货人电话", trigger: "change" },
-          { min: 11, message: "电话格式填写错误", trigger: "blur" }
+          // { min: 11, message: "电话格式填写错误", trigger: "blur" }
         ],
-        region: [
+        area: [
           { required: true, message: "请填写收货人地区", trigger: "change" }
         ],
-        detailed: [
+        extend: [
           { required: true, message: "请填写详细地址", trigger: "blur" }
         ]
-      }
+      },
+      
     };
   },
+  
   methods: {
     addedForm() {
-      alert("xin")
       axios({
-        //请求接口
+        //请求新增接口
         method: "post",
         // url: this.objURL.list,
         url: this.objURL.add,

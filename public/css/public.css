@@ -737,6 +737,12 @@ table.table-normal td, table.table-normal th {
  .C_999{
    color: #999;
  }
+ .C_f44{
+  color: #f44;
+}
+.BC_f44{
+  background-color:  #f44;
+}
  .BC_fff{
    background-color:  #fff;
 }

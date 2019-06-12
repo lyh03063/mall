@@ -21,7 +21,7 @@ import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 
 import listAdded from "./components/list-address/listAdded";
-
+import listModify from "./components/list-address/listModify";
 
 
 
@@ -44,7 +44,7 @@ const router = new VueRouter({
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },
-  
+    { path: '/listModify', component: listModify },
 
     
   ]

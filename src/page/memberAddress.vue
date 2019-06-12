@@ -1,10 +1,11 @@
 <template>
-  <div class="main">
-    <div class="P20" v-for="item in tableData" :key="item.box">
+  <div class="" >
+    <div class="P30" v-for="item in tableData" :key="item.tableData" style="border-bottom: 1px solid #ebedf0" >
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.recipt_region}}</div>
-      <div class="receipt-modify FR" @click="modifyForm('ruleForm')">修改</div>
-    </div>
+      
+      <div class="receipt-modify FR" @click="form('ruleForm')"><i class="iconfont icon-xiugai"></i></div>
+    </div> 
 
     <div class="added" @click="submitForm('ruleForm')">新增地址</div>
   </div>
@@ -12,6 +13,7 @@
 
 <script>
 import listAdded from "../components/list-address/listAdded";
+import listModify from "../components/list-address/listModify";
 export default {
   components: { listAdded },
   data() {
@@ -23,11 +25,12 @@ export default {
         delete: "000"
       },
       tableData: []
+
     };
   },
   methods: {
-    modifyForm(formName) {
-      this.$router.push({ path: "/listAdded" }); //跳转到listAdded
+    form(formName) {
+      this.$router.push({ path: "/listModify" }); //跳转到listAdded
     },
 
     submitForm(formName) {
@@ -65,7 +68,7 @@ export default {
 
 .added {
   position: fixed;
-  top: 93.5%;
+  bottom: 0px;
   left: 0%;
   color: #fff;
   background-color: #f44;
