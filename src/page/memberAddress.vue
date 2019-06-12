@@ -1,41 +1,40 @@
 <template>
   <div class="main">
-    <div class="P20 " v-for="item in box"  :key="item.box">
-      <div class="receipt-name " >{{item.recipt_name}},{{item.recipt_phone}} </div>
-      <div class="receipt-region FL OFH" >{{item.recipt_region}}</div>
-      <div class="receipt-modify FR "> 修改</div>
+    <div class="P20" v-for="item in tableData" :key="item.box">
+      <div class="receipt-name">{{item.name}},{{item.phone}}</div>
+      <div class="receipt-region FL OFH">{{item.recipt_region}}</div>
+      <div class="receipt-modify FR" @click="modifyForm('ruleForm')">修改</div>
     </div>
-    
-     <div class="added"  @click="submitForm('ruleForm')"> 新增地址 </div>
-      
+
+    <div class="added" @click="submitForm('ruleForm')">新增地址</div>
   </div>
 </template>
 
 <script>
-
+import listAdded from "../components/list-address/listAdded";
 export default {
-  components: {},
- data() {
-   return{
-     objURL: {
-        add: "000",
+  components: { listAdded },
+  data() {
+    return {
+      objURL: {
+        add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "000",
         list: "http://120.76.160.41:3000/crossList?page=mabang-address",
         delete: "000"
       },
-   box:[
-     {
-       recipt_name:"name",recipt_phone:"phone",
-       recipt_region:"aaa"
-     }
-   ]
-}
+      tableData: []
+    };
+  },
+  methods: {
+    modifyForm(formName) {
+      this.$router.push({ path: "/listAdded" }); //跳转到listAdded
+    },
 
- }, methods:{
-   submitForm(formName) {
-      this.$router.push({path:'/listAdded'})//跳转到listAdded
-   },
-  getProList() {
+    submitForm(formName) {
+      this.$router.push({ path: "/listAdded" }); //跳转到listAdded
+    },
+
+    getProList() {
       axios({
         //请求接口
         method: "post",
@@ -53,28 +52,26 @@ export default {
         .catch(function(error) {
           alert("异常:" + error);
         });
-    },
-
-
- }
-
-}
+    }
+  },
+  mounted() {
+    this.getProList();
+  }
+};
 </script>
 
 <style lang="scss" >
-@import "../assets/css/util.scss";//导入公共样式文件
+@import "../assets/css/util.scss"; //导入公共样式文件
 
- .added{
-    position:fixed;
-    top:93.5%;
-    left:0%;
-   color:#fff;
-   background-color: #f44;
-   width:100%;
-   height:50px;
-   text-align: center;
-   line-height:50px;
-
- }
-
+.added {
+  position: fixed;
+  top: 93.5%;
+  left: 0%;
+  color: #fff;
+  background-color: #f44;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
 </style>
