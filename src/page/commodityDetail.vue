@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    commodityDetail
+  
   </div>
 </template>
 
