@@ -1,7 +1,5 @@
 <template>
-  <div class="main">
-    
-  </div>
+  <div class="main"></div>
 </template>
 
 <script>
@@ -10,16 +8,10 @@ export default {
   components: {},
   props: {},
   data() {
-    return {
-     
-    };
+    return {};
   },
-  methods: {
-    
-  },
-  mounted() {
-  
-  }
+  methods: {},
+  mounted() {}
 };
 </script>
 
