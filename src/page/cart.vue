@@ -263,8 +263,6 @@ export default {
 //---------当前页面------
 .cart {
   width: 100%;
-  // font-size: 11px;
-  padding: 5px 10px 5px 0;
 }
 
 //------- 商城模块-------

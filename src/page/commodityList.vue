@@ -252,10 +252,7 @@ export default {
 body {
   background-color: #f8f8f8;
 }
-.main {
-  max-width: 540px;
-  margin: 0 auto;
-}
+
 
 .leftMenu {
   width: 80px;
