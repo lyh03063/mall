@@ -1,0 +1,193 @@
+/*----------------- 订单完成情况开始---------------- */
+.order-status-main {
+    padding         : 15px;
+    background-color: #fff;
+}
+
+.order-status-main img {
+    display        : block;
+    float          : left;
+    margin-right   : 10px;
+    width          : 40px;
+    height         : 40px;
+    background-size: 40px 40px;
+}
+
+.order-status-main p {
+    margin-top : 7px;
+    font-size  : 12px;
+    line-height: 16px;
+    color      : #666;
+    word-break : break-all;
+}
+
+/*----------------- 订单完成情况结束---------------- */
+
+
+/*----------------- 交易流程开始---------------- */
+.order-color {
+    background-color: #ffffff;
+}
+
+/*----------------- 交易流程结束---------------- */
+
+/*----------------- 收货人信息开始---------------- */
+.order-shipping-address {
+    border-top      : 1px solid black;
+    background-color: #F8F8F8;
+}
+
+// 收获地址栏
+.order-address-content {
+    position   : relative;
+    padding    : 15px;
+    min-height : 22px;
+    line-height: 24px;
+    background : #fff;
+}
+
+// 收货名称电话
+.order-address-name {
+    float      : left;
+    font-size  : 14px;
+    font-weight: bold;
+}
+
+.order-address-tel {
+    float      : right;
+    font-size  : 14px;
+    font-weight: bold;
+}
+
+// 收货地址详情
+.order-address-detail {
+    clear      : both;
+    margin-top : 7px;
+    font-size  : 12px;
+    line-height: 16px;
+    color      : #666;
+    word-break : break-all;
+}
+
+// 彩色线条
+.order-shipping-address .ordercap-logistics::after {
+    content        : "";
+    display        : block;
+    height         : 2px;
+    background     : -webkit-repeating-linear-gradient(135deg, #ff6c6c, #ff6c6c 20%, transparent 0, transparent 25%, #3283fa 0, #3283fa 45%, transparent 0, transparent 50%);
+    background     : repeating-linear-gradient(-45deg, #ff6c6c, #ff6c6c 20%, transparent 0, transparent 25%, #3283fa 0, #3283fa 45%, transparent 0, transparent 50%);
+    background-size: auto;
+    background-size: 80px;
+}
+
+/*----------------- 收货人信息结束---------------- */
+
+/*----------------- 商品列表开始 ---------------- */
+/*----------------- 商品列表结束 ---------------- */
+
+/*----------------- 配送方式及留言开始 ---------------- */
+.order-cell {
+    width           : 100%;
+    display         : flex;
+    padding         : 10px 15px;
+    box-sizing      : border-box;
+    line-height     : 24px;
+    position        : relative;
+    background-color: #fff;
+    color           : #323233;
+    font-size       : 14px;
+    overflow        : hidden;
+}
+
+.order-cell__title,
+.order-cell__value {
+    -webkit-box-flex: 1;
+    -webkit-flex    : 1;
+    flex            : 1;
+}
+
+.order-cell__value {
+    color         : #969799;
+    overflow      : hidden;
+    text-align    : right;
+    position      : relative;
+    vertical-align: middle;
+}
+
+/*----------------- 配送方式及留言结束 ---------------- */
+
+
+/*----------------- 金额及联系方式开始 ---------------- */
+.order-cell__value--alone {
+    color     : #323233;
+    text-align: left;
+}
+
+.order-goods-pay__cell {
+    display    : table;
+    width      : 100%;
+    font-size  : 12px;
+    line-height: 24px;
+}
+
+.order-goods-pay__cell-title {
+    display: table-cell;
+    color  : #333;
+}
+
+.order-goods-pay__cell-value {
+    display    : table-cell;
+    text-align : right;
+    font-weight: 700;
+    color      : #111;
+}
+
+.order-goods-pay__real-price__paid {
+    font-size: 14px;
+    float    : right;
+}
+
+.order-goods-pay__real-price__paid span {
+    color      : #FF4444;
+    font-weight: 700;
+}
+
+.order-contact-main {
+    border-top: 1px solid #969799;
+    width     : 100%;
+    height    : 40px;
+    padding   : 10px 15px;
+    font-size : 20px; 
+    text-align: center
+}
+
+.order-contact-main-in {
+    padding-right: 20px;
+    padding-left : 20px;
+    border-right : 1px solid #969799;
+
+    &:last-child {
+        border-right: 0px;
+    }
+}
+
+/*----------------- 金额及联系方式结束 ---------------- */
+
+/*----------------- 订单时间开始 ---------------- */
+.order-cell__title {
+    font-size  : 12px;
+    line-height: 24px;
+    color      : #666;
+}
+
+.order-base-info__question {
+    display    : block;
+    padding    : 10px 15px;
+    text-align : center;
+    background : #fff;
+    color      : #38f !important;
+    font-size  : 14px !important;
+    line-height: 24px;
+}
+
+/*----------------- 订单时间结束 ---------------- */
