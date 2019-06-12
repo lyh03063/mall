@@ -6,6 +6,10 @@ Vue.use(space);   //必须有install
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
+
 import Home from "./page/home";
 import login from "./page/login";
 import commodityList from "./page/commodityList";
@@ -49,6 +53,11 @@ const router = new VueRouter({
 
   ]
 })
+
+
+var VueTouch = require('vue-touch')
+Vue.use(VueTouch, { name: 'v-touch' })
+
 
 
 import axios from "axios";
