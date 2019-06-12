@@ -2,7 +2,8 @@
   <div class="main-cfo">
     <div style="background-color:white">
       <div class="delivery-btn">
-        <el-button type="danger">商家配送</el-button>
+        <el-button class="iconfont iconkuaidi">商家配送</el-button>
+        <el-button class="iconfont iconbaobao">商家配送</el-button>
       </div>
       <router-link to="./memberAddress">
         <ul :cf="title" class="address">
@@ -12,27 +13,29 @@
           <li class="FS14">收货地址：{{title.address}}</li>
         </ul>
       </router-link>
+     
       <div class="line"></div>
     </div>
     <space height="15"></space>
-    <!--------------商品详情------------>
+   
     <div class="BC_fff">
-      <div class="FS15" style="padding:20px 2.5%">
+      <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
         <router-link to="./home">
-          <P class="shoppingmall">米柚生活</P>
+          <span class="shoppingmall">码帮商城</span>
         </router-link>
       </div>
-      <div class="details" v-for="item in commodity" :key="item.props">
+      <!-----------------商品詳情--------------------->
+      <div class="details" v-for="(item,index) in cartData" :key="index">
         <a>
           <img :src="item.imgUrl">
         </a>
         <div class="title-details">
           <p>{{item.name}}</p>
-          <p style="color:#999;font-size:12px">{{item.prop}}</p>
+          <p style="color:#999;font-size:12px">{{item.description}}</p>
           <div>
             <span style="color:red">￥{{item.price}}</span>
-            <span style="float:right">X1</span>
+            <span style="float:right">X{{item.cartProductNumber}}</span>
           </div>
         </div>
       </div>
@@ -43,10 +46,11 @@
         <div style="width:50%;float:left;font-size:16px;line-height: 30px">
           <p>配送方式</p>
         </div>
-        <div class="delivery-mode">
+        <div @click="delivery=true" class="delivery-mode">
           <span>同城配送 免运费</span>
           <br>
-          <span>time</span>
+           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
+          <span>{{value1}}</span>
         </div>
       </div>
       <div class="message">
@@ -65,7 +69,7 @@
     <div class="total-price">
       <p>
         商品金额
-        <span>￥199.60</span>
+        <span>￥{{cartTotal}}</span>
       </p>
       <p style="border-bottom:1px solid #e3e3e3">
         运费
@@ -73,7 +77,7 @@
       </p>
       <span>
         合计:
-        <span style="color:red">￥199.60</span>
+        <span style="color:red">￥{{cartTotal}}</span>
       </span>
     </div>
     <!-------------------提交订单----------------->
@@ -81,85 +85,92 @@
       <div style="float:right">
         <span>
           合計:
-          <span class="C_f00">149</span>
+          <span class="C_f00">￥{{cartTotal}}</span>
         </span>
         <el-button type="danger">提交订单</el-button>
       </div>
     </div>
-    <!-- <listDialog ref="listDialog"></listDialog> -->
-    <div>
-  
-      
-  </div>
+
+    <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
+      <el-button type="danger" style="background-color:red;width:50%" round>同城配送 免運費</el-button>
+      <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
+      <div class="block" style="height:200px;width:100%">
+        <el-date-picker
+          v-model="value1"
+          type="datetime"
+          placeholder="选择日期时间"
+          style="width:100%"
+          :picker-options="pickerOptions1"
+        ></el-date-picker>
+      </div>
+      <div class="footer">
+        <span type="primary" @click="delivery=false">确 定</span>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import listDialog from "../components/list-dialog/list-dialog";
 export default {
-  // components: {
-  //   listDialog
-  // },
   data: function() {
     return {
+      pickerOptions1: {
+        disabledDate(time) {
+          const curDate = new Date().getTime();
+          const day = 3 * 24 * 3600 * 1000;
+          const dateRegion = curDate + day;
+          return time.getTime() <= Date.now() || time.getTime() > dateRegion;
+        }
+      },
+      value1: "",
       URL: {
         list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
       },
-      // objParam: {
-      //   pageSize: 5,
-      //   pageIndex: 1,
-      //   brandMuti: []
-      // },
-      tableData: [],
+      isCartList: [],
+      delivery: false,
+
       title: {
-        phone: "182180456",
+        phone: "18123456454",
         name: "张等等",
         address: "码帮科技"
       },
-      commodity: [
+       cartData: [
         {
+      
           imgUrl:
-            "https://img.yzcdn.cn/upload_files/2018/12/11/FuNLdcS8lECbjl-8P8TmZxLXuyGQ.jpg!small.jpg",
-          name: "name",
-          prop: "30枚",
-          price: 79.90
+            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          name:
+            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
+          description: "6种时令水果大切盘，鲜切水果",
+          price: 49,
+          cartProductNumber: 2 //产品选中的数量
         },
         {
+       
+       
           imgUrl:
-            "https://img.yzcdn.cn/upload_files/2018/12/11/FuNLdcS8lECbjl-8P8TmZxLXuyGQ.jpg!small.jpg",
-          name: "【自养自产土鸡蛋】30枚装44.9！纯正土鸡蛋，产地直发！",
-          prop: "30枚",
-          price: 79.90
-        }
+            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          name:
+            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
+          description: "6种时令水果大切盘，鲜切水果",
+          price: 99,
+          cartProductNumber: 2
+        },
       ]
     };
   },
-  
-  methods: {
-   
-    getProList() {
-      //ajax获取产品列表的函数
-      let that = this;
-      axios({
-        method: "post",
-        url: this.URL.list,
-        data: this.objParam
-      })
-        .then(response => {
-          console.log("response.data", response.data);
-          let { list, page } = response.data; //结构赋值
-          this.tableData = list;
-          this.page = page;
-        })
-        .catch(function(error) {
-          alert("异常" + error);
-        });
+  computed: {
+    cartTotal() {
+      //计算合计总数
+      let stock = 0; //初始值设置为0
+      this.cartData.forEach(item => {
+        stock += item.price * item.cartProductNumber; //
+      });
+      return stock;
     }
-  }
-  //  mounted() {
-  //   //等待模板生成后
-  //   this.getProList(); //获取产品列表
-  // }
+  },
+
+
 };
 </script>
 
@@ -182,13 +193,19 @@ export default {
 }
 .shoppingmall {
   background-size: 100%;
+ float: left;
+
+  overflow: hidden;
+  
+  display: block;
+
 }
 .palce-order {
   width: 100%;
   background-color: white;
   position: fixed;
   height: 50px;
-  top: 93%;
+  bottom: 0;
   .el-button {
     margin-left: 5px;
     height: 50px;
@@ -204,9 +221,11 @@ export default {
 .delivery-btn {
   text-align: center;
   .el-button {
-    width: 95%;
-    background: red;
-    color: white;
+    width: 47.5%;
+    background: white;
+    color: red;
+    margin-left: 32px;
+    border-color:red
   }
 }
 
@@ -311,5 +330,30 @@ export default {
     transparent 50%
   );
   background-size: 80px;
+}
+
+.el-dialog.abc {
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+}
+.footer span {
+  width: 100%;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid red;
+  line-height: 50px;
+  background-color: red;
+}
+.el-dialog__header span {
+  text-align: center;
+  display: block;
+  font-size: 15px;
+  border-bottom: 1px solid gray;
+}
+.el-dialog.abc .el-dialog__body {
+  padding: 0;
+  padding-top: 10px;
 }
 </style>

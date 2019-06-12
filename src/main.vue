@@ -2,7 +2,7 @@
 
   <div class>
     <router-view></router-view>
-    <div class="foot">有赞提供技术支持</div>
+    <div class="foot">碼幫提供技术支持</div>
   </div>
 
 
@@ -23,7 +23,6 @@ export default {
   padding: 0 15px;
 }
 .foot {
-  background-image: url("https://img.yzcdn.cn/public_files/2018/02/01/01a9df5ffcbf29f1416832070b5a909b.png!middle.png");
   color: #bfbfc3;
   padding: 50px 0 20px;
   background-position: center 17px;
