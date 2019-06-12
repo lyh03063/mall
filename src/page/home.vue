@@ -1,6 +1,7 @@
 
 <template>
-  <div class="main" style="background:#f8f8f8;height:1225px;width:380px;">
+  <div class="bigg">
+
     <div class="box-top"></div>
     <div class="block">
       <el-carousel trigger="click" height="135px">
@@ -14,11 +15,11 @@
     </div>
     <div class="block">
       <div style="background: #F2F2F2;">
-        <template v-for="(buy,index) in buy">
+        <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
-            <img class="box-commodity" :src="buy.album">
-            <div class="box-title">{{buy.description}}</div>
-            <div class="box-3" style="width:135px">￥{{buy.price}}</div>
+            <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
+            <div class="box-title">{{buyEach.description}}</div>
+            <div class="box-3" style="width:135px">￥{{buyEach.price}}</div>
             <div class="el-icon-shopping-cart-2 box-4"></div>
           </div>
         </template>
@@ -31,8 +32,9 @@
 
 <script>
 import portal from "../components/shift/portal";
+import note from "../components/shift/note";
 export default {
-  components: { portal },
+  components: { portal,note },
   data() {
     return {
       buy: [],
@@ -89,6 +91,12 @@ export default {
 
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
+.bigg {
+  background: #f8f8f8;
+  height: 1175px;
+  width: 100%;
+  padding: 0 auto;
+}
 
 //商品列表+
 .box-top {
