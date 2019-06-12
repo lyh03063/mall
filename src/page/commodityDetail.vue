@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-  
+    
   </div>
 </template>
 
@@ -9,7 +9,17 @@ export default {
   name: "",
   components: {},
   props: {},
+  data() {
+    return {
+     
+    };
+  },
+  methods: {
+    
+  },
+  mounted() {
   
+  }
 };
 </script>
 
@@ -17,5 +27,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/css/util.scss"; //导入公共样式文件
-
 </style>
