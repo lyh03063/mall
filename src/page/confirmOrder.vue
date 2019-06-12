@@ -1,17 +1,15 @@
 <template>
-  <div class="main">
+  <div class="main-cfo">
     <div style="background-color:white">
       <div class="delivery-btn">
-        <el-button>商家配送</el-button>
+        <el-button type="danger">商家配送</el-button>
       </div>
       <router-link to="./memberAddress">
         <ul :cf="title" class="address">
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
-           
-            <li>收货人：{{title.name}}</li>
-            <li class="FS14">收货地址：{{title.address}}</li>
-     
+          <li>收货人：{{title.name}}</li>
+          <li class="FS14">收货地址：{{title.address}}</li>
         </ul>
       </router-link>
       <div class="line"></div>
@@ -25,7 +23,6 @@
           <P class="shoppingmall">米柚生活</P>
         </router-link>
       </div>
-
       <div class="details" v-for="item in commodity" :key="item.props">
         <a>
           <img :src="item.imgUrl">
@@ -34,13 +31,12 @@
           <p>{{item.name}}</p>
           <p style="color:#999;font-size:12px">{{item.prop}}</p>
           <div>
-            <span style="color:red">{{item.price}}</span>
+            <span style="color:red">￥{{item.price}}</span>
             <span style="float:right">X1</span>
           </div>
         </div>
       </div>
     </div>
-
     <!-----------------配送方式--------------------->
     <div>
       <div class="delivery-box">
@@ -48,8 +44,9 @@
           <p>配送方式</p>
         </div>
         <div class="delivery-mode">
-          <p>同城配送 免运费</p>
-          <p>time</p>
+          <span>同城配送 免运费</span>
+          <br>
+          <span>time</span>
         </div>
       </div>
       <div class="message">
@@ -86,16 +83,34 @@
           合計:
           <span class="C_f00">149</span>
         </span>
-        <el-button>提交订单</el-button>
+        <el-button type="danger">提交订单</el-button>
       </div>
     </div>
+    <!-- <listDialog ref="listDialog"></listDialog> -->
+    <div>
+  
+      
+  </div>
   </div>
 </template>
 
 <script>
+// import listDialog from "../components/list-dialog/list-dialog";
 export default {
+  // components: {
+  //   listDialog
+  // },
   data: function() {
     return {
+      URL: {
+        list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
+      },
+      // objParam: {
+      //   pageSize: 5,
+      //   pageIndex: 1,
+      //   brandMuti: []
+      // },
+      tableData: [],
       title: {
         phone: "182180456",
         name: "张等等",
@@ -105,27 +120,29 @@ export default {
         {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2018/12/11/FuNLdcS8lECbjl-8P8TmZxLXuyGQ.jpg!small.jpg",
-          name: "【自养自产土鸡蛋】30枚装44.9！纯正土鸡蛋，产地直发！",
+          name: "name",
           prop: "30枚",
-          price: " ¥79.90"
+          price: 79.90
         },
         {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2018/12/11/FuNLdcS8lECbjl-8P8TmZxLXuyGQ.jpg!small.jpg",
           name: "【自养自产土鸡蛋】30枚装44.9！纯正土鸡蛋，产地直发！",
           prop: "30枚",
-          price: " ¥79.90"
+          price: 79.90
         }
       ]
     };
   },
+  
   methods: {
+   
     getProList() {
       //ajax获取产品列表的函数
       let that = this;
       axios({
         method: "post",
-        url: this.cf.url.list,
+        url: this.URL.list,
         data: this.objParam
       })
         .then(response => {
@@ -139,6 +156,10 @@ export default {
         });
     }
   }
+  //  mounted() {
+  //   //等待模板生成后
+  //   this.getProList(); //获取产品列表
+  // }
 };
 </script>
 
@@ -147,6 +168,13 @@ export default {
 
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
+.delivery-mode::before {
+  content: ">";
+  float: right;
+  font-size: 20px;
+  margin-top: 8px;
+  margin-left: 9px;
+}
 .iconfont {
   float: left;
   display: block;
@@ -237,7 +265,7 @@ export default {
   background-color: white;
   padding: 10px 2.5%;
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 2px;
 }
 
 .total-price {
