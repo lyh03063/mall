@@ -15,7 +15,6 @@ import login from "./page/login";
 import commodityList from "./page/commodityList";
 import commodityDetail from "./page/commodityDetail";
 import cart from "./page/cart";
-import confirmOrder from "./page/confirmOrder";
 import memberCenter from "./page/memberCenter";
 import memberSetting from "./page/memberSetting";
 import pswModify from "./page/pswModify";
@@ -24,8 +23,8 @@ import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 
-import listAdded from "./components/list-address/listAdded";
 
+import listAdded from "./components/list-address/listAdded";
 
 
 
@@ -48,9 +47,6 @@ const router = new VueRouter({
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },
-
-
-
   ]
 })
 
@@ -79,7 +75,13 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       console.log("cartBalanceFun--param", param);
     },
 
-
+    addCartFun(state, param){
+      console.log("addCartFun--param", param);
+    },
+    goCartFun(state, param){
+      console.log("goCartFun--param", param);
+    },
+    
 
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
