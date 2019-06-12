@@ -60,17 +60,14 @@
         </div>
       </div>
     </router-link>
-    <div class="WP100" style="padding-left:40%">
-    <el-button type="primary" @click="modifyMessage">确认修改</el-button>
-    <el-button type="primary"><router-link to="/home"><div style="color:white">返回首页</div></router-link></el-button>
-    </div>
+    
     <!-- 头像弹框 -->
-    <el-dialog :visible.sync="isShowHeadPortrait" width="100%" top="150px">
+    <el-dialog :visible.sync="isShowHeadPortrait" width="100%" top="150px" @close="modifyMessage">
       <div @click="isShowHeadPortrait=false" class="headPortrait-box">是否使用微信头像</div>
       <div @click="isShowHeadPortrait=false" class="headPortrait-box">取消</div>
     </el-dialog>
     <!-- 姓名弹框 -->
-    <el-dialog title="请输入您的姓名" :visible.sync="isShowName" width="100%" top="150px">
+    <el-dialog title="请输入您的姓名" :visible.sync="isShowName" width="100%" top="150px" @close="modifyMessage">
       <el-input placeholder="请输入您的姓名" v-model="name" ></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShowName=false">取 消</el-button>
@@ -78,7 +75,7 @@
       </span>
     </el-dialog>
     <!-- 性别弹框 -->
-    <el-dialog title="请选择您的性别" :visible.sync="isShowGender" width="100%" top="150px">
+    <el-dialog title="请选择您的性别" :visible.sync="isShowGender" width="100%" top="150px" @close="modifyMessage">
       <el-radio v-model="memberMessage[0].sex" label="1">男</el-radio>
       <el-radio v-model="memberMessage[0].sex" label="0">女</el-radio>
       <el-radio v-model="memberMessage[0].sex" label="2">保密</el-radio>
@@ -87,7 +84,7 @@
       </span>
     </el-dialog>
     <!-- 生日弹框 -->
-    <el-dialog title="请选择您的生日" :visible.sync="isShowBirthday" width="100%" top="0px">
+    <el-dialog title="请选择您的生日" :visible.sync="isShowBirthday" width="100%" top="0px" @close="modifyMessage">
       <div style="margin-bottom:10px;"><el-input placeholder="年" v-model="birthday[0]" ></el-input>
       </div>
       <div style="margin-bottom:10px;"><el-input placeholder="月" v-model="birthday[1]"></el-input>
@@ -100,7 +97,7 @@
       </span>
     </el-dialog>
     <!-- 城市弹框 -->
-    <el-dialog title="请选择您的城市" :visible.sync="isShowCity" width="100%" top="50px">
+    <el-dialog title="请选择您的城市" :visible.sync="isShowCity" width="100%" top="50px" @close="modifyMessage">
       <div class="block">
         <el-cascader v-model="cityArray" :options="options"></el-cascader>
       </div>
@@ -113,7 +110,7 @@
       </span>
     </el-dialog>
     <!-- 微信号弹框 -->
-    <el-dialog title="请输入您的微信号" :visible.sync="isShowWechat" width="100%" top="150px">
+    <el-dialog title="请输入您的微信号" :visible.sync="isShowWechat" width="100%" top="150px" @close="modifyMessage">
       <el-input  placeholder="请输入您的微信号" v-model="myWeChat"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShowWechat=false">取 消</el-button>
@@ -126,6 +123,7 @@
 export default {
   data() {
     return {
+      options:option,
       name:"",
       myWeChat:"",
       birthday:["","",""],
@@ -146,90 +144,7 @@ export default {
         city: "",
         wechat: ""
       }],
-      options: [
-        {
-          value: "广东省",
-          label: "广东省",
-          children: [
-            {
-              value: "广州市",
-              label: "广州市",
-              children: [
-                {
-                  value: "白云区",
-                  label: "白云区"
-                }
-              ]
-            },
-            {
-              value: "深圳市",
-              label: "深圳市",
-              children: [
-                {
-                  value: "龙岗区",
-                  label: "龙岗区"
-                }
-              ]
-            },
-            {
-              value: "汕头市",
-              label: "汕头市",
-              children: [
-                {
-                  value: "朝南区",
-                  label: "朝南区"
-                }
-              ]
-            },
-            {
-              value: "佛山市",
-              label: "佛山市",
-              children: [
-                {
-                  value: "南海区",
-                  label: "南海区"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "江西省",
-          label: "江西省",
-          children: [
-            {
-              value: "南昌区",
-              label: "南昌区",
-              children: [
-                {
-                  value: "东湖区",
-                  label: "东湖区"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "北京市",
-          label: "北京市",
-          children: [
-            {
-              value: "东城区",
-              label: "东城区"
-            }
-          ]
-        },
-        {
-          value: "上海市",
-          label: "上海市",
-          children: [
-            {
-              value: "黄埔区",
-              label: "黄埔区"
-            }
-          ]
-        }
-      ]
+     
     };
   },
   methods: {
@@ -267,11 +182,11 @@ export default {
       } //传递参数
     })
       .then(response => {
-        console.log("第一次请求结果", this.memberMessage,this.memberMessage[0].P1),
-        this.$message({
-          message: "修改产品成功",
-          duration: 1500,
-        });
+        console.log("第一次请求结果", this.memberMessage,this.options),
+        // this.$message({
+        //   message: "修改产品成功",
+        //   duration: 1500,
+        // });
         this.getProList();
       })
       .catch(function(error) {
