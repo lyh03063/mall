@@ -1,13 +1,20 @@
 <template>
-  <div class="" >
-    <div class="P30" v-for="item in tableData" :key="item.tableData" style="border-bottom: 1px solid #ebedf0" >
+  <div class>
+    <div
+      class="P30"
+      v-for="item in tableData"
+      :key="item.tableData"
+      style="border-bottom: 1px solid #ebedf0"
+    >
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
-      <div class="receipt-region FL OFH">{{item.recipt_region}}</div>
-      
-      <div class="receipt-modify FR" @click="form('ruleForm')"><i class="iconfont icon-xiugai"></i></div>
-    </div> 
+      <div class="receipt-region FL OFH">{{item.area}}</div>
+      <div class="receipt-region FL OFH">{{item.extend}}</div>
+      <div class="receipt-modify FR" @click="form()">
+        <i class="iconfont icon-xiugai"></i>
+      </div>
+    </div>
 
-    <div class="added" @click="submitForm('ruleForm')">新增地址</div>
+    <div class="added" @click="submitForm()">新增地址</div>
   </div>
 </template>
 
@@ -25,15 +32,15 @@ export default {
         delete: "000"
       },
       tableData: []
-
     };
   },
   methods: {
-    form(formName) {
+    form() {
       this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
+     
     },
 
-    submitForm(formName) {
+    submitForm() {
       this.$router.push({ path: "/listAdded" }); //跳转到listAdded
     },
 
@@ -49,6 +56,7 @@ export default {
           console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
           this.tableData = list;
+          console.log("this.tableData", this.tableData);
           this.page = page;
           this.allCount = page.allCount; //更改总数据量
         })
@@ -59,7 +67,6 @@ export default {
   },
   mounted() {
     this.getProList();
-    
   }
 };
 </script>
