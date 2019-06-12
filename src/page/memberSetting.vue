@@ -131,7 +131,7 @@
   </div>
 </template>
 <script>
-import portal from "../components/space/portal";
+import portal from "../components/shift/portal";
 export default {
   components: { portal },
   data() {
