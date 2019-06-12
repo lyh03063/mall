@@ -1,51 +1,11 @@
 <template>
   <div class="main">
-    <el-tabs tab-position="left">
-      <el-tab-pane label="应季尝鲜区">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="seasonal in seasonalList"
-            :key="seasonal.prop"
-          >{{productEach[seasonal.prop]}}</li>
-        </ul>
-      </el-tab-pane>
-      <el-tab-pane label="进口区">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="entrance in entranceList"
-            :key="entrance.prop"
-          >{{productEach[entrance.prop]}}</li>
-        </ul>
-      </el-tab-pane>
-      <el-tab-pane label="国产区">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="domestic in domesticList"
-            :key="domestic.prop"
-          >{{productEach[domestic.prop]}}</li>
-        </ul>
-      </el-tab-pane>
-      <el-tab-pane label="果盘鲜切">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="freshCut in freshCutList"
-            :key="freshCut.prop"
-          >{{productEach[freshCut.prop]}}</li>
-        </ul>
-      </el-tab-pane>
-      <el-tab-pane label="零食">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="snacks in snacksList"
-            :key="snacks.prop"
-          >{{productEach[snacks.prop]}}</li>
-        </ul>
-      </el-tab-pane>
+    <el-tabs tab-position="left" :data="tableData">
+      <el-tab-pane
+        :prop="tableData.prop"
+        v-for="product in tableData"
+        :key="product.prop"
+      >{{product.name}}</el-tab-pane>
     </el-tabs>
     <portal></portal>
   </div>
@@ -67,14 +27,18 @@ export default {
         delete: ""
       },
       Objparma: {
-        category: "2"
+        category: "1"
       },
-      tableData: [], //列表数据
-      seasonalList: [{ prop: "P1" }, { prop: "name" }, { prop: "description" }],
-      entranceList: [{ prop: "P1" }, { prop: "name" }, { prop: "description" }],
-      domesticList: [{ prop: "P1" }, { prop: "name" }, { prop: "description" }],
-      freshCutList: [{ prop: "P1" }, { prop: "name" }, { prop: "description" }],
-      snacksList: [{ prop: "P1" }, { prop: "name" }, { prop: "description" }]
+      tableData: [
+        {
+          prop: "name"
+        }
+      ]
+      // productList: [
+      //   {
+      //     prop: "name"
+      //   }
+      // ] //列表数据
     };
   },
   methods: {
@@ -88,16 +52,14 @@ export default {
       })
         .then(response => {
           console.log("第一次请求结果", response.data);
-          let { list, page } = response.data; //解构赋值
+          let { list } = response.data; //解构赋值
           this.tableData = list;
-          this.page = page;
-          this.allCount = page.allCount; //更改总数据量
-          for (var i = 0; i < this.tableData.length; i++) {
-            if (this.tableData[i].P1 == 1) {
-              this.seasonalList.push(this.tableData[i]);
-              console.log(" 1111this.seasonalList", this.seasonalList);
-            }
-          }
+          // for (var i = 0; i < this.tableData.length; i++) {
+          //   if (this.tableData[i].P1 == 1) {
+          //     this.productList.push(this.tableData[i]);
+          //     console.log(" 1111this.productList", this.productList);
+          //   }
+          // }
           // this.seasonalList = this.tableData.map(doc => {
           //   if (doc.category == seasonalList) {
           //     console.log("doc.category", doc.category);
@@ -145,7 +107,6 @@ body {
   width: 100%;
   overflow: hidden;
   background-color: #fff;
- 
 }
 .product-img {
   width: 30%;

@@ -55,8 +55,8 @@ const router = new VueRouter({
 })
 
 
-var VueTouch = require('vue-touch')
-Vue.use(VueTouch, { name: 'v-touch' })
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
 
 
 
