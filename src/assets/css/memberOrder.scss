@@ -1,0 +1,163 @@
+/*----------------- 头部和页脚layout布局样式开始 ---------------- */
+.el-row {
+    margin-bottom: 20px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.el-col {
+    border-radius: 4px;
+}
+
+.bg-purple-wihte {
+    background           : #99a9bf;
+    // background        : #FFFFFF;
+}
+
+.grid-content {
+    border-radius: 4px;
+    min-height   : 50px;
+}
+
+.row-bg {
+    padding         : 10px 0;
+    background-color: #f9fafc;
+}
+
+
+
+@media screen and (min-width: 375px) {
+
+    // 屏幕宽度大于375px
+    .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav {
+        width          : 100%;
+        display        : flex;
+        justify-content: space-around;
+    }
+
+    .el-tabs__active-bar {
+        width             : 20% !important;
+        // transform      : translateX(20%) !important
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+    // 屏幕宽度小于375px
+}
+
+/*----------------- 头部和页脚layout布局样式结束 ---------------- */
+
+
+/*----------------- 头部样式开始 ---------------- */
+
+
+//订单列表
+.list-item__order-list {
+    font-size : 14px;
+    background: #fff;
+}
+
+.cap-order-item {
+    line-height: 1.4;
+    font-size  : 14px;
+    padding    : 0 15px 10px;
+}
+
+// 订单头部店铺名称,交易情况
+.list-item__header {
+    padding    : 10px 15px 0;
+    font-size  : 14px;
+    line-height: 24px;
+    background : #fff;
+    color      : #743333;
+}
+
+.list-item__header__state {
+    float: right;
+    color: #FF4444;
+}
+
+// 订单列表中的头部订单编号
+.cap-order-item__head {
+    color      : #999;
+    font-size  : 12px;
+    line-height: 18px;
+}
+
+// 订单列表中的内容
+.cap-order-item__body {
+    background-color: #FAFAFA
+}
+
+// 订单列表中的内容-----商品图片
+.van-card__header {
+    width : 100%;
+    height: 100px;
+}
+
+.van-card__thumb img {
+    width : 90px;
+    height: 90px;
+    float : left
+}
+
+// 订单列表中的内容-----商品描述
+.van-card__content {}
+
+.van-card__title {
+    line-height: 16px;
+    max-height : 32px;
+    font-weight: 700;
+    overflow   : hidden;
+}
+
+.van-card__desc {
+    color     : #7d7e80;
+    max-height: 20px;
+}
+
+.van-ellipsis {
+    overflow     : hidden;
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+}
+
+.van-card__bottom {}
+
+.van-card__num {
+    float: right;
+}
+
+// 订单列表中的页脚
+.cap-order-item__footer {}
+
+.cap-order-item__more {
+    color     : #3283fa;
+    position  : relative;
+    padding   : 15px;
+    text-align: center;
+}
+
+.cap-order-item__total-price {
+    position  : relative;
+    padding   : 10px 15px;
+    text-align: right;
+}
+
+// 订单页脚 
+.list-item__footer {
+    padding   : 10px 15px;
+    text-align: right;
+    font-size : 14px;
+    background: #fff;
+}
+
+.van-button__text {
+    float: right;
+}
+
+
+/*----------------- 头部样式结束 ---------------- */
