@@ -260,19 +260,19 @@ export default {
       url: "http://120.76.160.41:3000/crossModify?page=mabang-member",
       data: {
         findJson: {
-          P1: this.memberMessage.P1
+          P1: this.memberMessage[0].P1
         },
         
-        modifyJson: this.memberMessage
+        modifyJson: this.memberMessage[0]
       } //传递参数
     })
       .then(response => {
-        console.log("第一次请求结果", this.memberMessage),
+        console.log("第一次请求结果", this.memberMessage,this.memberMessage[0].P1),
         this.$message({
           message: "修改产品成功",
           duration: 1500,
         });
-        // this.getProList();
+        this.getProList();
       })
       .catch(function(error) {
         alert("异常:" + error);
