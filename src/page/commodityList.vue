@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <el-tabs tab-position="left">
-      <el-tab-pane label="应季尝鲜区">
+      <el-tab-pane class="list" label="应季尝鲜区">
         <ul class="product-list">
           <div class="product-title">应季尝鲜区</div>
           <li class="product-group" v-for="(seasonal,index) in seasonalList" :key="index">
@@ -96,6 +96,8 @@
 </template>
 
 <script>
+// import portal from "../components/shift/portal";
+
 export default {
   name: "",
   components: {},
@@ -320,5 +322,9 @@ body {
 .product-icon {
   font-size: 24px;
   float: right;
+}
+
+.el-tabs--left .el-tabs__header.is-left .list {
+  margin: 0;
 }
 </style>

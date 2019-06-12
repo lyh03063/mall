@@ -25,7 +25,7 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-    <portal ></portal>
+    <portal></portal>
   </div>
 </template>
 
