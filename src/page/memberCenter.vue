@@ -1,5 +1,5 @@
 <template>
-  <div style=" background-color: rgb(248, 248, 248)">
+  <div style=" background-color: rgb(248, 248, 248)" v-if="list!='' ">
     <el-row>
       <el-col :xs="0" :sm="4" :md="4" :lg="6" :xl="6">
         <div style="width:100%;height:600px"></div>
@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{userPhone}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list[activeMenuIndex].phone}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
@@ -132,18 +132,60 @@
         <div class></div>
       </el-col>
     </el-row>
+    <div style="margin:-20px;">
+ <portal></portal>
+    </div>
   </div>
+   
 </template>
 
 <script>
+import portal from "../components/space/portal";
 export default {
+  components: { portal },
   data() {
     return {
-      userPhone: ""
+      data:false,
+      list:[],
     };
   },
-  created() {
-    this.userPhone = "123456789";
+  computed:{
+    activeMenuIndex(){
+      return this.$store.state.activeMenuIndex;
+    }
+  },
+  methods: {
+    getProList() {
+      //获取产品列表函数
+        
+      axios({
+        //请求接口
+        method: "post",
+        url: "http://120.76.160.41:3000/crossList?page=mabang-member",
+        data: this.Objparma //传递参数
+      })
+        .then(response => {
+          //这有函数，不知道this指向谁
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
+          this.list = list;
+          this.page = page;
+          this.allCount = page.allCount;
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    }, 
+  },
+  mounted() {
+    this.getProList(); 
+  },
+  beforeCreate() {
+    localStorage.isLogin = 0;
+    if(localStorage.isLogin == "1"){
+      this.$router.push({ path:"/login"})
+    }
+
   }
 };
 </script>

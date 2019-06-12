@@ -56,7 +56,7 @@ export default {
   bottom: 0;
   left: 0;
 }
-li {
+.box li {
   display: block;
   width: 25%;
   height: 50px;

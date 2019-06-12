@@ -1,5 +1,5 @@
 <template>
-  <div class="H500" style="background-color: rgb(248, 248, 248)">
+  <div class="H500" style="background-color: rgb(248, 248, 248)" v-if="memberMessage!=''">
     <div class="H50" style="color:rgb(153,153,153);line-height: 50px; padding-left:1%">基本信息</div>
     <div class="memberSetting-message" style="cursor:pointer" @click=" isShowHeadPortrait = true">
       <div class="message-box">
@@ -13,13 +13,13 @@
         <div style="float: left; margin-left:0px;">姓名</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage.name}}&nbsp;></div>
+        >{{memberMessage[activeMenuIndex].nickName}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer">
       <div class="message-box">
         <div style="float: left; margin-left:0px;">手机号</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage.phone}}</div>
+        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[activeMenuIndex].phone}}</div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowGender = true">
@@ -27,13 +27,13 @@
         <div style="float: left; margin-left:0px;">性别</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage.gender}}&nbsp;></div>
+        >{{memberMessage[activeMenuIndex].gender=setGender(memberMessage[activeMenuIndex].sex)}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowBirthday= true">
       <div class="message-box">
         <div style="float: left; margin-left:0px;">生日</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage.birthday}}&nbsp;></div>
+        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[activeMenuIndex].birthday}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowCity = true">
@@ -41,7 +41,7 @@
         <div style="float: left; margin-left:0px;">地区</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage.city}}&nbsp;></div>
+        >{{memberMessage[activeMenuIndex].city}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowWechat=true">
@@ -49,7 +49,7 @@
         <div style="float: left; margin-left:0px;">微信号</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage.wechat}}&nbsp;></div>
+        >{{memberMessage[activeMenuIndex].wechat}}&nbsp;></div>
       </div>
     </div>
     <router-link to="/memberAddress">
@@ -60,43 +60,54 @@
         </div>
       </div>
     </router-link>
+    
     <!-- 头像弹框 -->
-    <el-dialog :visible.sync="isShowHeadPortrait" width="100%" top="150px">
+    <el-dialog :visible.sync="isShowHeadPortrait" width="100%" top="150px" @close="modifyMessage">
       <div @click="isShowHeadPortrait=false" class="headPortrait-box">是否使用微信头像</div>
       <div @click="isShowHeadPortrait=false" class="headPortrait-box">取消</div>
     </el-dialog>
     <!-- 姓名弹框 -->
-    <el-dialog title="请输入您的姓名" :visible.sync="isShowName" width="100%" top="150px">
-      <el-input placeholder="请输入您的姓名" v-model="memberMessage.name" ></el-input>
+    <el-dialog title="请输入您的姓名" :visible.sync="isShowName" width="100%" top="150px" @close="modifyMessage">
+      <el-input placeholder="请输入您的姓名" v-model="name" ></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="memberMessage.name=closeName(isShowName,memberMessage.name)">取 消</el-button>
-        <el-button type="primary" @click="isShowName=false">确 定</el-button>
+        <el-button @click="isShowName=false">取 消</el-button>
+        <el-button type="primary" @click="memberMessage[activeMenuIndex].nickName=closeName(isShowName,name)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 性别弹框 -->
-    <el-dialog title="请选择您的性别" :visible.sync="isShowGender" width="100%" top="150px">
-      <el-radio v-model="memberMessage.gender" label="男">男</el-radio>
-      <el-radio v-model="memberMessage.gender" label="女">女</el-radio>
-      <el-radio v-model="memberMessage.gender" label="保密">保密</el-radio>
+    <el-dialog title="请选择您的性别" :visible.sync="isShowGender" width="100%" top="150px" @close="modifyMessage">
+      <el-radio v-model="memberMessage[activeMenuIndex].sex" label="1">男</el-radio>
+      <el-radio v-model="memberMessage[activeMenuIndex].sex" label="0">女</el-radio>
+      <el-radio v-model="memberMessage[activeMenuIndex].sex" label="2">保密</el-radio>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="isShowGender=false">确 定</el-button>
+        <el-button type="primary" @click="memberMessage[activeMenuIndex].gender=closeGender(isShowGender,memberMessage[activeMenuIndex].sex)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 生日弹框 -->
-    <el-dialog title="请选择您的生日" :visible.sync="isShowBirthday" width="100%" top="0px">
-      <div style="margin-bottom:10px;"><el-input placeholder="年" v-model="birthday[0]" ></el-input>
-      </div>
-      <div style="margin-bottom:10px;"><el-input placeholder="月" v-model="birthday[1]"></el-input>
-      </div>
-      <div><el-input placeholder="日" v-model="birthday[2]"></el-input>
-      </div>
+    <el-dialog title="请选择您的生日" :visible.sync="isShowBirthday" width="100%" top="0px" @close="modifyMessage">
+      <el-select v-model="birthday[0]" placeholder="请选择">
+    <el-option
+      v-for="month in months"
+      :key="month"
+      :label="month"
+      :value="month">
+    </el-option>
+  </el-select>
+      <el-select v-model="birthday[1]"  placeholder="请选择">
+    <el-option
+      v-for="day in days"
+      :key="day "
+      :label="day"
+      :value="day ">
+    </el-option>
+  </el-select>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShowBirthday=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage.birthday=closeBirthday(isShowBirthday,birthday)">确 定</el-button>
+        <el-button type="primary" @click="memberMessage[activeMenuIndex].birthday=closeBirthday(isShowBirthday,birthday)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 城市弹框 -->
-    <el-dialog title="请选择您的城市" :visible.sync="isShowCity" width="100%" top="50px">
+    <el-dialog title="请选择您的城市" :visible.sync="isShowCity" width="100%" top="50px" @close="modifyMessage">
       <div class="block">
         <el-cascader v-model="cityArray" :options="options"></el-cascader>
       </div>
@@ -104,25 +115,31 @@
         <el-button @click="isShowCity=false">取 消</el-button>
         <el-button
           type="primary"
-          @click="memberMessage.city=closeCity(isShowCity,cityArray)"
+          @click="memberMessage[activeMenuIndex].city=closeCity(isShowCity,cityArray)"
         >确 定</el-button>
       </span>
     </el-dialog>
     <!-- 微信号弹框 -->
-    <el-dialog title="请输入您的微信号" :visible.sync="isShowWechat" width="100%" top="150px">
-      <el-input :value="memberMessage.wechat" v-model="memberMessage.wechat"></el-input>
+    <el-dialog title="请输入您的微信号" :visible.sync="isShowWechat" width="100%" top="150px" @close="modifyMessage">
+      <el-input  placeholder="请输入您的微信号" v-model="myWeChat"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="memberMessage.wechat=closeWechat(isShowWechat,memberMessage.wechat)">取 消</el-button>
-        <el-button type="primary" @click="isShowWechat=false">确 定</el-button>
+        <el-button @click="isShowWechat=false">取 消</el-button>
+        <el-button type="primary" @click="memberMessage[activeMenuIndex].wechat=closeWechat(isShowWechat,myWeChat)">确 定</el-button>
       </span>
     </el-dialog>
+    <portal></portal>
   </div>
 </template>
 <script>
+import portal from "../components/space/portal";
 export default {
+  components: { portal },
   data() {
     return {
-      birthday:["","",""],
+      options:option,
+      name:"",
+      myWeChat:"",
+      birthday:["",""],
       cityArray: [],
       isShowName: false,
       isShowHeadPortrait: false,
@@ -131,99 +148,12 @@ export default {
       isShowCity: false,
       isShowTooltip: false,
       isShowWechat: false,
-      // message: "请填写",
-      memberMessage: {
-        name: "",
-        phone: "",
-        gender: "",
-        birthday: "",
-        city: "",
-        wechat: ""
-      },
-      options: [
-        {
-          value: "广东省",
-          label: "广东省",
-          children: [
-            {
-              value: "广州市",
-              label: "广州市",
-              children: [
-                {
-                  value: "白云区",
-                  label: "白云区"
-                }
-              ]
-            },
-            {
-              value: "深圳市",
-              label: "深圳市",
-              children: [
-                {
-                  value: "龙岗区",
-                  label: "龙岗区"
-                }
-              ]
-            },
-            {
-              value: "汕头市",
-              label: "汕头市",
-              children: [
-                {
-                  value: "朝南区",
-                  label: "朝南区"
-                }
-              ]
-            },
-            {
-              value: "佛山市",
-              label: "佛山市",
-              children: [
-                {
-                  value: "南海区",
-                  label: "南海区"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "江西省",
-          label: "江西省",
-          children: [
-            {
-              value: "南昌区",
-              label: "南昌区",
-              children: [
-                {
-                  value: "东湖区",
-                  label: "东湖区"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "北京市",
-          label: "北京市",
-          children: [
-            {
-              value: "东城区",
-              label: "东城区"
-            }
-          ]
-        },
-        {
-          value: "上海市",
-          label: "上海市",
-          children: [
-            {
-              value: "黄埔区",
-              label: "黄埔区"
-            }
-          ]
-        }
-      ]
+      months:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",],
+      days:["一号","二号","三号","四号","五号","六号","七号","八号","九号","十号",
+      "十一号","十二号","十三号","十四号","十五号","十六号","十七号","十八号","十九号","二十号",
+      "二十一号","二十二号","二十三号","二十四号","二十五号","二十六号","二十七号","二十八号","二十九号","三十号","三十一号"],
+      memberMessage: [],
+     
     };
   },
   methods: {
@@ -233,19 +163,42 @@ export default {
         //请求接口
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-member",
-        data: this.memberMessage //传递参数
+        // data: this.Objparma //传递参数
       })
         .then(response => {
           //这有函数，不知道this指向谁
           console.log("第一次请求结果", response.data);
-          let { list, page } = response.data; //解构赋值
-          this.tableData = list;
-          this.page = page;
-          this.allCount = page.allCount;
+          let { list } = response.data; //解构赋值
+          this.memberMessage = list;
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
+    },
+    modifyMessage(){
+      axios({
+      //请求接口
+      method: "post",
+      url: "http://120.76.160.41:3000/crossModify?page=mabang-member",
+      data: {
+        findJson: {
+          P1: this.memberMessage[0].P1
+        },
+        
+        modifyJson: this.memberMessage[0]
+      } //传递参数
+    })
+      .then(response => {
+        console.log("第一次请求结果", this.memberMessage,this.options),
+        // this.$message({
+        //   message: "修改产品成功",
+        //   duration: 1500,
+        // });
+        this.getProList();
+      })
+      .catch(function(error) {
+        alert("异常:" + error);
+      });
     },
     closeCity(isShowCity, cityArray) {
       this.isShowCity = false;
@@ -254,32 +207,55 @@ export default {
     },
     closeBirthday(isShowBirthday,birthday){
       this.isShowBirthday = false;
-      let string = birthday.join("-");
+      let string = birthday.join(" ");
       return string;
     },
-    closeName(isShowName,memberName){
+    closeName(isShowName,name){
       this.isShowName=false
-      if(memberName != ""){
-        name=memberName
-      }else{name =""}
-      return name;
+          return name;
+    },
+    closeGender(isShowGender,sex){
+      this.isShowGender =false;
+      if(sex == "0"){
+        return "女"
+      }else if(sex == "1"){
+        return "男"
+      }else{
+        return "保密"
+      }
+    },
+    setGender(sex){
+      if(sex == "0"){
+        return "女"
+      }else if(sex == "1"){
+        return "男"
+      }else{
+        return "保密"
+      }
     },
     closeWechat(isShowWechat,weChat){
       this.isShowWechat=false
-      if(weChat != ""){
-        name=weChat
-      }else{name =""}
-      return name;
+      return weChat;
     }
-    
   },
   created() {
-    this.memberMessage.phone = "123456789";
+    
+  },
+  computed:{
+    activeMenuIndex(){
+      return this.$store.state.activeMenuIndex;
+    }
   },
    mounted() {
     this.getProList(); 
+    
+  },
+  beforeCreate() {
+    if(localStorage.isLogin == "1"){
+      this.$router.push({ path:"/login"})
+    }
   }
-};
+}
 </script>
 
 
