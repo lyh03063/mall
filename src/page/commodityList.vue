@@ -8,7 +8,21 @@
         :key="product.P1"
       >
         {{product.name}}
-        
+        <div>
+          <li class="product-group" v-for="(domestic,index) in domesticList" :key="index">
+            <img class="product-img" :src="domestic.imgUrl">
+            <div class="product-text">
+              <p class="product-intro">{{domestic.intro}}</p>
+              <p class="product-groupTitle">{{domestic.groupTitle}}</p>
+              <div class="FL">
+                <div class="product-info">
+                  {{domestic.info}}
+                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
       </el-tab-pane>
     </el-tabs>
 
