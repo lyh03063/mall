@@ -10,7 +10,6 @@ Vue.use(VueRouter)
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
 import confirmOrder from "./page/confirmOrder";
-
 import Home from "./page/home";
 import login from "./page/login";
 import commodityList from "./page/commodityList";
@@ -23,6 +22,11 @@ import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
+
+// import confirmOrder from "./page/confirmOrder";
+
+
+
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
 
@@ -76,7 +80,8 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
-    activeProduceId:"",//当前商品的id
+    activeCellphoneVerify: "",//手机验证码
+    activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
@@ -110,8 +115,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
-
-
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
       state.listState[param.listIndex] = param.objState;
@@ -119,8 +122,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       let str = JSON.stringify(state.listState)//对象转换成字符串
       state.listState = JSON.parse(str)//字符串转换成对象
     },
-    changeActiveProduce(state,activeProduceId){//获取当前商品详情
-      state.activeProduceId=activeProduceId
+    changeActiveCellphone(state, activeCellphoneVerify) {//验证码获取手机的值
+      state.activeCellphoneVerify = activeCellphoneVerify
+    },
+    changeActiveProduce(state, activeProduceId) {//获取当前商品详情
+      state.activeProduceId = activeProduceId
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex

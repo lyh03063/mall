@@ -1,6 +1,10 @@
 <template>
+
+
+
   <div class="cart">
     <div v-if="NewcartData.length">
+
       <div class="shop">
         <!-- 全选打钩按钮 -->
         <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -11,7 +15,11 @@
 
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
+
+        <div class="shop-name">米柚生活</div>
+
         <div class="shop-name">码帮生活</div>
+
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
