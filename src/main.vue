@@ -30,19 +30,22 @@ export default {};
 }
 
 /* 购物车小插件样式 */
-.Shopping-box .el-dialog {
+.cartComponent .el-dialog {
   position: fixed;
   bottom: 0;
   margin-bottom: -0px;
 }
-.Shopping-box .el-dialog__body {
+.cartComponent .el-dialog__body {
   padding: 0;
 }
 .cartComponent .el-dialog__headerbtn {
   border: 1px solid #909399;
   border-radius: 50%;
+  z-index: 10000;
 }
-
+.cartComponent .el-dialog__header span {
+  border-bottom: 0;
+}
 .cart .el-dialog__header span {
   border-bottom: 0;
 }
