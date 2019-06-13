@@ -1,12 +1,17 @@
 <template>
   <div class="main">
-    <el-tabs tab-position="left" :data="tableData">
+    <el-tabs tab-position="left" :data="productList">
       <el-tab-pane
-        :prop="tableData.prop"
-        v-for="product in tableData"
-        :key="product.prop"
-      >{{product.name}}</el-tab-pane>
+        :label="product.name"
+        :prop="productList.prop"
+        v-for="product in productList"
+        :key="product.P1"
+      >
+        {{product.name}}
+        
+      </el-tab-pane>
     </el-tabs>
+
     <portal></portal>
   </div>
 </template>
@@ -29,16 +34,12 @@ export default {
       Objparma: {
         category: "1"
       },
-      tableData: [
+      productList: [
         {
           prop: "name"
         }
-      ]
-      // productList: [
-      //   {
-      //     prop: "name"
-      //   }
-      // ] //列表数据
+      ], //列表数据
+      commodityList: []
     };
   },
   methods: {
@@ -53,14 +54,14 @@ export default {
         .then(response => {
           console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
-          this.tableData = list;
-          // for (var i = 0; i < this.tableData.length; i++) {
-          //   if (this.tableData[i].P1 == 1) {
-          //     this.productList.push(this.tableData[i]);
+          this.productList = list;
+          // for (var i = 0; i < this.productList.length; i++) {
+          //   if (this.productList[i].P1 == 1) {
+          //     this.productList.push(this.productList[i]);
           //     console.log(" 1111this.productList", this.productList);
           //   }
           // }
-          // this.seasonalList = this.tableData.map(doc => {
+          // this.seasonalList = this.productList.map(doc => {
           //   if (doc.category == seasonalList) {
           //     console.log("doc.category", doc.category);
           //     return true;
