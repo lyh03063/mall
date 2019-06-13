@@ -9,8 +9,8 @@
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
-      <div class="receipt-modify FR" @click="form()">
-        <i class="iconfont icon-xiugai"></i>
+      <div class="receipt-modify FR" @click="form(item)">
+        <i class="iconfont icon-xiugai">111</i>
       </div>
     </div>
 
@@ -35,7 +35,8 @@ export default {
     };
   },
   methods: {
-    form() {
+    form(item) {
+       this.$store.commit("memberAddressModify", item);
       this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
      
     },

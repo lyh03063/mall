@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
+import confirmOrder from "./page/confirmOrder";
 
 import Home from "./page/home";
 import login from "./page/login";
@@ -22,10 +23,9 @@ import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
-
-
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
+
 
 
 
@@ -43,7 +43,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    // { path: '/confirmOrder', component: confirmOrder },
+    { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -82,21 +82,36 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
-    }
+    },
+    cartData: [],//用于存放购物车的总数据
   },
   mutations: {//变更事件
     //----wxd-----购物车去确认之后转移到确认订单的数据
     cartBalanceFun(state, param) {
       console.log("cartBalanceFun--param", param);
     },
+    // JumpDetail(state, param){
+    
+    // },
 
-    addCartFun(state, param){
-      console.log("addCartFun--param", param);
+       //----wxd-----购物车初始化
+    init(state) {
+      state.cartData = JSON.parse(localStorage.cartData);
+      console.log("init--this.cartData", state.cartData);
     },
-    goCartFun(state, param){
+
+
+    //----wxd-----购物车去确认之后转移到确认订单的数据
+    cartBalanceFun(state, param) {
+      console.log("cartBalanceFun--param", param);
+    },
+
+    //----wxd-----购物车插件---立即购买
+    goCartFun(state, param) {
       console.log("goCartFun--param", param);
     },
-    
+
+
 
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
