@@ -1,7 +1,6 @@
 <template>
-  <div class="app">
+  <div class="cartComponent" style="bottom:0">
     <!-- 这是购物车插件 -->
-
     <div class="Shopping-box cartComponent">
       <el-dialog
         :visible.sync="dialogCartComponent"
@@ -30,7 +29,7 @@
         <footer>
           <span class="footer-name">购买数量：</span>
           <span class="footer-input">
-            <el-input-number :min="1" :max="doc.store" size="mini" v-model="cartProductNumber"></el-input-number>
+            <el-input-number :min="1" :max="doc.store" size="mini" v-model="doc.cartProductNumber"></el-input-number>
           </span>
           <div class="footer-bt-box">
             <div class="footer-bt" @click="addCartFun">加入购物车</div>
@@ -43,29 +42,43 @@
 </template>
 <script>
 export default {
+  computed: {
+    //计算属性
+
+    cartData() {
+      return this.$store.state.cartData;
+    }
+  },
   methods: {
     addCartFun() {
       this.dialogCartComponent = false;
-      this.$store.commit("addCartFun", {
-        cartData: this.doc,
-        cartProductNumber: this.cartProductNumber
-      });
+      this.cartTotal = this.doc.price * this.doc.cartProductNumber;
+      this.cartData.unshift(this.doc);
+      console.log("this.cartData=============", this.cartData);
+      // 当前加入购物车状态保存到本地
+      let strArr = JSON.stringify({
+        objcartData: this.doc,
+        cartTotal: this.cartTotal
+      }); //数组转字符串
+      localStorage.objcartData = strArr;
+      let strArr2 = JSON.stringify(this.cartData); //数组转字符串
+      localStorage.cartData = strArr2;
     },
+
     goCartFun() {
-      this.cartTotal = this.doc.price * this.cartProductNumber;
-      this.$store.commit("goCartFun", {
-        cartData: this.doc,
-        cartProductNumber: this.cartProductNumber,
-        cartTotal:this.cartTotal
-      });
+      this.$router.push({ path: "/confirmOrder", });
+      // this.cartTotal = this.doc.price * this.doc.cartProductNumber;
+      this.$store.commit("goCartFun", this.doc);
     }
   },
   data() {
     return {
       dialogCartComponent: true,
-      cartProductNumber: null,
-      cartTotal: null,
+
+      cartTotal: 1,
       doc: {
+        cartProductNumber: 1,
+        isCart: true,
         _id: "5cfefc577352e31858b62470",
         P1: 1,
         name: "牛皮西瓜",
@@ -118,7 +131,7 @@ header {
   top: 0;
   left: 0;
   height: 80px;
-  z-index: -10;
+  z-index: 10;
 
   .header-main {
     float: left;

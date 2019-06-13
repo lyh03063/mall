@@ -1,6 +1,7 @@
 <template>
   <div class="main-cfo">
     <div style="background-color:white">
+      
       <div class="delivery-btn">
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
       </div>
@@ -141,7 +142,7 @@ export default {
         name: "张等等",
         address: "码帮科技"
       },
-      allCount: {},
+      allCount:{},
 
       cartData: [
         {
@@ -153,7 +154,8 @@ export default {
                 "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
             }
           ],
-          name: "name",
+          name:
+            "name",
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
 
@@ -184,7 +186,8 @@ export default {
     },
     Jumpaddress() {
       this.$router.push({ path: "/memberAddress" });
-    }
+    },
+
   },
   computed: {
     cartTotal() {
@@ -194,13 +197,7 @@ export default {
         stock += item.price * item.cartProductNumber; //
       });
       return stock;
-    },
-    confirmOrder() {
-      return this.$store.state.confirmOrder;
     }
-  },
-  created() {
-    this.cartData=this.confirmOrder
   }
 };
 </script>

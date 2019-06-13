@@ -1,42 +1,54 @@
 
 <template>
   <div class="bigg">
-
-    <div class="box-top"></div>
+    <div class="box-top">
+      <img class="box-top-img" src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg">
+    </div>
     <div class="block">
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
       </el-carousel>
-      <div class="box-span">
+      <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="block">
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
+            <div class="img-box" @click="$store.commit('changeActiveProduce',buyEach)">
             <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
+            </div>
             <div class="box-title">{{buyEach.description}}</div>
-            <div class="box-3" style="width:135px">￥{{buyEach.price}}</div>
-            <div class="el-icon-shopping-cart-2 box-4"></div>
+            <div class="box-3" style="width:135px" >￥{{buyEach.price}}</div>
+            <div class="el-icon-shopping-cart-2 box-4" @click="isCartCom=!isCartCom"></div>
           </div>
         </template>
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
+
     <portal></portal>
+    <cartComponent v-if="isCartCom"></cartComponent>
+
+    
+    <portal></portal>
+   <cartComponent v-if="isCartCom"></cartComponent>
+
   </div>
 </template>
 
 <script>
+
 import portal from "../components/shift/portal";
-import note from "../components/shift/note";
+import cartComponent from "../components/cart/cartComponent.vue";
 export default {
-  components: { portal,note },
+  components: { portal,cartComponent },
   data() {
     return {
+      isCartCom:false,
       buy: [],
       imgg: [
         {
@@ -73,7 +85,6 @@ export default {
         } //传递参数
       })
         .then(response => {
-          console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
           this.buy = list;
         })
@@ -85,7 +96,12 @@ export default {
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
-  }
+  },
+  // computed:{
+  //   activeProduceId(){
+  //     return this.$store.state.activeProduceId
+  //   }
+  // }
 };
 </script>
 
@@ -96,6 +112,7 @@ export default {
   height: 1175px;
   width: 100%;
   padding: 0 auto;
+ 
 }
 
 //商品列表+
@@ -107,6 +124,14 @@ export default {
   background-size: 380px 200px;
   background-repeat: no-repeat;
   background-position-y: -10px;
+  position:relative;
+}
+.box-top-img{
+  width:50px;
+  height:50px;
+  position:absolute;
+  top:0;
+  right:0;
 }
 .box-1 {
   height: 265px;
@@ -114,6 +139,10 @@ export default {
   background: #ffffff;
   margin: 5px 7px;
   float: left;
+}
+.img-box{
+  width: 167.5px;
+  height: 175.5px;
 }
 .box-commodity {
   width: 167.5px;
@@ -138,6 +167,8 @@ export default {
   font-size: 25px;
   float: left;
   margin: 20px 0;
+  width:40px;
+  height:40px;
 }
 .block {
   width: 380px;
