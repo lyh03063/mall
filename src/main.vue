@@ -35,4 +35,11 @@ export default {};
   bottom: 0;
   margin-bottom: -0px;
 }
+.Shopping-box .el-dialog__body {
+  padding: 0;
+}
+.el-dialog__headerbtn {
+  border: 1px solid #909399;
+  border-radius: 50%;
+}
 </style>

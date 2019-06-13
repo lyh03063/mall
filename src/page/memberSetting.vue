@@ -19,7 +19,7 @@
     <div class="memberSetting-message" style="cursor:pointer">
       <div class="message-box">
         <div style="float: left; margin-left:0px;">手机号</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[activeMenuIndex].phone}}</div>
+        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[activeMenuIndex].userName}}</div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowGender = true">
@@ -41,7 +41,7 @@
         <div style="float: left; margin-left:0px;">地区</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[activeMenuIndex].city}}&nbsp;></div>
+        >{{memberMessage[activeMenuIndex].area}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowWechat=true">
@@ -115,7 +115,7 @@
         <el-button @click="isShowCity=false">取 消</el-button>
         <el-button
           type="primary"
-          @click="memberMessage[activeMenuIndex].city=closeCity(isShowCity,cityArray)"
+          @click="memberMessage[activeMenuIndex].area=closeCity(isShowCity,cityArray)"
         >确 定</el-button>
       </span>
     </el-dialog>
