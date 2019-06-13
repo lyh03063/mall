@@ -32,9 +32,9 @@ export default {
         },
         {
           id: "3",
-          router: "/memberOrder",
+          router: "/cart",
           icon: "el-icon-shopping-cart-full",
-          title: "我的加购"
+          title: "购物车"
         },
         {
           id: "4",

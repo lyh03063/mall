@@ -1,6 +1,7 @@
 <template>
   <div class="main-cfo">
     <div style="background-color:white">
+      
       <div class="delivery-btn">
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
       </div>
