@@ -43,7 +43,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    { path: '/confirmOrder', component: confirmOrder },
+    // { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -62,8 +62,8 @@ const router = new VueRouter({
 
 
 
-var VueTouch = require('vue-touch')
-Vue.use(VueTouch, { name: 'v-touch' })
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
 
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
