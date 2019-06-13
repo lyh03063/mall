@@ -1,7 +1,6 @@
 <template>
 
-  <div class="main">
-    <div class="cart">
+
 
   <div class="cart">
     <div v-if="NewcartData.length">

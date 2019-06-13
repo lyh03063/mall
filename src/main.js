@@ -22,9 +22,9 @@ import pswModify from "./page/pswModify";
 import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
-import register from "./page/register";
+// import register from "./page/register";
 
-import confirmOrder from "./page/confirmOrder";
+// import confirmOrder from "./page/confirmOrder";
 
 
 
@@ -118,10 +118,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
-
-
-
-
 
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
