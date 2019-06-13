@@ -9,7 +9,7 @@
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
-      <div class="receipt-modify FR" @click="form()">
+      <div class="receipt-modify FR" @click="form(item)">
         <i class="iconfont icon-xiugai"></i>
       </div>
     </div>
@@ -35,10 +35,11 @@ export default {
     };
   },
   methods: {
-    form() {
-      this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
-     
-    },
+    form(item) {
+      //alert(JSON.stringify(item))
+this.$store.commit("memberAddressModify", this.item);
+this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
+},
 
     submitForm() {
       this.$router.push({ path: "/listAdded" }); //跳转到listAdded

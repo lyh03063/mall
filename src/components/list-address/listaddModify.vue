@@ -25,6 +25,7 @@
   <el-button type="text" @click="deleteForm()">删除收货地址</el-button>
 </template>
     </el-form>
+    {{row}}
   </div>
 </template>
 
@@ -118,8 +119,17 @@ export default {
         .catch(() => {
           this.$message({ type: "info", message: "已取消删除" });
         });
-    }
-  
+    },
+  computed: {
+row() {
+  // alert(JSON.stringify(AddressModify_item))
+return this.$store.state.AddressModify_item;
+}
+},
+mounted(){
+  alert(JSON.stringify(this.row))
+}
+
 };
 </script>
 

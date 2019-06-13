@@ -43,7 +43,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    { path: '/confirmOrder', component: confirmOrder },
+    // { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -62,11 +62,11 @@ const router = new VueRouter({
 
 
 
-var VueTouch = require('vue-touch')
-Vue.use(VueTouch, { name: 'v-touch' })
-
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
+
+// // var VueTouch = require('vue-touch')
+// // Vue.use(VueTouch, { name: 'v-touch' })
 
 
 
@@ -82,9 +82,15 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeMenuIndex: "1",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
-    }
+    },
+    AddressModify_item: {},
   },
   mutations: {//变更事件
+    memberAddressModify(state, param) {
+
+      state.AddressModify_item = param
+      console.log("this.AddressModify_item",this.AddressModify_item);
+      },
     //----wxd-----购物车去确认之后转移到确认订单的数据
     cartBalanceFun(state, param) {
       console.log("cartBalanceFun--param", param);
