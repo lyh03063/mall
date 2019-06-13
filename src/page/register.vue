@@ -1,16 +1,142 @@
 <template>
-  <div class="main">
-    商城首页
-    cdc111
-    注册页XQL20190610
-    cdc1112131
-
+  <div class="login-box">
+    <h1>免费注册</h1>
+    <el-form
+      :model="registerruleForm"
+      status-icon
+      :rules="rules"
+      ref="registerruleForm"
+      label-width="0"
+      class="demo-registerruleForm"
+    >
+      <el-form-item prop="mobile">
+        <div>
+          <div style="float:left;text-align:center;">中国+86</div>
+          <div style="float:left;width:90%">
+            <el-input v-model.number="registerruleForm.mobile" placeholder="用户手机"></el-input>
+          </div>
+        </div>
+      </el-form-item>
+      <el-form-item prop="mobileVCode">
+        <div class>
+          <div style="float:left;width:90%">
+            <el-input v-model.number="registerruleForm.mobileVCode" placeholder="验证码"></el-input>
+          </div>
+          <button style="float:right;">验证码</button>
+        </div>
+      </el-form-item>
+      <el-form-item placeholder="请输入密码" prop="password">
+        <el-input type="password" v-model="registerruleForm.password" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item placeholder="请再输入一次密码" prop="checkPass">
+        <el-input type="password" v-model="registerruleForm.checkPass" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="registerSubmitForm('registerruleForm')">注册</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    let regnumber = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+    var validateuserName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入用户手机"));
+      } else if (!regnumber.test(value)) {
+        callback(new Error("请输入正确手机格式"));
+      } else {
+        callback(); //通过校验
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.registerruleForm.checkPass !== "") {
+          this.$refs.registerruleForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.registerruleForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+    return {
+      tableData: [],
+      objURL: {
+        register: "http://120.76.160.41:3000/mabangMall/register"
+      },
+      registerruleForm: {
+        mobile: "",
+        password: "",
+        mobileVCode: "",
+        checkPass: ""
+      },
+      rules: {
+        mobile: [{ validator: validateuserName, trigger: "blur" }],
+        password: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }]
+      }
+    };
+  },
+  methods: {
+    registerSubmitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        //表单组件执行validate校验方法
+        if (valid) {
+          //如果校验结果为真
+          axios({
+            method: "post",
+            url: this.objURL.register, //数据地址，数据来源于objURL.List中的地址
+            data: this.registerruleForm //传递参数
+          })
+            .then(response => {
+              let { list } = response.data;
+              // var userList = JSON.stringify(list);
+              console.log(list);
+              if (list.code == 0 ) {
+                alert("注册成功");
+                this.$router.push({ path: "/home" });
+              } else if(list.code == 2 ){
+                alert("手机号码已注册")
+                this.$router.push({ path: "/login" });
+                return
+              }else{
+                alert("请重新注册")
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              alert("错误产生" + error);
+            });
+        }
+      });
+    }
+  }
+};
+</script>
 
-
-
-<style lang="scss" >
-@import "../assets/css/util.scss";//导入公共样式文件
-
+<style lang="scss">
+.login-box {
+  width: 100%;
+  padding: 40px;
+  h1 {
+    padding: 20px 20px 20px 5px;
+    font-size: 28px;
+    font-weight: 400;
+  }
+}
+.login-form {
+  width: 330px;
+  margin: 0 auto;
+}
+@import "../assets/css/util.scss"; //导入公共样式文件
 </style>
