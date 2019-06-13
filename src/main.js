@@ -22,7 +22,12 @@ import pswModify from "./page/pswModify";
 import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
-import register from "./page/register";
+// import register from "./page/register";
+
+// import confirmOrder from "./page/confirmOrder";
+
+
+
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
 
@@ -83,6 +88,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     },
     cartData: [],//用于存放购物车的总数据
+    confirmOrder: []//用于确认订单的总数据
   },
   mutations: {//变更事件
     //----wxd-----购物车去确认之后转移到确认订单的数据
@@ -98,23 +104,27 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       if (window.localStorage.cartData) {
         state.cartData = JSON.parse(localStorage.cartData);
       }
-
       console.log("init--this.cartData", state.cartData);
     },
 
 
     //----wxd-----购物车去确认之后转移到确认订单的数据
     cartBalanceFun(state, param) {
+      state.confirmOrder = param
       console.log("cartBalanceFun--param", param);
     },
 
     //----wxd-----购物车插件---立即购买
     goCartFun(state, param) {
-      console.log("goCartFun--param", param);
+      state.confirmOrder.push(param)
+      console.log("goCartFun--param", state.confirmOrder);
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> a15cd1ead70b4f19639d998b48a710da444784be
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
-
       state.listState[param.listIndex] = param.objState;
       //对listState进行整个对象的变更（深拷贝），因为listState是有注册的，可以触发响应
       let str = JSON.stringify(state.listState)//对象转换成字符串
