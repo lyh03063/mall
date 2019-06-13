@@ -119,10 +119,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
-<<<<<<< HEAD
-=======
-
->>>>>>> a15cd1ead70b4f19639d998b48a710da444784be
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
       state.listState[param.listIndex] = param.objState;
