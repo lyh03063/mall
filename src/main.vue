@@ -37,11 +37,13 @@ export default {};
 .Shopping-box .el-dialog__body {
   padding: 0;
 }
-.cartComponent .el-dialog__headerbtn {
+.Shopping-box .el-dialog__headerbtn {
   border: 1px solid #909399;
   border-radius: 50%;
 }
-
+.Shopping-box .el-dialog__header span {
+  border-bottom: 0;
+}
 .cart .el-dialog__header span {
   border-bottom: 0;
 }
