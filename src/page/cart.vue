@@ -1,104 +1,90 @@
 <template>
-
-  <div class="cart">
-
-
   <div class="main">
+    <div class="cart">
+      <div class="shop">
+        <!-- 全选打钩按钮 -->
+        <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
+          <div class="shop-checkbox">
+            <i class="el-icon-check"></i>
+          </div>
+        </div>
 
-  <div class="cart">
-   
+        <!-- 商城图标 -->
+        <div class="icon-shop"></div>
+        <div class="shop-name">米柚生活</div>
 
-
-    <div class="shop">
-      <!-- 全选打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
-        <div class="shop-checkbox">
-          <i class="el-icon-check"></i>
+        <div class="shop-edit" @click="editfun">
+          <div v-if="!isedit">编辑</div>
+          <div v-else>完成</div>
         </div>
       </div>
 
-      <!-- 商城图标 -->
-      <div class="icon-shop"></div>
-      <div class="shop-name">米柚生活</div>
+      <!------------- 购物车的主要内容 ---------------->
 
-      <div class="shop-edit" @click="editfun">
-        <div v-if="!isedit">编辑</div>
-        <div v-else>完成</div>
+      <div
+        v-for="item  in  cartData"
+        :key="item.P1"
+        class="cart-product-box"
+        @click="shopCheckbox(item)"
+      >
+        <!-- 打钩按钮 -->
+        <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
+          <div class="shop-checkbox">
+            <i class="el-icon-check"></i>
+          </div>
+        </div>
+
+        <!-- 商品图片 -->
+        <div class="cart-img">
+          <img :src="item.imgUrl">
+        </div>
+
+        <!-- 商品名与计数器 -->
+        <div class="cart-main">
+          <div class="cart-name">
+            <template v-if="!isedit">{{item.name}}</template>
+            <el-input-number v-else v-model="item.cartProductNumber" :min="1" size="mini"></el-input-number>
+          </div>
+          <!-- 商品介绍、价格、数量 -->
+          <div class="cart-intro">{{item.description}}</div>
+          <div class="cart-price">{{item.price}}</div>
+          <div class="cart-number">X{{item.cartProductNumber}}</div>
+        </div>
       </div>
+
+      <!----------- 页尾 ------------->
+      <footer>
+        <!-- 全选打钩按钮 -->
+        <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
+          <div class="shop-checkbox">
+            <i class="el-icon-check"></i>
+          </div>
+        </div>
+
+        <div class="footer-all">全选</div>
+
+        <!-- 结算与删除 -->
+        <div class="footer-right-box">
+          <template v-if="!isedit">
+            <span class="footer-total">
+              <span>合计：￥{{cartTotal}}</span>
+              <p>运费</p>
+            </span>
+            <el-button type="danger">结算（{{cartBalance}}）</el-button>
+          </template>
+          <el-button type="danger" v-else :disabled="cartBalance==0" @click="dialogVisible=true">删除</el-button>
+        </div>
+      </footer>
+
+      <!---------------- 删除弹窗----------------- -->
+      <el-dialog :visible.sync="dialogVisible" width="70%" class="deleteDialog" style="padding:0">
+        <div style="justify-content: center; display: flex; ">确定删除所选店铺的{{cartBalance}}个商品？</div>
+        <div class="dialog-footer">
+          <span @click="dialogVisible = false">取 消</span>
+          <span type="primary" @click="cartdeleteFun">确 定</span>
+        </div>
+      </el-dialog>
     </div>
-
-    <!------------- 购物车的主要内容 ---------------->
-
-    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box">
-
-
-    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box">
-
-    <div
-      v-for="item  in  cartData"
-      :key="item.P1"
-      class="cart-product-box"
-      @click="shopCheckbox(item)"
-    >
-
-
-      <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
-        <div class="shop-checkbox">
-          <i class="el-icon-check"></i>
-        </div>
-      </div>
-
-      <!-- 商品图片 -->
-      <div class="cart-img">
-        <img :src="item.imgUrl">
-      </div>
-
-      <!-- 商品名与计数器 -->
-      <div class="cart-main">
-        <div class="cart-name">
-          <template v-if="!isedit">{{item.name}}</template>
-          <el-input-number v-else v-model="item.cartProductNumber" :min="1" size="mini"></el-input-number>
-        </div>
-        <!-- 商品介绍、价格、数量 -->
-        <div class="cart-intro">{{item.description}}</div>
-        <div class="cart-price">{{item.price}}</div>
-        <div class="cart-number">X{{item.cartProductNumber}}</div>
-      </div>
-    </div>
-
-    <!----------- 页尾 ------------->
-    <footer>
-      <!-- 全选打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
-        <div class="shop-checkbox">
-          <i class="el-icon-check"></i>
-        </div>
-      </div>
-
-      <div class="footer-all">全选</div>
-
-      <!-- 结算与删除 -->
-      <div class="footer-right-box">
-        <template v-if="!isedit">
-          <span class="footer-total">
-            <span>合计：￥{{cartTotal}}</span>
-            <p>运费</p>
-          </span>
-          <el-button type="danger">结算（{{cartBalance}}）</el-button>
-        </template>
-        <el-button type="danger" v-else :disabled="cartBalance==0" @click="dialogVisible=true">删除</el-button>
-      </div>
-    </footer>
-
-    <!---------------- 删除弹窗----------------- -->
-    <el-dialog :visible.sync="dialogVisible" width="70%" class="deleteDialog" style="padding:0">
-      <div style="justify-content: center; display: flex; ">确定删除所选店铺的{{cartBalance}}个商品？</div>
-      <div class="dialog-footer">
-        <span @click="dialogVisible = false">取 消</span>
-        <span type="primary" @click="cartdeleteFun">确 定</span>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -218,11 +204,8 @@ export default {
     cartdeleteFun() {
       this.dialogVisible = false;
 
-
-
       console.log("删除--this.isCartList", this.isCartList);
       // -------删除之后待做-------
-
 
       console.group("删除-------");
       console.log("this.isCartList", this.isCartList);
@@ -248,9 +231,6 @@ export default {
         this.$store.commit("cartBalanceFun", objCartBalance);
         this.$router.push({ path: "/confirmOrder" });
       }
-
-
-
     }
   },
   watch: {
@@ -263,23 +243,17 @@ export default {
         //  商品总数量等于选中的数组长度
         this.cartBalance = this.isCartList.length;
 
-
-
         console.log("选中状态的列表--this.isCartList", this.isCartList);
         if (this.isCartList.length == this.cartData.length) {
           this.allIsCart = true;
 
-
-        // 如果总的数组存在
-        if (this.cartData.length) {
-          // 如果选中的数组等于选中的数组，那么就全选
-          if (this.isCartList.length == this.cartData.length) {
-            this.allIsCart = true;
+          // 如果总的数组存在
+          if (this.cartData.length) {
+            // 如果选中的数组等于选中的数组，那么就全选
+            if (this.isCartList.length == this.cartData.length) {
+              this.allIsCart = true;
+            }
           }
-
-
-        }
-
         }
       },
       deep: true //深度监听
