@@ -7,8 +7,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
+
 
 import Home from "./page/home";
 import login from "./page/login";
@@ -65,15 +64,7 @@ const router = new VueRouter({
 
 
 
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
 
-
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
-
-// // var VueTouch = require('vue-touch')
-// // Vue.use(VueTouch, { name: 'v-touch' })
 
 
 
@@ -93,20 +84,28 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     },
     AddressModify_item: {},
-    confirmOrderAddress:{}
+    confirmOrderAddress: {},
+    doc: {//存放购物车插件的对象
+      cartProductNumber: null,
+      isCart: true
+    },
+    isCartCom: false,//控制购物车弹窗
+    cartData: [],//用于存放购物车的总数据
+    confirmOrder: []//用于存放确认订单的总数据
   },
 
+
   mutations: {//变更事件
-    confirmOrderAddressFun(state, param){
-      state.confirmOrderAddress=param
-    
-      console.log(" state.confirmOrderAddress",state.confirmOrderAddress)
+    confirmOrderAddressFun(state, param) {
+      state.confirmOrderAddress = param
+
+      console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
     },
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
-      console.log("this.AddressModify_item",this.AddressModify_item);
-      },
+      console.log("this.AddressModify_item", this.AddressModify_item);
+    },
 
     // JumpDetail(state, param){
 
@@ -147,9 +146,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.activeCellphoneVerify = activeCellphoneVerify
     },
     changeActiveProduce(state, activeProduceId) {//获取当前商品详情
-
+      console.log("changeActiveProduce--state.doc", state.doc)
+      console.log("changeActiveProduce--activeProduceId", activeProduceId)
       Object.assign(state.doc, activeProduceId);
-      console.log("changeActiveProduce", state.doc)
+
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex
