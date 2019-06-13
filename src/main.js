@@ -91,12 +91,15 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       console.log("cartBalanceFun--param", param);
     },
     // JumpDetail(state, param){
-    
+
     // },
 
-       //----wxd-----购物车初始化
+    //----wxd-----购物车初始化
     init(state) {
-      state.cartData = JSON.parse(localStorage.cartData);
+      if (window.localStorage.cartData) {
+        state.cartData = JSON.parse(localStorage.cartData);
+      }
+
       console.log("init--this.cartData", state.cartData);
     },
 
@@ -115,6 +118,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
+
       state.listState[param.listIndex] = param.objState;
       //对listState进行整个对象的变更（深拷贝），因为listState是有注册的，可以触发响应
       let str = JSON.stringify(state.listState)//对象转换成字符串

@@ -1,8 +1,7 @@
 <template>
   <div class="cartComponent">
     <!-- 这是购物车插件 -->
-
-    <div class="Shopping-box cartComponent">
+    <div class="Shopping-box cartComponent" >
       <el-dialog
         :visible.sync="dialogCartComponent"
         width="100%"
@@ -137,7 +136,7 @@ header {
   top: 0;
   left: 0;
   height: 80px;
-  z-index: -10;
+  z-index: 10;
 
   .header-main {
     float: left;
