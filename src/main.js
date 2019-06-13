@@ -25,7 +25,9 @@ import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
 
 
-// import confirmOrder from "./page/confirmOrder";
+
+
+
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
 
@@ -84,36 +86,53 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
+    AddressModify_item: {},
+      confirmOrderAddress: {},
     activeCellphoneVerify: "",//手机验证码
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-
+      user: {},
+      
     },
-    AddressModify_item: {},
-    
+   
   },
-  mutations: {//变更事件
 
-    confirmOrderAddressFun(state, param){
-      state.confirmOrderAddress=param
+  mutations: {//变更事件
+    confirmOrderAddressFun(state, param) {
+      state.confirmOrderAddress = param
+
+      console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
     },
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
-      console.log("this.AddressModify_item",this.AddressModify_item);
-      },
+      console.log("this.AddressModify_item", this.AddressModify_item);
+    },
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于确认订单的总数据
-    confirmOrderAddress:{}
+    doc: {//用于购物车插件的数据
+      cartProductNumber: null,
+      isCart: true,
+    },
+    getForm(state, param) {
+      console.log("123123", param);
+      state.user = param
+    },
+    isCartCom: false
   },
   mutations: {//变更事件
- 
+
     // JumpDetail(state, param){
 
     // },
-
-    //----wxd-----购物车初始化
+    isCartComClose(state) {//关闭购物车弹窗
+      state.isCartCom = false
+    },
+    isCartComOpen(state) {//打开购物车弹窗
+      state.isCartCom = true
+    },
+    //--------购物车初始化
     init(state) {
       if (window.localStorage.cartData) {
         state.cartData = JSON.parse(localStorage.cartData);
@@ -121,14 +140,13 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       console.log("init--this.cartData", state.cartData);
     },
 
-
-    //----wxd-----购物车去确认之后转移到确认订单的数据
+    //-------购物车去确认之后转移到确认订单的数据
     cartBalanceFun(state, param) {
       state.confirmOrder = param
       console.log("cartBalanceFun--param", param);
     },
 
-    //----wxd-----购物车插件---立即购买
+    //---------购物车插件---立即购买
     goCartFun(state, param) {
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
@@ -144,7 +162,9 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.activeCellphoneVerify = activeCellphoneVerify
     },
     changeActiveProduce(state, activeProduceId) {//获取当前商品详情
-      state.activeProduceId = activeProduceId
+
+      Object.assign(state.doc, activeProduceId);
+      console.log("changeActiveProduce", state.doc)
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex

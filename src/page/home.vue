@@ -1,4 +1,3 @@
-
 <template>
   <div class="bigg">
     <div class="box-topbox">码帮商城</div>
@@ -41,9 +40,9 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-    
+
     <portal></portal>
-   <cartComponent v-if="isCartCom"></cartComponent>
+    <cartComponent v-if="isCartCom"></cartComponent>
   </div>
 </template>
 
@@ -54,9 +53,7 @@ export default {
   components: { portal, cartComponent },
   data() {
     return {
-      isCartCom: false,
       buy: [],
-
       imgg: [
         {
           id: 1,
@@ -83,7 +80,7 @@ export default {
   },
   methods: {
     purchase(buyEach) {
-      this.isCartCom = !this.isCartCom;
+      this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
     },
     getProList() {
@@ -104,16 +101,25 @@ export default {
         });
     }
   },
+  computed: {
+    activeMenuIndex() {
+      return this.$store.state.user;
+    },
+ 
+  },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
+  },
+  computed: {
+    // activeProduceId() {
+    //   //此处返回vuex的值到外部
+    //   return this.$store.state.activeProduceId;
+    // }
+    isCartCom() {
+      return this.$store.state.isCartCom;
+    }
   }
-  // computed: {
-  //   activeProduceId() {
-  //     //此处返回vuex的值到外部
-  //     return this.$store.state.activeProduceId;
-  //   }
-  // }
 };
 </script>
 
@@ -125,7 +131,6 @@ export default {
   width: 100%;
   padding: 0 auto;
 }
-
 //商品列表+
 .box-topbox {
   margin: 0 auto;
@@ -217,11 +222,9 @@ export default {
   background-repeat: no-repeat;
   background-size: 380px 135px;
 }
-
 .el-carousel__item:nth-child(3) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/Ft8u0o9RPHyxDwahv19iH8ixFWXM.jpg!large.jpg");
 }
-
 .el-carousel__item:nth-child(5) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FvAWQmPIRX4Qr6baCOfvf1rTOHBj.jpg!large.jpg");
 }

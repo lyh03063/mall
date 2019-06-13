@@ -129,32 +129,10 @@ export default {
       isCartList: [],
       delivery: false,
 
-      // title: {
-      
-      // },
-      //  cartData: [
-      //   {
-      
-      //     imgUrl:
-      //       "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
-      //     name:
-      //       "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-      //     description: "6种时令水果大切盘，鲜切水果",
-      //     price: 49,
-      //     cartProductNumber: 2 //产品选中的数量
-      //   },
-      //   {
-       
-       
-      //     imgUrl:
-      //       "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
-      //     name:
-      //       "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-      //     description: "6种时令水果大切盘，鲜切水果",
-      //     price: 99,
-      //     cartProductNumber: 2
-      //   },
-      // ]
+      // title: [],
+       cartData: [
+        
+      ]
     };
   },
   computed: {

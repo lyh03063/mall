@@ -12,9 +12,7 @@
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
-        <div class="shop-name">米柚生活</div>
-
-        <div class="shop-name">码帮生活</div>
+        <div class="shop-name">码帮商城</div>
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
@@ -95,6 +93,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 
@@ -104,13 +103,12 @@ export default {
   components: { cartComponent },
   data() {
     return {
-      NewcartData: [],
-      cartTotal: null,
+      NewcartData: [], //当前渲染的数据
+      cartTotal: null, //合计
       dialogVisible: false, //控制删除弹窗是否显示
       allIsCart: false, //控制全选的按钮
       cartBalance: 0, //选中之后总的商品数量
       isedit: false, //是否为编辑状态
-
       isCartList: [] //选中之后的列表
     };
   },
@@ -123,12 +121,10 @@ export default {
         this.cartData[i].isCart = this.allIsCart;
       }
     },
-
     // --------编辑函数---------
     editfun() {
       this.allIsCart = false; //全选取消
       this.isedit = !this.isedit; //是否进入编辑状态
-
       // 先把列表的所有状态进行未选中状态
       for (var i = 0; i < this.cartData.length; i++) {
         this.cartData[i].isCart = false;
@@ -136,33 +132,25 @@ export default {
     },
     // --------删除函数---------
     cartdeleteFun() {
-      this.dialogVisible = false;
-      console.group("删除-------");
-
+      this.dialogVisible = false; //删除弹窗隐藏
       this.NewcartData.forEach((item, i) => {
+        //当为点击状态时，进行删除
         if (item.isCart == true) {
           this.cartData.splice(i, 1); //删除一个数组元素
         }
       });
-
-      console.group("cartdeleteFun-------", this.cartData);
-      if (this.allIsCart) {
-        this.cartData = [];
-        this.allIsCart = false;
-      }
     },
     // // --------结算函数---------
     cartBalanceFun() {
+      //当选中之后的列表不为0时
       if (this.isCartList.lenght != 0) {
         this.$store.commit("cartBalanceFun", this.isCartList);
         this.$router.push({ path: "/confirmOrder" });
       }
     },
-
     //----------点击选中函数-------
     shopCheckbox(item) {
-      console.group("shopCheckbox-------", item);
-      item.isCart = !item.isCart; //对当前节点的状态取反
+      item.isCart = !item.isCart;
       // 当循环到的含有选中状态，那么不全选
       this.cartData.filter(doc => {
         if (doc.isCart == true) {
@@ -175,18 +163,16 @@ export default {
   watch: {
     cartData: {
       handler: function() {
-        // 如果总的数组存在
-
+        //筛选点击状态的数组
         this.isCartList = this.cartData.filter(item => {
           return item.isCart;
         });
-
+        // 计算总价钱
         let stock = 0; //初始值设置为0
         this.isCartList.forEach(item => {
           stock += item.price * item.cartProductNumber; //
         });
         this.cartTotal = stock;
-
         let strArr = JSON.stringify(this.NewcartData); //数组转字符串
         localStorage.cartData = strArr;
       },
@@ -194,6 +180,7 @@ export default {
     },
     isCartList: {
       handler: function() {
+        
         this.cartBalance = this.isCartList.length;
         if (this.isCartList.length != 0) {
           if (this.isCartList.length == this.cartData.length) {
@@ -202,25 +189,19 @@ export default {
         } else {
           this.allIsCart = false;
         }
-
-        // 如果总的数组存在
       },
       deep: true //深度监听
     }
   },
-
   computed: {
     //计算属性
-
     //从vuex拿到的数据
     cartData() {
       //总的数据列表
       return this.$store.state.cartData;
     }
   },
-
   created() {
-    // 初始化列表的数据 this.cartData
     this.$store.commit("init");
     this.NewcartData = this.cartData;
   }
@@ -228,12 +209,10 @@ export default {
 </script >
 <style lang="scss" scoped>
 @import "../assets/css/util.scss"; //导入公共样式文件
-
 //---------当前页面------
 .main {
   width: 100%;
 }
-
 //------- 商城模块-------
 .shop {
   width: 100%;
@@ -243,7 +222,6 @@ export default {
   float: left;
   border-bottom: 1px solid #ebedf0;
 }
-
 .shop-checkbox-box {
   float: left;
   height: 52px;
@@ -283,7 +261,6 @@ export default {
   background-repeat: no-repeat;
   float: left;
 }
-
 .shop-name {
   float: left;
   font-size: 18px;
@@ -295,7 +272,6 @@ export default {
   line-height: 50px;
   color: #38f;
 }
-
 //---------购物车内容模块----start-----
 .cart-product-box {
   width: 100%;
@@ -358,7 +334,6 @@ export default {
   width: 100%;
 }
 //---------购物车内容模块----end-----
-
 //------------页脚----------
 footer {
   position: fixed;
@@ -370,7 +345,6 @@ footer {
   height: 50px;
   line-height: 50px;
   padding: 0 0 0 10px;
-
   .el-button--danger {
     background-color: #f44;
     border-radius: 0;
@@ -382,19 +356,16 @@ footer {
   .el-button--danger.is-disabled {
     background-color: #ffa2a2;
   }
-
   .shop-checkbox-box {
     float: left;
     line-height: 20px;
     margin-top: 17px;
   }
 }
-
 // -----右下角结算与删除盒子
 .footer-right-box {
   float: right;
 }
-
 // ------全选文字样式
 .footer-all {
   float: left;
@@ -406,7 +377,6 @@ footer {
   box-sizing: border-box;
   font-size: 12px;
   line-height: 16px;
-
   color: #999;
   padding: 8px 10px;
   color: #f60;
@@ -414,14 +384,12 @@ footer {
     color: #999;
   }
 }
-
 // -----编辑状态计数器样式-----
 .el-input-number--mini {
   width: 90px;
   line-height: 26px;
   color: #000;
 }
-
 //----- 删除弹窗----start
 .dialog-footer {
   margin-bottom: -13px;
@@ -440,7 +408,6 @@ footer {
   color: #1989fa;
 }
 //———— 删除弹窗————end
-
 .NocartData {
   text-align: center;
   margin-top: 50px;
