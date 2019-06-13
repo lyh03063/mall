@@ -1,44 +1,24 @@
 <template>
   <div class="main">
-    <el-tabs :tab-position="tabPosition" style="height: 200px;">
-    <el-tab-pane label="用户管理">用户管理</el-tab-pane>
-    <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-    <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-    <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
-  </el-tabs>
-    <!-- <el-tabs tab-position="left">
-      <el-tab-pane label="应季尝鲜区">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="seasonal in seasonalList"
-            :key="seasonal.prop"
-          >{{productEach[seasonal.prop]}}</li>
-        </ul>
-      </el-tab-pane>
-      <el-tab-pane label="应季尝鲜区">
-        <ul class="product-list" v-for="productEach in tableData" :key="productEach.P1">
-          <li
-            class="product-group"
-            v-for="seasonal in seasonalList"
-            :key="seasonal.prop"
-          >{{productEach[seasonal.prop]}}</li>
-        </ul>
-      </el-tab-pane>
-    </el-tabs> -->
-    <!-- <portal></portal> -->
+    <el-tabs tab-position="left" :data="tableData">
+      <el-tab-pane
+        :prop="tableData.prop"
+        v-for="product in tableData"
+        :key="product.prop"
+      >{{product.name}}</el-tab-pane>
+    </el-tabs>
+    <portal></portal>
   </div>
 </template>
 
 <script>
-// import portal from "../components/shift/portal";
+import portal from "../components/shift/portal";
 export default {
   name: "",
-  components: {  },
+  components: { portal },
   props: {},
   data() {
     return {
-      tabPosition: 'left',
       // -------------------------请求接口的地址-------------------------
       objURL: {
         add: "",
@@ -49,12 +29,16 @@ export default {
       Objparma: {
         category: "1"
       },
-      tableData: [], //列表数据
-      seasonalList: [{ prop: "P1" }, { prop: "name" }, { prop: "description" }],
-      entranceList: [],
-      domesticList: [],
-      freshCutList: [],
-      snacksList: []
+      tableData: [
+        {
+          prop: "name"
+        }
+      ]
+      // productList: [
+      //   {
+      //     prop: "name"
+      //   }
+      // ] //列表数据
     };
   },
   methods: {
@@ -68,11 +52,14 @@ export default {
       })
         .then(response => {
           console.log("第一次请求结果", response.data);
-          let { list, page } = response.data; //解构赋值
+          let { list } = response.data; //解构赋值
           this.tableData = list;
-          this.page = page;
-          this.allCount = page.allCount; //更改总数据量
-
+          // for (var i = 0; i < this.tableData.length; i++) {
+          //   if (this.tableData[i].P1 == 1) {
+          //     this.productList.push(this.tableData[i]);
+          //     console.log(" 1111this.productList", this.productList);
+          //   }
+          // }
           // this.seasonalList = this.tableData.map(doc => {
           //   if (doc.category == seasonalList) {
           //     console.log("doc.category", doc.category);
@@ -120,7 +107,6 @@ body {
   width: 100%;
   overflow: hidden;
   background-color: #fff;
-  margin-bottom: 10px;
 }
 .product-img {
   width: 30%;

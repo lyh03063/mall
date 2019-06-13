@@ -1,52 +1,52 @@
 <template>
-  <div class="main">
+  <div class="order-main">
     <el-row>
       <!------------------------ 订单列表头部开始 ---------------------------->
       <el-col :span="24">
-        <div class="grid-content bg-purple-wihte">
+        <div class="order-grid-content order-bg-purple-wihte">
           <!-- 列表头部切换开始 -->
-          <div>
+          <div class="order-tab">
             <el-tabs :tab-position="tabPosition">
               <!-- 全部订单 -->
               <el-tab-pane label="全部">
-                <div class="list-item" v-for="shop in shops" :key="shop.P1">
+                <div class="order-list-item" v-for="shop in shops" :key="shop.P1">
                   <!-- 订单头部店铺名称，交易情况 -->
-                  <div class="list-item__header" type="list-item-header">
+                  <div class="order-list-item__header" type="list-item-header">
                     店铺：米柚生活
-                    <!-- <span class="list-item__header__state">交易关闭</span> -->
+                    <!-- <span class="order-list-item__header__state">交易关闭</span> -->
                   </div>
                   <!-- 订单列表 -->
-                  <div class="list-item__order-list" type="order-list">
-                    <div class="cap-order-item">
+                  <div class="order-list-item__order-list" type="order-list">
+                    <div class="order-cap-order-item">
                       <!-- 订单列表中的头部订单编号 -->
-                      <div class="cap-order-item__head">{{shop._id}}</div>
+                      <div class="order-cap-order-item__head">{{shop._id}}</div>
                       <!-- 订单列表中的内容 -->
                       <div
-                        class="cap-order-item__body"
+                        class="order-cap-order-item__body"
                         v-for="order in shop.commodityList"
                         :key="order.id"
                       >
-                        <div class="van-card">
-                          <div class="van-card__header">
-                            <a class="van-card__thumb">
+                        <div class="order-card">
+                          <div class="order-card__header">
+                            <a class="order-card__thumb">
                               <img
                                 src="https://img.yzcdn.cn/upload_files/2016/09/29/ForFFyDV_trRjCVprENBUvCuKYef.jpg!small.jpg"
-                                class="van-card__img"
+                                class="order-card__img"
                               >
                             </a>
-                            <div class="van-card__content">
-                              <div class="van-card__title">{{order.name}}</div>
-                              <div class="van-card__desc van-ellipsis">数量X{{order.byCount}}</div>
+                            <div class="order-card__content">
+                              <div class="order-card__title">{{order.name}}</div>
+                              <div class="order-card__desc order-ellipsis">数量X{{order.byCount}}</div>
                               <div>
                                 <el-button type="danger" size="mini">代付</el-button>
                               </div>
                               <!-- v-if="list.status==1? true:false" -->
-                              <div class="van-card__bottom">
+                              <div class="order-card__bottom">
                                 <div
-                                  class="van-card__price"
+                                  class="order-card__price"
                                   style="color:red"
                                 >商品价格X{{order.price*order.byCount}}</div>
-                                <div class="van-card__num">x 1</div>
+                                <div class="order-card__num">x 1</div>
                               </div>
                             </div>
                           </div>
@@ -56,9 +56,9 @@
                     </div>
                   </div>
                   <!-- 订单页脚 -->
-                  <div class="list-item__footer van-hairline--top" type="list-item-footer">
-                    <div class="cap-order-item__footer">
-                      <div class="cap-order-item__total-price">
+                  <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
+                    <div class="order-cap-order-item__footer">
+                      <div class="order-cap-order-item__total-price">
                         合计 ：
                         <span style="color:red">{{totalMoney}}</span>
                       </div>
@@ -68,51 +68,51 @@
                 </div>
                 <!-------------------查看全部商品数量----------------------------->
                 <div
-                  class="cap-order-item__more"
+                  class="order-cap-order-item__more"
                   v-if="totalCount>=1? true:false"
                 >查看全部{{totalCount}}件商品</div>
               </el-tab-pane>
 
               <!-- 待付款 -->
               <el-tab-pane label="待付款">
-                <div class="list-item" v-for="shop in shopStatus" :key="shop.P1">
+                <div class="order-list-item" v-for="shop in shopStatus" :key="shop.P1">
                   <!-- 订单头部店铺名称，交易情况 -->
-                  <div class="list-item__header" type="list-item-header">
+                  <div class="order-list-item__header" type="list-item-header">
                     店铺：米柚生活
-                    <!-- <span class="list-item__header__state">交易关闭</span> -->
+                    <!-- <span class="order-list-item__header__state">交易关闭</span> -->
                   </div>
                   <!-- 订单列表 -->
-                  <div class="list-item__order-list" type="order-list">
-                    <div class="cap-order-item">
+                  <div class="order-list-item__order-list" type="order-list">
+                    <div class="order-cap-order-item">
                       <!-- 订单列表中的头部订单编号 -->
-                      <div class="cap-order-item__head">{{shop._id}}</div>
+                      <div class="order-cap-order-item__head">{{shop._id}}</div>
                       <!-- 订单列表中的内容 -->
                       <div
-                        class="cap-order-item__body"
+                        class="order-cap-order-item__body"
                         v-for="order in shop.commodityList"
                         :key="order.id"
                       >
-                        <div class="van-card">
-                          <div class="van-card__header">
-                            <a class="van-card__thumb">
+                        <div class="order-card">
+                          <div class="order-card__header">
+                            <a class="order-card__thumb">
                               <img
                                 src="https://img.yzcdn.cn/upload_files/2016/09/29/ForFFyDV_trRjCVprENBUvCuKYef.jpg!small.jpg"
-                                class="van-card__img"
+                                class="order-card__img"
                               >
                             </a>
-                            <div class="van-card__content">
-                              <div class="van-card__title">{{order.name}}</div>
-                              <div class="van-card__desc van-ellipsis">数量X{{order.byCount}}</div>
+                            <div class="order-card__content">
+                              <div class="order-card__title">{{order.name}}</div>
+                              <div class="order-card__desc order-ellipsis">数量X{{order.byCount}}</div>
                               <div>
                                 <el-button type="danger" size="mini">代付</el-button>
                               </div>
                               <!-- v-if="list.status==1? true:false" -->
-                              <div class="van-card__bottom">
+                              <div class="order-card__bottom">
                                 <div
-                                  class="van-card__price"
+                                  class="order-card__price"
                                   style="color:red"
                                 >商品价格X{{order.price*order.byCount}}</div>
-                                <div class="van-card__num">x 1</div>
+                                <div class="order-card__num">x 1</div>
                               </div>
                             </div>
                           </div>
@@ -122,9 +122,9 @@
                     </div>
                   </div>
                   <!-- 订单页脚 -->
-                  <div class="list-item__footer van-hairline--top" type="list-item-footer">
-                    <div class="cap-order-item__footer">
-                      <div class="cap-order-item__total-price">
+                  <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
+                    <div class="order-cap-order-item__footer">
+                      <div class="order-cap-order-item__total-price">
                         合计 ：
                         <span style="color:red">{{totalMoney}}</span>
                       </div>
@@ -133,25 +133,25 @@
                   </div>
                 </div>
                 <!-------------------查看全部商品数量----------------------------->
-                <div class="cap-order-item__more">查看全部{{allCount}}件商品</div>
+                <div class="order-cap-order-item__more">查看全部{{allCount}}件商品</div>
               </el-tab-pane>
 
               <!-- 待发货 -->
               <el-tab-pane label="待发货">
                 待发货
-                <div class="no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
+                <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
               </el-tab-pane>
 
               <!-- 已发货 -->
               <el-tab-pane label="已发货">
                 已发货
-                <div class="no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
+                <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
               </el-tab-pane>
 
               <!-- 待评价 -->
               <el-tab-pane label="待评价">
                 待评价
-                <div class="no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
+                <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -164,17 +164,17 @@
 
       <!------------------------ 订单列表页脚开始 ---------------------------->
       <el-col :span="24">
-        <div class="grid-content bg-purple-wihte">
-          <div class="footer">
-            <div class="footer__links">
-              <a href="javascript:;" class="van-hairline">店铺主页</a>
-              <a href="javascript:;" class="van-hairline">个人中心</a>
-              <a href="javascript:;" class="van-hairline">关注我们</a>
-              <a href="javascript:;" class="van-hairline">线下门店</a>
-              <a href="javascript:;" class="van-hairline">店铺信息</a>
+        <div class="order-grid-content order-bg-purple-wihte">
+          <div class="order-footer">
+            <div class="order-footer__links">
+              <a href="javascript:;" class="order-hairline">店铺主页</a>
+              <a href="javascript:;" class="order-hairline">个人中心</a>
+              <a href="javascript:;" class="order-hairline">关注我们</a>
+              <a href="javascript:;" class="order-hairline">线下门店</a>
+              <a href="javascript:;" class="order-hairline">店铺信息</a>
               <!---->
             </div>
-            <div class="footer__copyright">
+            <div class="order-footer__copyright">
               <a href="javascript:;" class>有赞提供技术支持</a>
             </div>
           </div>
@@ -261,4 +261,5 @@ export default {
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
 @import "../assets/css/memberOrder.scss"; //导入memberOrder订单列表样式文件
+
 </style>

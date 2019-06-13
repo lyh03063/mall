@@ -1,5 +1,10 @@
 <template>
+<<<<<<< HEAD
+  <div class="main">
+=======
   <div class="cart">
+   
+>>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
     <div class="shop">
       <!-- 全选打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -10,7 +15,7 @@
 
       <!-- 商城图标 -->
       <div class="icon-shop"></div>
-      <div class="shop-name">码帮商城</div>
+      <div class="shop-name">米柚生活</div>
 
       <div class="shop-edit" @click="editfun">
         <div v-if="!isedit">编辑</div>
@@ -19,14 +24,18 @@
     </div>
 
     <!------------- 购物车的主要内容 ---------------->
+<<<<<<< HEAD
+    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box">
+=======
     <div
-      v-for="(item,index)  in  cartData"
-      :key="index"
+      v-for="item  in  cartData"
+      :key="item.P1"
       class="cart-product-box"
       @click="shopCheckbox(item)"
     >
+>>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
       <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}">
+      <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
@@ -68,11 +77,7 @@
             <span>合计：￥{{cartTotal}}</span>
             <p>运费</p>
           </span>
-          <el-button
-            type="danger"
-            @click="cartBalanceFun"
-            :disabled="cartBalance==0"
-          >结算（{{cartBalance}}）</el-button>
+          <el-button type="danger">结算（{{cartBalance}}）</el-button>
         </template>
         <el-button type="danger" v-else :disabled="cartBalance==0" @click="dialogVisible=true">删除</el-button>
       </div>
@@ -86,19 +91,23 @@
         <span type="primary" @click="cartdeleteFun">确 定</span>
       </div>
     </el-dialog>
+
+    
   </div>
 </template>
 
 
 <script>
+import cartComponent from "../components/cart/cartComponent"
 export default {
+  components:{cartComponent},
   data() {
     return {
       dialogVisible: false, //控制删除弹窗是否显示
       allIsCart: false, //控制全选的按钮
       cartBalance: 0, //选中之后总的商品数量
       isedit: false, //是否为编辑状态
-      // Arrdelete: [],
+
       isCartList: [], //选中之后的列表
 
       //---------- 加入购物车以后的产品数组
@@ -109,9 +118,12 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
+
+
             "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "1-6种时令水果大切盘，鲜切水果",
-          price: 49,
+          price: 20,
+
           cartProductNumber: 2 //产品选中的数量
         },
         {
@@ -120,9 +132,12 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
+
+
             "2【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "2-6种时令水果大切盘，鲜切水果",
-          price: 99,
+          price: 30,
+
           cartProductNumber: 2
         },
         {
@@ -131,9 +146,10 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
+
             "3【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "3-6种时令水果大切盘，鲜切水果",
-          price: 100,
+          price: 40,
           cartProductNumber: 10
         },
 
@@ -145,7 +161,7 @@ export default {
           name:
             "4【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "4-6种时令水果大切盘，鲜切水果",
-          price: 99,
+          price: 50,
           cartProductNumber: 2
         },
         {
@@ -156,13 +172,16 @@ export default {
           name:
             "5【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "5-6种时令水果大切盘，鲜切水果",
-          price: 100,
+
           cartProductNumber: 10
         }
       ]
     };
   },
   methods: {
+    onSwipeLeft(e) {
+      console.group("aa-------", e);
+    },
     //----------点击选中函数-------
     shopCheckbox(item) {
       item.isCart = !item.isCart; //对当前节点的状态取反
@@ -187,8 +206,9 @@ export default {
 
     // --------编辑函数---------
     editfun() {
+      this.allIsCart = false; //全选取消
       this.isedit = !this.isedit; //是否进入编辑状态
-      // this.Arrdelete = [];
+
       // 先把列表的所有状态进行未选中状态
       for (var i = 0; i < this.cartData.length; i++) {
         this.cartData[i].isCart = false;
@@ -197,18 +217,19 @@ export default {
     // --------删除函数---------
     cartdeleteFun() {
       this.dialogVisible = false;
+<<<<<<< HEAD
       console.log("删除--this.isCartList", this.isCartList);
-      console.log("删除-#####-this.Arrdelete", this.Arrdelete);
+      // -------删除之后待做-------
+=======
+      console.group("删除-------");
+      console.log("this.isCartList", this.isCartList);
 
       // -------删除之后待做-------
-      this.cartData.forEach((item, i) => {
-        console.log("删除--@@@@@this.cartData", this.cartData);
-        console.log("删除--@@@@@item", item.P1);
+      console.log("后--this.cartData", this.cartData);
 
-        if (item.isCart == true) {
-          this.cartData.splice(i, 1);
-        }
-      });
+      let arrCartData = this.cartData.filter(item => !item.isCart);
+      this.cartData = arrCartData;
+
       if (this.allIsCart) {
         this.cartData = [];
         this.allIsCart = false;
@@ -216,7 +237,6 @@ export default {
     },
     // --------结算函数---------
     cartBalanceFun() {
-      
       if (this.isCartList.lenght != 0) {
         let objCartBalance = {
           isCartList: this.isCartList,
@@ -225,20 +245,30 @@ export default {
         this.$store.commit("cartBalanceFun", objCartBalance);
         this.$router.push({ path: "/confirmOrder" });
       }
+>>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
     }
   },
   watch: {
     cartData: {
       handler: function() {
+        // 当选中时，返回this.isCartList数组
         this.isCartList = this.cartData.filter(item => {
           return item.isCart;
         });
+        //  商品总数量等于选中的数组长度
         this.cartBalance = this.isCartList.length;
+<<<<<<< HEAD
         console.log("选中状态的列表--this.isCartList", this.isCartList);
-        if (this.cartData.length === !0) {
+        if (this.isCartList.length == this.cartData.length) {
+          this.allIsCart = true;
+=======
+        // 如果总的数组存在
+        if (this.cartData.length) {
+          // 如果选中的数组等于选中的数组，那么就全选
           if (this.isCartList.length == this.cartData.length) {
             this.allIsCart = true;
           }
+>>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
         }
       },
       deep: true //深度监听
@@ -247,7 +277,7 @@ export default {
   computed: {
     //计算属性
     cartTotal() {
-      //计算合计总数
+      //计算合计价钱总数
       let stock = 0; //初始值设置为0
       this.isCartList.forEach(item => {
         stock += item.price * item.cartProductNumber; //
@@ -261,7 +291,7 @@ export default {
 @import "../assets/css/util.scss"; //导入公共样式文件
 
 //---------当前页面------
-.cart {
+.main {
   width: 100%;
 }
 
