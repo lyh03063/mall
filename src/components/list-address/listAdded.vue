@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <el-form  :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm" size="small" >
+    <el-form :model="addForm"  :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm" size="small" >
       <el-form-item label="姓名" prop="name" >
         <el-input v-model="addForm.name" placeholder="收货人姓名"></el-input>
       </el-form-item>
@@ -10,7 +10,6 @@
       
       <el-form-item label="地区" prop="area" >
           <el-cascader :options="options" v-model="addForm.area" ></el-cascader>
-        
         </el-form-item>
   
     
@@ -56,8 +55,12 @@ export default {
           { required: true, message: "请输入收货人电话", trigger: "change" },
           // { min: 11, message: "电话格式填写错误", trigger: "blur" }
         ],
+          area: [
+          { required: true, message: "请输入收货人地区", trigger: "change" },
+          
+        ],
         extend: [
-          { required: true, message: "请填写详细地址", trigger: "blur" }
+          { required:true, message: "请填写详细地址", trigger: "blur" }
         ]
       },
       
@@ -65,6 +68,7 @@ export default {
   },
   
   methods: {
+    //---------- 新增函数
     addedAddress() {
       axios({
         //请求新增接口
@@ -74,9 +78,9 @@ export default {
         data: { data: this.addForm } //传递参数
       })
         .then(response => {
-          this.$message({ message: "删除产品成功",duration: 1500, type: "success" });
+          this.$message({ message: "新增成功",duration: 1500, type: "success" });
           this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
-          // this.getProList();
+        
         })
         .catch(function(error) {
           alert("异常:" + error);

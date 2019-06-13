@@ -90,8 +90,14 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     },
     AddressModify_item: {},
+    confirmOrderAddress:{}
   },
   mutations: {//变更事件
+
+    confirmOrderAddressFun(state, param){
+      state.confirmOrderAddress=param
+    },
+    //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
       console.log("this.AddressModify_item",this.AddressModify_item);

@@ -10,7 +10,7 @@
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>
-          <li class="FS14">收货地址：{{title.address}}</li>
+          <li class="FS14">收货地址：{{title.area}}{{title.extend}}</li>
         </ul>
       </router-link>
      
@@ -129,11 +129,11 @@ export default {
       isCartList: [],
       delivery: false,
 
-      title: {
-        phone: "18123456454",
-        name: "张等等",
-        address: "码帮科技"
-      },
+      // title: {
+      //   phone: "18123456454",
+      //   name: "张等等",
+      //   address: "码帮科技"
+      // },
        cartData: [
         {
       
@@ -167,6 +167,9 @@ export default {
         stock += item.price * item.cartProductNumber; //
       });
       return stock;
+    },
+    title(){
+       return this.$store.state.confirmOrderAddress; 
     }
   },
 

@@ -1,10 +1,5 @@
 <template>
   <div class="cart">
-   
-
-
-   
-
     <div class="shop">
       <!-- 全选打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -32,8 +27,7 @@
       :key="item.P1"
       class="cart-product-box"
       @click="shopCheckbox(item)"
-     >
-
+    >
       <!-- 打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
         <div class="shop-checkbox">
@@ -58,17 +52,6 @@
         <div class="cart-number">X{{item.cartProductNumber}}</div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <!----------- 页尾 ------------->
     <footer>
@@ -102,18 +85,14 @@
         <span type="primary" @click="cartdeleteFun">确 定</span>
       </div>
     </el-dialog>
-
-    
   </div>
-
-  
 </template>
 
 
 <script>
-import cartComponent from "../components/cart/cartComponent"
+import cartComponent from "../components/cart/cartComponent";
 export default {
-  components:{cartComponent},
+  components: { cartComponent },
   data() {
     return {
       dialogVisible: false, //控制删除弹窗是否显示
@@ -131,8 +110,6 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-
-
             "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
@@ -145,8 +122,6 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-
-
             "2【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "2-6种时令水果大切盘，鲜切水果",
           price: 30,
@@ -159,7 +134,6 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-
             "3【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "3-6种时令水果大切盘，鲜切水果",
           price: 40,
@@ -231,8 +205,6 @@ export default {
     cartdeleteFun() {
       this.dialogVisible = false;
 
-
-
       console.log("删除--this.isCartList", this.isCartList);
       // -------删除之后待做-------
 
@@ -260,7 +232,6 @@ export default {
         this.$store.commit("cartBalanceFun", objCartBalance);
         this.$router.push({ path: "/confirmOrder" });
       }
-
     }
   },
   watch: {
@@ -277,21 +248,20 @@ export default {
         if (this.isCartList.length == this.cartData.length) {
           this.allIsCart = true;
 
-        // 如果总的数组存在
-        if (this.cartData.length) {
-          // 如果选中的数组等于选中的数组，那么就全选
-          if (this.isCartList.length == this.cartData.length) {
-            this.allIsCart = true;
+          // 如果总的数组存在
+          if (this.cartData.length) {
+            // 如果选中的数组等于选中的数组，那么就全选
+            if (this.isCartList.length == this.cartData.length) {
+              this.allIsCart = true;
+            }
           }
-
         }
-
-        }
-        }
-        },
-      deep: true //深度监听
+      }
     },
-  
+    deep: true //深度监听
+  },
+
+
   computed: {
     //计算属性
     cartTotal() {
