@@ -145,6 +145,7 @@ export default {
   components: { portal },
   data() {
     return {
+      
       data:false,
       list:[],
     };
@@ -181,8 +182,8 @@ export default {
     this.getProList(); 
   },
   beforeCreate() {
-    localStorage.isLogin = 0;
-    if(localStorage.isLogin == "1"){
+    
+    if(localStorage.isLogin == "0"){
       this.$router.push({ path:"/login"})
     }
 

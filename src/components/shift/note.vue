@@ -32,7 +32,7 @@ export default {
         method: "post",
         url: "http://120.76.160.41:3000/mabangMall/sendMobileMessage",
         data: {
-          mobile: "13415028975"
+          mobile:this.mobile
         }
       })
         .then(response => {
@@ -45,7 +45,14 @@ export default {
           alert("异常:" + error);
         });
     }
-  }
+  },
+ computed: {
+   
+    mobile() {
+      //总的数据列表
+      return this.$store.state.activeCellphoneVerify;
+    }
+  },
 };
 </script>
 
@@ -56,6 +63,7 @@ export default {
   text-align: center;
   line-height: 25px;
   position: relative;
+  border:1px solid black;
 }
 .defense {
   width: 100px;
