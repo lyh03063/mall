@@ -22,10 +22,15 @@ import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
+import confirmOrder from "./page/confirmOrder";
+
+
+
 
 
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
+
 
 
 
@@ -43,7 +48,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    // { path: '/confirmOrder', component: confirmOrder },
+    { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -51,22 +56,24 @@ const router = new VueRouter({
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
-
-
   ]
 })
 
 
 
 
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
 
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
+
+
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
+
+// // var VueTouch = require('vue-touch')
+// // Vue.use(VueTouch, { name: 'v-touch' })
 
 
 
@@ -79,36 +86,82 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
+    activeCellphoneVerify: "",//手机验证码
+    activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
     user:{}
 
-    }
+    },
+    AddressModify_item: {},
+    confirmOrderAddress:{}
   },
   mutations: {//变更事件
-    //----wxd-----购物车去确认之后转移到确认订单的数据
-    cartBalanceFun(state, param) {
-      console.log("cartBalanceFun--param", param);
+
+    confirmOrderAddressFun(state, param){
+      state.confirmOrderAddress=param
+    },
+    //----cdx-----
+    memberAddressModify(state, param) {
+      state.AddressModify_item = param
+      console.log("this.AddressModify_item",this.AddressModify_item);
+      },
+    cartData: [],//用于存放购物车的总数据
+    confirmOrder: [],//用于确认订单的总数据
+    doc: {//用于购物车插件的数据
+      cartProductNumber: null,
+      isCart: true,
     },
     getForm(state, param){
       console.log("123123",param);
       state.user=param
     },
+    isCartCom: false
+  },
+  mutations: {//变更事件
 
-    addCartFun(state, param){
-      console.log("addCartFun--param", param);
-    },
-    goCartFun(state, param){
-      console.log("goCartFun--param", param);
-    },
-    
+    // JumpDetail(state, param){
 
+    // },
+    isCartComClose(state) {//关闭购物车弹窗
+      state.isCartCom = false
+    },
+    isCartComOpen(state) {//打开购物车弹窗
+      state.isCartCom = true
+    },
+    //--------购物车初始化
+    init(state) {
+      if (window.localStorage.cartData) {
+        state.cartData = JSON.parse(localStorage.cartData);
+      }
+      console.log("init--this.cartData", state.cartData);
+    },
+
+    //-------购物车去确认之后转移到确认订单的数据
+    cartBalanceFun(state, param) {
+      state.confirmOrder = param
+      console.log("cartBalanceFun--param", param);
+    },
+
+    //---------购物车插件---立即购买
+    goCartFun(state, param) {
+      state.confirmOrder.push(param)
+      console.log("goCartFun--param", state.confirmOrder);
+    },
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
       state.listState[param.listIndex] = param.objState;
       //对listState进行整个对象的变更（深拷贝），因为listState是有注册的，可以触发响应
       let str = JSON.stringify(state.listState)//对象转换成字符串
       state.listState = JSON.parse(str)//字符串转换成对象
+    },
+    changeActiveCellphone(state, activeCellphoneVerify) {//验证码获取手机的值
+      state.activeCellphoneVerify = activeCellphoneVerify
+    },
+    changeActiveProduce(state, activeProduceId) {//获取当前商品详情
+
+      Object.assign(state.doc, activeProduceId);
+      console.log("changeActiveProduce", state.doc)
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex

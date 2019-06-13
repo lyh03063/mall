@@ -1,10 +1,10 @@
 <template>
   <div class="order-main">
-    <div v-for="shop in shops" :key="shop.P1">
+    <div>
       <!------------------------ 订单完成情况开始 ---------------------------->
       <div class="order-status-main">
         <!-- 订单交易成功开始 -->
-        <div v-if="shop.status==0? true:false">
+        <div v-if="row.status==0">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/30/345a61fbbf62d65a3a8c528272426666.png"
           >
@@ -24,7 +24,7 @@
 
       <!------------------------ 交易流程开始 ---------------------------->
       <!-- 订单交易成功开始 -->
-      <div class="order-flow order-color" v-if="shop.status==0? true:false">
+      <div class="order-flow order-color" v-if="row.status==0">
         <el-steps :active="2" align-center>
           <el-step title="买家已付款"></el-step>
           <el-step title="已成团"></el-step>
@@ -47,10 +47,10 @@
         <div class="order-cap-logistics">
           <div class="order-address-content">
             <div>
-              <p class="order-address-name">收货人：{{shop.postAddress.name}}</p>
-              <p class="order-address-tel">{{shop.postAddress.phone}}</p>
+              <p class="order-address-name">收货人：{{row.postAddress.name}}</p>
+              <p class="order-address-tel">{{row.postAddress.phone}}</p>
             </div>
-            <p class="order-address-detail">收货地址：{{shop.postAddress.address}}</p>
+            <p class="order-address-detail">收货地址：{{row.postAddress.address}}</p>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@
 
       <!------------------------ 商品列表开始 ---------------------------->
 
-      <div class="order-list-item" v-for="shop in shops" :key="shop.P1">
+      <div class="order-list-item">
         <!-- 订单头部店铺名称，交易情况 -->
         <div class="order-list-item__header" type="list-item-header">店铺：码帮科技</div>
         <!-- 订单列表 -->
@@ -67,12 +67,11 @@
             <!-- 订单列表中的内容 -->
             <div
               class="order-cap-order-item__body"
-              v-for="order in shop.commodityList"
+              v-for="order in row.commodityList"
               :key="order.id"
             >
               <!-- 订单列表中的头部订单编号 -->
-              <div class="order-cap-order-item__head">{{shop._id}}</div>
-
+              <div class="order-cap-order-item__head">{{row._id}}</div>
               <div class="order-card">
                 <div class="order-card__header">
                   <a class="order-card__thumb">
@@ -83,11 +82,12 @@
                   </a>
                   <div class="order-card__content">
                     <div class="order-card__title">{{order.name}}</div>
-                    <div class="order-card__desc order-ellipsis">{{shop.leaveMsg}}</div>
+                    <div class="order-card__desc order-ellipsis">{{row.leaveMsg}}</div>
                     <div></div>
+
                     <div class="order-card__bottom">
-                      <div class="order-card__price">商品价格X{{order.price*order.byCount}}</div>
-                      <div class="order-card__num">x 1</div>
+                      <div class="order-card__price" style="color:red">￥{{order.price}}</div>
+                      <div class="order-card__num">X{{order.byCount}}</div>
                     </div>
                   </div>
                 </div>
@@ -114,7 +114,7 @@
             <!---->
           </div>
           <div class="order-cell__value">
-            <p class="order-cap-express-way__fee">¥30.00</p>
+            <p class="order-cap-express-way__fee">{{row.freigh}}</p>
             <p class="order-cap-express-way__type">快递发货</p>
           </div>
         </div>
@@ -125,7 +125,7 @@
           <span>买家留言</span>
         </div>
         <div class="order-cell__value">
-          <span>{{shop.leaveMsg}}</span>
+          <span>{{row.leaveMsg}}</span>
         </div>
       </div>
 
@@ -138,11 +138,11 @@
           <div class="order-cell__value order-cell__value--alone">
             <div class="order-goods-pay__cell">
               <p class="order-goods-pay__cell-title">商品金额</p>
-              <p class="order-goods-pay__cell-value">¥ 239.70</p>
+              <p class="order-goods-pay__cell-value">{{totalMoney}}</p>
             </div>
             <div class="order-goods-pay__cell">
-              <!-- <p class="order-goods-pay__cell-title">{{shop.}}</p> -->
-              <p class="order-goods-pay__cell-value">+ ¥ 30.00</p>
+              <p class="order-goods-pay__cell-title">运费</p>
+              <p class="order-goods-pay__cell-value">{{newtotalfreight}}</p>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
           <div class="order-cell__value order-cell__value--alone">
             <div class="order-goods-pay__real-price__paid">
               实付款：
-              <span>¥ 269.70</span>
+              <span>¥ {{newtotalMoney}}</span>
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@
         <div class="order-cell__title">
           <p>
             订单编号：
-            <span>{{shop._id}}</span>
+            <span>{{row._id}}</span>
             <button>
               <input type="button" v-on:click="copy()" value="点击复制订单号">
             </button>
@@ -184,25 +184,27 @@
 
           <p>
             创建时间：
-            <span>{{shop.CreateTime | formatDate}}</span>
+            <span>{{row.CreateTime | formatDate}}</span>
           </p>
 
           <p>
             付款时间：
-            <span>{{shop.UpdateTime | formatDate}}</span>
+            <span>{{row.UpdateTime | formatDate}}</span>
           </p>
 
           <p>
             发货时间：
-            <span>{{shop.UpdateTime | formatDate}}</span>
+            <span>{{row.UpdateTime | formatDate}}</span>
           </p>
 
           <p>
             完成时间：
-            <span>{{shop.UpdateTime | formatDate}}</span>
+            <span>{{row.UpdateTime | formatDate}}</span>
           </p>
 
           <a href="javascript:;" class="order-base-info__question">对此订单有疑问？</a>
+
+          <div>{{row}}</div>
         </div>
       </div>
 
@@ -210,20 +212,19 @@
     </div>
   </div>
 </template>
-
-
-<script>
-import { all } from "q";
+  
+  
+  <script>
 export default {
   data() {
     return {
       allCount: null, //总记录数
       shops: {},
       page: {},
-      totalMoney: 0,
-      totalCount: 0,
-      shopStatus: [],
-      totalCount: 0,
+      totalMoney: 0, //总价格
+      totalCount: 0, //总共条数
+      newtotalfreight: 0, //运费
+      newtotalMoney: 0, //运费加总金额
       shopid: 0
     };
   },
@@ -241,49 +242,30 @@ export default {
   },
   computed: {
     //获取列表数据
-    orderlistdata() {
-      console.log("列表信息", this.$store.state.obj);
-      return this.$store.state.obj;
+    row() {
+      console.log("列表信息", this.$store.state.newdetail);
+      // let aaa = JSON.stringify(this.$store.state.newdetail);
+      // alert(aaa);
+      return this.$store.state.newdetail;
     }
   },
   mounted() {
-    axios({
-      //请求接口
-      method: "post",
-      // url: this.objURL.list,
-      url: "http://120.76.160.41:3000/crossList?page=mabang-order"
-      // data: this.Objparma //传递参数
-    })
-      .then(response => {
-        console.log("第一次请求结果", response.data);
-        let { list, page } = response.data; //解构赋值
-        this.shops = list;
-        this.page = page;
-        this.allCount = page.allCount; //更改总数据量
+    this.shopid = this.row._id;
+    for (let index = 0; index < this.row.commodityList.length; index++) {
+      this.totalMoney +=
+        this.row.commodityList[index].price *
+        this.row.commodityList[index].byCount;
+      this.newtotalfreight += parseInt(this.row.commodityList[index].freight);
+    }
+    this.newtotalMoney = this.totalMoney + this.newtotalfreight;
 
-        var shopIndex = 0;
-        for (let i = 0; i < this.shops.length; i++) {
-          this.shopid = this.shops[shopIndex]._id;
-          for (let j = 0; j < this.shops[shopIndex].commodityList.length; j++) {
-            this.totalMoney +=
-              this.shops[shopIndex].commodityList[j].price *
-              this.shops[shopIndex].commodityList[j].byCount;
-          }
-          if (this.shops[shopIndex].status == 1) {
-            this.shopStatus.push(this.shops[shopIndex]);
-          }
-          this.totalCount += this.shops[shopIndex].commodityList.length;
-          shopIndex++;
-        }
-      })
-      .catch(function(error) {
-        alert("异常:" + error);
-      });
+    this.totalCount += this.row.commodityList.length;
   },
+
   methods: {
     // 复制订单编号
     copy() {
-      //data 获取的数据
+      // data 获取的数据
       var data = this.shopid;
       var oInput = document.createElement("input");
       oInput.value = data;
@@ -297,8 +279,8 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" >
+  
+  <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
 @import "../assets/css/memberorderDetail.scss"; //导入memberorderDetail订单详情样式文件
 body {
