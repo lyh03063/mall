@@ -151,11 +151,7 @@ export default {
     // // --------结算函数---------
     cartBalanceFun() {
       if (this.isCartList.lenght != 0) {
-        let objCartBalance = {
-          isCartList: this.isCartList,
-          cartTotal: this.cartTotal
-        };
-        this.$store.commit("cartBalanceFun", objCartBalance);
+        this.$store.commit("cartBalanceFun", this.isCartList);
         this.$router.push({ path: "/confirmOrder" });
       }
     },
