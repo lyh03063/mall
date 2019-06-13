@@ -1,10 +1,6 @@
 <template>
-
-
-
   <div class="cart">
     <div v-if="NewcartData.length">
-
       <div class="shop">
         <!-- 全选打钩按钮 -->
         <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -16,10 +12,7 @@
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
-        <div class="shop-name">米柚生活</div>
-
-        <div class="shop-name">码帮生活</div>
-
+        <div class="shop-name">码帮商城</div>
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
@@ -109,13 +102,12 @@ export default {
   components: { cartComponent },
   data() {
     return {
-      NewcartData: [],
+      NewcartData: [], //渲染数据
       cartTotal: null,
       dialogVisible: false, //控制删除弹窗是否显示
       allIsCart: false, //控制全选的按钮
       cartBalance: 0, //选中之后总的商品数量
       isedit: false, //是否为编辑状态
-
       isCartList: [] //选中之后的列表
     };
   },
@@ -174,6 +166,7 @@ export default {
           return true;
         }
       });
+      console.log("cartData-------", this.cartData);
     }
   },
   watch: {
@@ -191,8 +184,10 @@ export default {
         });
         this.cartTotal = stock;
 
-        let strArr = JSON.stringify(this.NewcartData); //数组转字符串
-        localStorage.cartData = strArr;
+        if (this.NewcartData) {
+          let strArr = JSON.stringify(this.NewcartData); //数组转字符串
+          localStorage.cartData = strArr;
+        }
       },
       deep: true //深度监听
     },
@@ -206,8 +201,6 @@ export default {
         } else {
           this.allIsCart = false;
         }
-
-        // 如果总的数组存在
       },
       deep: true //深度监听
     }
@@ -223,7 +216,6 @@ export default {
   },
 
   created() {
-    // 初始化列表的数据 this.cartData
     this.$store.commit("init");
     this.NewcartData = this.cartData;
   }

@@ -88,7 +88,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     },
     cartData: [],//用于存放购物车的总数据
-    confirmOrder: []//用于确认订单的总数据
+    confirmOrder: [],//用于确认订单的总数据
+    doc: {//用于购物车插件的数据
+      cartProductNumber:null,
+      isCart: true,
+    }
   },
   mutations: {//变更事件
     //----wxd-----购物车去确认之后转移到确认订单的数据
@@ -99,7 +103,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     // },
 
-    //----wxd-----购物车初始化
+    //--------购物车初始化
     init(state) {
       if (window.localStorage.cartData) {
         state.cartData = JSON.parse(localStorage.cartData);
@@ -108,22 +112,17 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     },
 
 
-    //----wxd-----购物车去确认之后转移到确认订单的数据
+    //-------购物车去确认之后转移到确认订单的数据
     cartBalanceFun(state, param) {
       state.confirmOrder = param
       console.log("cartBalanceFun--param", param);
     },
 
-    //----wxd-----购物车插件---立即购买
+    //---------购物车插件---立即购买
     goCartFun(state, param) {
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
-<<<<<<< HEAD
-
-
-=======
->>>>>>> a289ddd02f93f22603a9dd46070768d7fcf7829b
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
       state.listState[param.listIndex] = param.objState;
@@ -135,7 +134,9 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.activeCellphoneVerify = activeCellphoneVerify
     },
     changeActiveProduce(state, activeProduceId) {//获取当前商品详情
-      state.activeProduceId = activeProduceId
+ 
+      Object.assign(state.doc,activeProduceId);
+      console.log("changeActiveProduce", state.doc)
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex
