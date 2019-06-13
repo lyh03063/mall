@@ -1,7 +1,6 @@
 
 <template>
   <div class="bigg">
-
     <div class="box-top"></div>
     <div class="block">
       <el-carousel trigger="click" height="135px">
@@ -17,26 +16,33 @@
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
-            <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
+            <img
+              class="box-commodity"
+              v-if="buyEach.album&&buyEach.album.length"
+              :src="buyEach.album[0].url"
+            >
             <div class="box-title">{{buyEach.description}}</div>
             <div class="box-3" style="width:135px">￥{{buyEach.price}}</div>
-            <div class="el-icon-shopping-cart-2 box-4"></div>
+            <div class="el-icon-shopping-cart-2 box-4" ></div>
           </div>
         </template>
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
     <portal></portal>
+   
   </div>
 </template>
 
 <script>
+
 import portal from "../components/shift/portal";
 import note from "../components/shift/note";
 export default {
-  components: { portal,note },
+  components: { portal, note },
   data() {
     return {
+      
       buy: [],
       imgg: [
         {
