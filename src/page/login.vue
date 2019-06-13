@@ -116,7 +116,7 @@ export default {
 
                 alert("登录成功");
                 this.getForm();
-                localStorage.isLogin = 0;
+                localStorage.isLogin = 1;
                 // activeMenuIndex = this.list; //每个ID的登录状态
                 this.$router.push({ path: "/home" });
               } else {
@@ -171,7 +171,7 @@ export default {
   // },
   beforeCreate() {
     //------------如果未登录------------
-    if (localStorage.isLogin == 1) {
+    if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
     console.log("beforeCreate-this.msg", this.msg);
