@@ -12,7 +12,6 @@
     >
       <el-form-item prop="userName">
         <div class>
-          
           <div style="float:left;width:10%;text-align:center;">中国+86</div>
           <div style="float:left;width:90%">
             <el-input v-model.number="ruleForm.userName" placeholder="用户手机"></el-input>
@@ -33,20 +32,20 @@
       <el-row>
         <el-col :span="24">
           <div style="margin-top:15px;">
-          <div style="float:left">验证码登录</div>
-          <div style="float:right">免费注册 | 忘记密码</div>
+            <div style="float:left">验证码登录</div>
+            <div style="float:right">免费注册 | 忘记密码</div>
           </div>
         </el-col>
       </el-row>
     </el-form>
-    <footer >
-      登录即代表同意<a href="JavaScript:;">《用户使用协议》</a>
+    <footer>
+      登录即代表同意
+      <a href="JavaScript:;">《用户使用协议》</a>
     </footer>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     let regnumber = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
@@ -90,11 +89,11 @@ export default {
         // trigger: "blur" 规则的触发方式，失焦事件
         userName: [{ validator: validateuserName, trigger: "blur" }],
         password: [{ validator: validatepassword, trigger: "blur" }]
-      }
+      },
+      userLog:{}
     };
   },
   methods: {
-    
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         //表单组件执行validate校验方法
@@ -108,13 +107,17 @@ export default {
             .then(response => {
               let { list } = response.data;
               // var userList = JSON.stringify(list);
-
+              console.log(list);
+              this.userLog = list;
+              alert(JSON.stringify(this.userLog))
               if (list.length > 0) {
                 //接口测试工具中,只要传数据过去其中一个为错的,数组就为空,这里用数组长度判断最佳
                 // 登录成功
 
                 alert("登录成功");
+                this.getForm();
                 localStorage.isLogin = 0;
+                // activeMenuIndex = this.list; //每个ID的登录状态
                 this.$router.push({ path: "/home" });
               } else {
                 //登录失败
@@ -145,6 +148,7 @@ export default {
               // if (userStatus == 0) {
               //   alert("账户不存在,请注册");
               // }
+              
             })
             .catch(error => {
               console.log(error);
@@ -152,8 +156,19 @@ export default {
             });
         }
       });
-    }
+    },
+    getForm(){
+     
+    this.$store.commit("getForm",this.userLog)
   },
+  },
+  
+  // computed: {
+  //   activeMenuIndex() {
+  //     return this.$store.state.user;
+  //   },
+ 
+  // },
   beforeCreate() {
     //------------如果未登录------------
     if (localStorage.isLogin == 1) {
@@ -166,21 +181,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" >
-
-
 .login-box {
   width: 100%;
   padding: 40px;
-  
+
   h1 {
-   
-    padding: 20px 20px 20px 5px;;
+    padding: 20px 20px 20px 5px;
     font-size: 28px;
     font-weight: 400;
   }
   h2 {
-    margin: 20px 20px 20px 5px;;
-    padding-left: 5px;;
+    margin: 20px 20px 20px 5px;
+    padding-left: 5px;
     color: #999999;
     font-size: 16px;
     font-weight: 400;

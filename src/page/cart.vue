@@ -1,6 +1,7 @@
 <template>
-
   <div class="cart">
+   
+
    
 
     <div class="shop">
@@ -23,14 +24,14 @@
 
     <!------------- 购物车的主要内容 ---------------->
 
-    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box">
+    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box"></div>
 
     <div
       v-for="item  in  cartData"
       :key="item.P1"
       class="cart-product-box"
       @click="shopCheckbox(item)"
-    >
+     >
 
       <!-- 打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
@@ -56,6 +57,17 @@
         <div class="cart-number">X{{item.cartProductNumber}}</div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
 
     <!----------- 页尾 ------------->
     <footer>
@@ -92,7 +104,7 @@
 
     
   </div>
-  </div>
+  
 </template>
 
 

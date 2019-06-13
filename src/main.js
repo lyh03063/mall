@@ -81,6 +81,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
+    user:{}
 
     }
   },
@@ -88,6 +89,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     //----wxd-----购物车去确认之后转移到确认订单的数据
     cartBalanceFun(state, param) {
       console.log("cartBalanceFun--param", param);
+    },
+    getForm(state, param){
+      console.log("123123",param);
+      state.user=param
     },
 
     addCartFun(state, param){
