@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
-import confirmOrder from "./page/confirmOrder";
+
 import Home from "./page/home";
 import login from "./page/login";
 import commodityList from "./page/commodityList";
@@ -22,6 +22,8 @@ import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
+import confirmOrder from "./page/confirmOrder";
+
 
 // import confirmOrder from "./page/confirmOrder";
 import listAdded from "./components/list-address/listAdded";
@@ -60,11 +62,16 @@ const router = new VueRouter({
 
 
 
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
 
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
+
+
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
+
+// // var VueTouch = require('vue-touch')
+// // Vue.use(VueTouch, { name: 'v-touch' })
 
 
 
@@ -83,8 +90,22 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     listState: {//存放列表的共享状态，
 
     },
+    AddressModify_item: {},
+    
+  },
+  mutations: {//变更事件
+
+    confirmOrderAddressFun(state, param){
+      state.confirmOrderAddress=param
+    },
+    //----cdx-----
+    memberAddressModify(state, param) {
+      state.AddressModify_item = param
+      console.log("this.AddressModify_item",this.AddressModify_item);
+      },
     cartData: [],//用于存放购物车的总数据
-    confirmOrder: []//用于确认订单的总数据
+    confirmOrder: [],//用于确认订单的总数据
+    confirmOrderAddress:{}
   },
   mutations: {//变更事件
  
