@@ -41,15 +41,9 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-<<<<<<< HEAD
-    
-    <portal></portal>
-   <cartComponent v-if="isCartCom"></cartComponent>
-=======
 
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
->>>>>>> aca4bce5f4e691d0929880eb8805c32ded090234
   </div>
 </template>
 

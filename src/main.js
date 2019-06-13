@@ -24,9 +24,6 @@ import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 
 // import confirmOrder from "./page/confirmOrder";
-
-
-
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
 
