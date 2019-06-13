@@ -4,10 +4,10 @@
       class="P30"
       v-for="item in tableData"
       :key="item.tableData"
-      style="border-bottom: 1px solid #ebedf0"  @click="shopCheckbox(item)"
+      style="border-bottom: 1px solid #ebedf0" 
     >
       <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}">
+      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}" @click="shopCheckbox(item)">
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
@@ -47,7 +47,7 @@ export default {
     shopCheckbox(item) {
       this.isCart = item.P1; //对当前节点的状态取反
       console.log("shopCheckbox", item.isCart);
-       this.$router.push({ path: "/confirmOrder" }); //跳转到listAddModify
+       this.$router.push({ path: "/confirmOrder" }); //跳转到confirmOrder
        this.$store.commit("confirmOrderAddressFun", item);
     },
     form(item) {
