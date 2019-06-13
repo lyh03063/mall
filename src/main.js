@@ -15,7 +15,6 @@ import login from "./page/login";
 import commodityList from "./page/commodityList";
 import commodityDetail from "./page/commodityDetail";
 import cart from "./page/cart";
-import confirmOrder from "./page/confirmOrder";
 import memberCenter from "./page/memberCenter";
 import memberSetting from "./page/memberSetting";
 import pswModify from "./page/pswModify";
@@ -24,7 +23,12 @@ import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 
+
 import listAdded from "./components/list-address/listAdded";
+import listAddModify from "./components/list-address/listAddModify";
+
+
+
 
 
 
@@ -39,7 +43,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    { path: '/confirmOrder', component: confirmOrder },
+    // { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -47,16 +51,28 @@ const router = new VueRouter({
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-    { path: '/listAdded', component: listAdded },
 
+    { path: '/listAdded', component: listAdded },//新增收货地址
+    { path: '/listAddModify', component: listAddModify },//修改删除收货地址
 
 
   ]
 })
 
 
+<<<<<<< HEAD
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
+=======
+
+
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
+
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
+
+>>>>>>> 24b5fdfa725f02e28d8c2aaf51bea261eb6cf56a
 
 
 
@@ -68,7 +84,7 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
-    activeMenuIndex: "1",//当前激活的菜单index
+    activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
     }
@@ -79,7 +95,13 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       console.log("cartBalanceFun--param", param);
     },
 
-
+    addCartFun(state, param){
+      console.log("addCartFun--param", param);
+    },
+    goCartFun(state, param){
+      console.log("goCartFun--param", param);
+    },
+    
 
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);

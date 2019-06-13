@@ -1,17 +1,26 @@
 <template>
-  <div class="main">
-    <div class="P20" v-for="item in tableData" :key="item.box">
+  <div class>
+    <div
+      class="P30"
+      v-for="item in tableData"
+      :key="item.tableData"
+      style="border-bottom: 1px solid #ebedf0"
+    >
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
-      <div class="receipt-region FL OFH">{{item.recipt_region}}</div>
-      <div class="receipt-modify FR" @click="modifyForm('ruleForm')">修改</div>
+      <div class="receipt-region FL OFH">{{item.area}}</div>
+      <div class="receipt-region FL OFH">{{item.extend}}</div>
+      <div class="receipt-modify FR" @click="form()">
+        <i class="iconfont icon-xiugai"></i>
+      </div>
     </div>
 
-    <div class="added" @click="submitForm('ruleForm')">新增地址</div>
+    <div class="added" @click="submitForm()">新增地址</div>
   </div>
 </template>
 
 <script>
 import listAdded from "../components/list-address/listAdded";
+import listModify from "../components/list-address/listAddModify";
 export default {
   components: { listAdded },
   data() {
@@ -26,11 +35,12 @@ export default {
     };
   },
   methods: {
-    modifyForm(formName) {
-      this.$router.push({ path: "/listAdded" }); //跳转到listAdded
+    form() {
+      this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
+     
     },
 
-    submitForm(formName) {
+    submitForm() {
       this.$router.push({ path: "/listAdded" }); //跳转到listAdded
     },
 
@@ -46,6 +56,7 @@ export default {
           console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
           this.tableData = list;
+          console.log("this.tableData", this.tableData);
           this.page = page;
           this.allCount = page.allCount; //更改总数据量
         })
@@ -65,7 +76,7 @@ export default {
 
 .added {
   position: fixed;
-  top: 93.5%;
+  bottom: 0px;
   left: 0%;
   color: #fff;
   background-color: #f44;
