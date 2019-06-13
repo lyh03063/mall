@@ -1,7 +1,5 @@
 <template>
 
-  <div class="main">
-
   <div class="cart">
    
 
@@ -93,6 +91,7 @@
     </el-dialog>
 
     
+  </div>
   </div>
 </template>
 

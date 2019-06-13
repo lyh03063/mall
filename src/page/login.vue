@@ -158,8 +158,6 @@ export default {
     //------------如果未登录------------
     if (localStorage.isLogin == 1) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
-    } else {
-      this.$router.push({ path: "/home" });
     }
     console.log("beforeCreate-this.msg", this.msg);
   }
@@ -181,6 +179,7 @@ export default {
     font-weight: 400;
   }
   h2 {
+    margin: 20px 20px 20px 5px;;
     padding-left: 5px;;
     color: #999999;
     font-size: 16px;
