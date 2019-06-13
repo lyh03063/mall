@@ -1,23 +1,25 @@
 
 <template>
   <div class="bigg">
-
+<note></note>
     <div class="box-top"></div>
     <div class="block">
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
       </el-carousel>
-      <div class="box-span">
+      <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="block">
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
+            <div class="img-box">
             <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
+            </div>
             <div class="box-title">{{buyEach.description}}</div>
             <div class="box-3" style="width:135px">￥{{buyEach.price}}</div>
             <div class="el-icon-shopping-cart-2 box-4"></div>
@@ -73,7 +75,6 @@ export default {
         } //传递参数
       })
         .then(response => {
-          console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
           this.buy = list;
         })
@@ -114,6 +115,10 @@ export default {
   background: #ffffff;
   margin: 5px 7px;
   float: left;
+}
+.img-box{
+  width: 167.5px;
+  height: 175.5px;
 }
 .box-commodity {
   width: 167.5px;
