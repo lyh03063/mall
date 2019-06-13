@@ -1,7 +1,7 @@
 <template>
-  <div class="cartComponent" style="bottom:0">
+  <div class="cartComponent">
     <!-- 这是购物车插件 -->
-    <div class="Shopping-box cartComponent" >
+    <div class="Shopping-box cartComponent">
       <el-dialog
         :visible.sync="dialogCartComponent"
         width="100%"
@@ -65,8 +65,8 @@ export default {
       localStorage.cartData = strArr2;
     },
 
-
     goCartFun() {
+      
       this.cartTotal = this.doc.price * this.doc.cartProductNumber;
       this.$store.commit("goCartFun", {
         objcartData: this.doc,
@@ -78,7 +78,7 @@ export default {
     return {
       dialogCartComponent: true,
 
-      cartTotal: 1,
+      cartTotal: 0,
       doc: {
         cartProductNumber: 1,
         isCart: true,

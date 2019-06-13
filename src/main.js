@@ -81,12 +81,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     },
     cartData: [],//用于存放购物车的总数据
+    
   },
   mutations: {//变更事件
-    //----wxd-----购物车去确认之后转移到确认订单的数据
-    cartBalanceFun(state, param) {
-      console.log("cartBalanceFun--param", param);
-    },
+ 
     // JumpDetail(state, param){
 
     // },
@@ -96,7 +94,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       if (window.localStorage.cartData) {
         state.cartData = JSON.parse(localStorage.cartData);
       }
-
       console.log("init--this.cartData", state.cartData);
     },
 

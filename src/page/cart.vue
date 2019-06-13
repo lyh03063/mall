@@ -159,6 +159,7 @@ export default {
         this.$router.push({ path: "/confirmOrder" });
       }
     },
+    
     //----------点击选中函数-------
     shopCheckbox(item) {
       console.group("shopCheckbox-------", item);
