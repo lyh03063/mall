@@ -7,9 +7,9 @@
           <!-- 列表头部切换开始 -->
           <div class="order-tab">
             <el-tabs :tab-position="tabPosition">
-              <!-- 全部订单 -->
-              <el-tab-pane label="全部">
-                <div class="order-list-item" v-for="shop in shops" :key="shop.P1">
+              <!-- 已下单 -->
+              <el-tab-pane label="已下单">
+                <div class="order-list-item" v-for="shop in shopStatus1" :key="shop.P1">
                   <!-- 订单头部店铺名称，交易情况 -->
                   <div class="order-list-item__header" type="list-item-header">
                     店铺：米柚生活
@@ -36,17 +36,11 @@
                             </a>
                             <div class="order-card__content">
                               <div class="order-card__title">{{order.name}}</div>
-                              <div class="order-card__desc order-ellipsis">数量X{{order.byCount}}</div>
-                              <div>
-                                <el-button type="danger" size="mini">代付</el-button>
-                              </div>
+
                               <!-- v-if="list.status==1? true:false" -->
                               <div class="order-card__bottom">
-                                <div
-                                  class="order-card__price"
-                                  style="color:red"
-                                >商品价格X{{order.price*order.byCount}}</div>
-                                <div class="order-card__num">x 1</div>
+                                <div class="order-card__price" style="color:red">￥{{order.price}}</div>
+                                <div class="order-card__num">X{{order.byCount}}</div>
                               </div>
                             </div>
                           </div>
@@ -63,7 +57,9 @@
                         <span style="color:red">{{totalMoney}}</span>
                       </div>
                     </div>
-                    <el-button type="primary">再来一单</el-button>
+                    <router-link to="/memberOrderDetail" icon="el-icon-notebook-2">
+                      <el-button type="primary" @click="getlist(shop)">查看订单详情</el-button>
+                    </router-link>
                   </div>
                 </div>
                 <!-------------------查看全部商品数量----------------------------->
@@ -73,9 +69,9 @@
                 >查看全部{{totalCount}}件商品</div>
               </el-tab-pane>
 
-              <!-- 待付款 -->
-              <el-tab-pane label="待付款">
-                <div class="order-list-item" v-for="shop in shopStatus" :key="shop.P1">
+              <!-- 已付款 -->
+              <el-tab-pane label="已付款">
+                <div class="order-list-item" v-for="shop in shopStatus2" :key="shop.P1">
                   <!-- 订单头部店铺名称，交易情况 -->
                   <div class="order-list-item__header" type="list-item-header">
                     店铺：米柚生活
@@ -102,17 +98,9 @@
                             </a>
                             <div class="order-card__content">
                               <div class="order-card__title">{{order.name}}</div>
-                              <div class="order-card__desc order-ellipsis">数量X{{order.byCount}}</div>
-                              <div>
-                                <el-button type="danger" size="mini">代付</el-button>
-                              </div>
-                              <!-- v-if="list.status==1? true:false" -->
                               <div class="order-card__bottom">
-                                <div
-                                  class="order-card__price"
-                                  style="color:red"
-                                >商品价格X{{order.price*order.byCount}}</div>
-                                <div class="order-card__num">x 1</div>
+                                <div class="order-card__price" style="color:red">￥{{order.price}}</div>
+                                <div class="order-card__num">X{{order.byCount}}</div>
                               </div>
                             </div>
                           </div>
@@ -136,21 +124,21 @@
                 <div class="order-cap-order-item__more">查看全部{{allCount}}件商品</div>
               </el-tab-pane>
 
-              <!-- 待发货 -->
-              <el-tab-pane label="待发货">
-                待发货
-                <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
-              </el-tab-pane>
-
               <!-- 已发货 -->
               <el-tab-pane label="已发货">
                 已发货
                 <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
               </el-tab-pane>
 
-              <!-- 待评价 -->
-              <el-tab-pane label="待评价">
-                待评价
+              <!-- 已完成 -->
+              <el-tab-pane label="已完成">
+                已完成
+                <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
+              </el-tab-pane>
+
+              <!-- 已取消 -->
+              <el-tab-pane label="已取消">
+                已取消
                 <div class="order-no-more-tip">( ⊙ o ⊙ ) 啊哦，没有更多订单啦</div>
               </el-tab-pane>
             </el-tabs>
@@ -187,41 +175,31 @@
 
 
 <script>
-import { all } from "q";
 export default {
   data() {
     return {
       tabPosition: "top",
-      shops: {
-        shop: {
-          shopId: 1,
-          shopName: "店铺一号",
-          total: 4,
-          listOrder: {
-            order1: { id: 1, orderId: "E20190610162157027300005", payState: 0 },
-            order2: { id: 2, orderId: "E20190610162157027300005", payState: 1 },
-            order3: { id: 3, orderId: "E20190610162157027300005", payState: 1 }
-          }
-        },
-        shop1: {
-          shopId: 2,
-          shopName: "店铺二号",
-          total: 4,
-          listOrder: {
-            order1: { id: 1, orderId: "E20190610162157027300005", payState: 0 },
-            order2: { id: 2, orderId: "E20190610162157027300005", payState: 1 },
-            order3: { id: 3, orderId: "E20190610162157027300005", payState: 1 }
-          }
-        }
-      },
       allCount: null, //总记录数
       shops: {},
       page: {},
       totalMoney: 0,
-      shopStatus: [],
-      totalCount: 0
+      totalCount: 0,
+      orderlistdata: [], //指向vuex的对应的字段
+      shopStatus1: [],
+      shopStatus2: [],
+      shopStatus3: [],
+      shopStatus4: []
     };
   },
+  methods: {
+    getlist(data) {
+      //将列表信息传递到列表详情页面
+      this.$store.commit("orderlistdetail", data);
+      // let aaa = JSON.stringify(data);
+      // alert(aaa);
+    }
+  },
+  beforeCreate() {},
   mounted() {
     axios({
       //请求接口
@@ -236,8 +214,10 @@ export default {
         this.shops = list;
         this.page = page;
         this.allCount = page.allCount; //更改总数据量
+        this.orderlistdata = response.data;
 
         var shopIndex = 0;
+        // 计算总价格
         for (let i = 0; i < this.shops.length; i++) {
           for (let j = 0; j < this.shops[shopIndex].commodityList.length; j++) {
             this.totalMoney +=
@@ -245,8 +225,11 @@ export default {
               this.shops[shopIndex].commodityList[j].byCount;
           }
           if (this.shops[shopIndex].status == 1) {
-            this.shopStatus.push(this.shops[shopIndex]);
+            this.shopStatus1.push(this.shops[shopIndex]);
+            console.log("订单状态为1已下单未付款");
           }
+        
+
           this.totalCount += this.shops[shopIndex].commodityList.length;
           shopIndex++;
         }
@@ -261,5 +244,4 @@ export default {
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
 @import "../assets/css/memberOrder.scss"; //导入memberOrder订单列表样式文件
-
 </style>

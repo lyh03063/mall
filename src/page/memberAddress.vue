@@ -16,7 +16,7 @@
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
-      <div class="receipt-modify FR" @click="form(item)" style="z-index=1000">
+      <div class="receipt-modify FR" @click="form(item)" >
         <i class="iconfont icon-xiugai"></i>
       </div>
     </div>

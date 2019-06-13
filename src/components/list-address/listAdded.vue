@@ -4,7 +4,7 @@
       <el-form-item label="姓名" prop="name" >
         <el-input v-model="addForm.name" placeholder="收货人姓名"></el-input>
       </el-form-item>
-      <el-form-item label="电话" prop="phone" >
+      <el-form-item label="电话" prop="phone">
         <el-input v-model="addForm.phone" placeholder="收货人手机号"></el-input>
       </el-form-item>
       
@@ -16,7 +16,7 @@
       <el-form-item label="详细地址" prop="extend" >
         <el-input type="textarea" v-model="addForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
       </el-form-item>
-       
+
       <div class="preserve" @click="addedAddress()">保存并使用</div>
     </el-form>
   </div>
