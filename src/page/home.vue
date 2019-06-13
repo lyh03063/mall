@@ -1,34 +1,51 @@
 
 <template>
   <div class="bigg">
+    <div class="box-topbox">码帮商城</div>
     <div class="box-top">
-      <img class="box-top-img" src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg">
+      <img
+        class="box-top-img"
+        src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg"
+      >
     </div>
     <div class="block">
+       <router-link to="/commodityDetail">
       <el-carousel trigger="click" height="135px">
-        <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
+        <el-carousel-item v-for="item in 3" :key="item">
+        </el-carousel-item>
       </el-carousel>
+       </router-link>
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
         </div>
-      </div> -->
+      </div>-->
     </div>
     <div class="block">
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
             <div class="img-box" @click="$store.commit('changeActiveProduce',buyEach)">
-            <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
+              <router-link to="/commodityDetail">
+              <img
+                class="box-commodity"
+                v-if="buyEach.album&&buyEach.album.length"
+                :src="buyEach.album[0].url"
+              >
+              </router-link>
             </div>
             <div class="box-title">{{buyEach.description}}</div>
-            <div class="box-3" style="width:135px" >￥{{buyEach.price}}</div>
-            <div class="el-icon-shopping-cart-2 box-4" @click="isCartCom=!isCartCom"></div>
+            <div class="box-3" style="width:135px">￥{{buyEach.price}}</div>
+            <div class="el-icon-shopping-cart-2 box-4" @click="purchase(buyEach)"></div>
           </div>
         </template>
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
+<<<<<<< HEAD
+    <portal></portal>
+    <cartComponent v-if="isCartCom"></cartComponent>
+=======
 
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
@@ -37,19 +54,20 @@
     <portal></portal>
    <cartComponent v-if="isCartCom"></cartComponent>
 
+>>>>>>> a15cd1ead70b4f19639d998b48a710da444784be
   </div>
 </template>
 
 <script>
-
 import portal from "../components/shift/portal";
 import cartComponent from "../components/cart/cartComponent.vue";
 export default {
-  components: { portal,cartComponent },
+  components: { portal, cartComponent },
   data() {
     return {
-      isCartCom:false,
+      isCartCom: false,
       buy: [],
+      
       imgg: [
         {
           id: 1,
@@ -75,6 +93,11 @@ export default {
     };
   },
   methods: {
+    purchase(buyEach) {
+
+      this.isCartCom = !this.isCartCom;
+      this.$store.commit("changeActiveProduce", buyEach);
+    },
     getProList() {
       axios({
         method: "post",
@@ -97,9 +120,10 @@ export default {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
   },
-  // computed:{
-  //   activeProduceId(){
-  //     return this.$store.state.activeProduceId
+  // computed: {
+  //   activeProduceId() {
+  //     //此处返回vuex的值到外部
+  //     return this.$store.state.activeProduceId;
   //   }
   // }
 };
@@ -112,10 +136,24 @@ export default {
   height: 1175px;
   width: 100%;
   padding: 0 auto;
- 
 }
 
 //商品列表+
+.box-topbox {
+  margin: 0 auto;
+  width: 380px;
+  height: 90px;
+  text-align: center;
+  line-height:90px;
+  font-weight:bold;
+  font-size:40px;
+  background-color:#ffffff;
+  color:#64D9F6;
+  background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1560425120&di=627560e18211e7caad5d3bde52b51781&src=http://img.nongji360.com/n/image/2015/08/11/151247223025.jpg");
+  background-size: 380px 200px;
+  background-repeat: no-repeat;
+  background-position-y: -10px;
+}
 .box-top {
   margin: 0 auto;
   width: 380px;
@@ -124,14 +162,14 @@ export default {
   background-size: 380px 200px;
   background-repeat: no-repeat;
   background-position-y: -10px;
-  position:relative;
+  position: relative;
 }
-.box-top-img{
-  width:50px;
-  height:50px;
-  position:absolute;
-  top:0;
-  right:0;
+.box-top-img {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .box-1 {
   height: 265px;
@@ -140,7 +178,7 @@ export default {
   margin: 5px 7px;
   float: left;
 }
-.img-box{
+.img-box {
   width: 167.5px;
   height: 175.5px;
 }
@@ -167,8 +205,8 @@ export default {
   font-size: 25px;
   float: left;
   margin: 20px 0;
-  width:40px;
-  height:40px;
+  width: 40px;
+  height: 40px;
 }
 .block {
   width: 380px;
