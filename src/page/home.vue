@@ -1,7 +1,9 @@
 
 <template>
   <div class="bigg">
-    <div class="box-top"></div>
+    <div class="box-top">
+      <img class="box-top-img" src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg">
+    </div>
     <div class="block">
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
@@ -106,6 +108,14 @@ export default {
   background-size: 380px 200px;
   background-repeat: no-repeat;
   background-position-y: -10px;
+  position:relative;
+}
+.box-top-img{
+  width:50px;
+  height:50px;
+  position:absolute;
+  top:0;
+  right:0;
 }
 .box-1 {
   height: 265px;
