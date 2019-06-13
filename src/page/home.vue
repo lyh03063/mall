@@ -18,7 +18,7 @@
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
-            <div class="img-box">
+            <div class="img-box" @click="$store.commit('changeActiveProduce',buyEach)">
             <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
             </div>
             <div class="box-title">{{buyEach.description}}</div>
@@ -29,8 +29,8 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-    <cartComponent v-if="isCartCom"></cartComponent>
     <portal></portal>
+    <cartComponent v-if="isCartCom"></cartComponent>
   </div>
 </template>
 
@@ -89,7 +89,12 @@ export default {
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
-  }
+  },
+  // computed:{
+  //   activeProduceId(){
+  //     return this.$store.state.activeProduceId
+  //   }
+  // }
 };
 </script>
 
@@ -100,6 +105,7 @@ export default {
   height: 1175px;
   width: 100%;
   padding: 0 auto;
+ 
 }
 
 //商品列表+
@@ -154,6 +160,8 @@ export default {
   font-size: 25px;
   float: left;
   margin: 20px 0;
+  width:40px;
+  height:40px;
 }
 .block {
   width: 380px;
