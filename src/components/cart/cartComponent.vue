@@ -1,13 +1,8 @@
 <template>
-  <div class="cartComponent" style="bottom:0">
+  <div class="cartComponent">
     <!-- 这是购物车插件 -->
     <div class="Shopping-box cartComponent">
-      <el-dialog
-        :visible.sync="dialogCartComponent"
-        width="100%"
-        style="padding: 0;"
-        class="dialog-fade-in"
-      >
+      <el-dialog :visible.sync="isCartCom" width="100%" style="padding: 0;" class="dialog-fade-in">
         <header class="header-box">
           <span class="header-img">
             <img :src="doc.album[0].url">
@@ -44,34 +39,28 @@
 export default {
   methods: {
     addCartFun() {
-      console.group("addCartFun=========购物车插件====");
-      this.dialogCartComponent = false;
-      this.cartTotal = this.doc.price * this.doc.cartProductNumber;
-      console.log("this.cartData=============", this.cartData);
-      this.cartData.unshift(this.doc);
-      console.log("this.cartData======----", this.cartData);
-      console.log(" this.doc======----", this.doc);
-      // 当前加入购物车状态保存到本地
+      this.$store.commit("isCartComClose");
 
-      // let strArr = JSON.stringify({
-      //   objcartData: this.doc,
-      //   cartTotal: this.cartTotal
-      // }); //数组转字符串
-      // localStorage.objcartData = strArr;
+      this.cartTotal = this.doc.price * this.doc.cartProductNumber;
+
+      // 深度拷贝
+      let str = JSON.stringify(this.doc); //转化为字符串
+      let rowNew = JSON.parse(str); //转化为对象
+
+      this.cartData.unshift(rowNew); //
+
       let strArr2 = JSON.stringify(this.cartData); //数组转字符串
       localStorage.cartData = strArr2;
     },
 
     goCartFun() {
+      this.$store.commit("isCartComClose");
       this.$router.push({ path: "/confirmOrder" });
-      // this.cartTotal = this.doc.price * this.doc.cartProductNumber;
       this.$store.commit("goCartFun", this.doc);
     }
   },
   data() {
     return {
-      dialogCartComponent: true,
-
       cartTotal: 1
     };
   },
@@ -85,6 +74,9 @@ export default {
     },
     cartData() {
       return this.$store.state.cartData;
+    },
+    isCartCom() {
+      return this.$store.state.isCartCom;
     }
   }
 };
