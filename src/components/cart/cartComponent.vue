@@ -66,12 +66,9 @@ export default {
     },
 
     goCartFun() {
-      
-      this.cartTotal = this.doc.price * this.doc.cartProductNumber;
-      this.$store.commit("goCartFun", {
-        objcartData: this.doc,
-        cartTotal: this.cartTotal
-      });
+      this.$router.push({ path: "/confirmOrder", });
+      // this.cartTotal = this.doc.price * this.doc.cartProductNumber;
+      this.$store.commit("goCartFun", this.doc);
     }
   },
   data() {

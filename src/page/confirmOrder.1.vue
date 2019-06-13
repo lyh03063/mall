@@ -1,6 +1,7 @@
 <template>
   <div class="main-cfo">
     <div style="background-color:white">
+      
       <div class="delivery-btn">
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
       </div>
@@ -10,7 +11,7 @@
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>
-          <li class="FS14">收货地址：{{title.area}}</li>
+          <li class="FS14">收货地址：{{title.address}}</li>
         </ul>
       </div>
 
@@ -139,24 +140,54 @@ export default {
       title: {
         phone: "18123456454",
         name: "张等等",
-        area: "码帮科技"
+        address: "码帮科技"
       },
-      allCount: {},
+      allCount:{},
 
       cartData: [
-       
-        
+        {
+          isCart: false, //控制是否选中状态
+          P1: 1,
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
+          name:
+            "name",
+          description: "1-6种时令水果大切盘，鲜切水果",
+          price: 20,
+
+          cartProductNumber: 2 //产品选中的数量
+        },
+        {
+          isCart: false, //控制是否选中状态
+          P1: 2,
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
+          name:
+            "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
+          description: "1-6种时令水果大切盘，鲜切水果",
+          price: 20,
+
+          cartProductNumber: 2 //产品选中的数量
+        }
       ]
     };
   },
   methods: {
     JumpDetail() {
       this.$router.push({ path: "/memberOrderDetail" });
-       
     },
     Jumpaddress() {
       this.$router.push({ path: "/memberAddress" });
-    }
+    },
+
   },
   computed: {
     cartTotal() {
@@ -166,13 +197,7 @@ export default {
         stock += item.price * item.cartProductNumber; //
       });
       return stock;
-    },
-    confirmOrder() {
-      return this.$store.state.confirmOrder;
     }
-  },
-  created() {
-    this.cartData=this.confirmOrder
   }
 };
 </script>
