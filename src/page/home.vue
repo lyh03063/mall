@@ -22,23 +22,26 @@
             <img class="box-commodity" v-if="buyEach.album&&buyEach.album.length" :src="buyEach.album[0].url">
             </div>
             <div class="box-title">{{buyEach.description}}</div>
-            <div class="box-3" style="width:135px">￥{{buyEach.price}}</div>
-            <div class="el-icon-shopping-cart-2 box-4"></div>
+            <div class="box-3" style="width:135px" >￥{{buyEach.price}}</div>
+            <div class="el-icon-shopping-cart-2 box-4" @click="isCartCom=!isCartCom"></div>
           </div>
         </template>
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
+    <cartComponent v-if="isCartCom"></cartComponent>
     <portal></portal>
   </div>
 </template>
 
 <script>
 import portal from "../components/shift/portal";
+import cartComponent from "../components/cart/cartComponent.vue";
 export default {
-  components: { portal },
+  components: { portal,cartComponent },
   data() {
     return {
+      isCartCom:false,
       buy: [],
       imgg: [
         {
