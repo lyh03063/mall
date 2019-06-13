@@ -1,7 +1,6 @@
 
 <template>
   <div class="bigg">
-<note></note>
     <div class="box-top"></div>
     <div class="block">
       <el-carousel trigger="click" height="135px">
@@ -34,9 +33,8 @@
 
 <script>
 import portal from "../components/shift/portal";
-import note from "../components/shift/note";
 export default {
-  components: { portal,note },
+  components: { portal },
   data() {
     return {
       buy: [],
