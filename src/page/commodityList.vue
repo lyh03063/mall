@@ -47,7 +47,7 @@ import portal from "../components/shift/portal";
 import { stringify } from "querystring";
 export default {
   name: "",
-  components: { portal,cartComponent },
+  components: { portal, cartComponent },
   props: {},
 
   data() {
@@ -61,7 +61,7 @@ export default {
 
       productList: [], //商品分类列表数据
       groupList: {}, //商品列表数据
-      focusId: 1,//选项卡id聚焦
+      focusId: 1, //选项卡id聚焦
       isCartCom: false,
       Objparma: {
         category: ""
@@ -118,7 +118,7 @@ export default {
           alert("异常:" + error);
         });
     },
-    
+
     getorder(index) {
       this.Objparma.category = index;
       this.getList();
@@ -127,6 +127,7 @@ export default {
   mounted() {
     //-------------------------等待模板加载后-------------------------
     this.getProList(); //第一次加载此函数，页面才不会空
+    this.getList((this.Objparma.category = 5));
     this.classSkin = this.classSkin || "skin-default"; //classSkin默认设成skin-default
   },
   created() {}

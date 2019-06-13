@@ -228,44 +228,7 @@ export default {
             this.shopStatus1.push(this.shops[shopIndex]);
             console.log("订单状态为1已下单未付款");
           }
-          // else if (this.shops[shopIndex].status == 2) {
-          //   this.shopStatus2.push(this.shops[shopIndex]);
-          //   console.log("订单状态为2已付款未发货");
-          // } else if (this.shops[shopIndex].status == 3) {
-          //   this.shopStatus3.push(this.shops[shopIndex]);
-          //   console.log("订单状态为已发货");
-          // } else if (this.shops[shopIndex].status == 4) {
-          //   this.shopStatus4.push(this.shops[shopIndex]);
-          //   console.log("订单状态为已完成");
-          // } else {
-          //   console.log("订单取消");
-          // }
-
-          // 判断订单的状态 1表示已下单
-          // switch (this.shops[shopIndex].status) {
-          //   case "0":
-          //     this.shopStatus0.push(this.shops[shopIndex]);
-          //     console.log("订单状态为0显示全部");
-          //     break;
-          //   case "1":
-          //     this.shopStatus1.push(this.shops[shopIndex]);
-          //     console.log("订单状态为1已下单未付款");
-          //     break;
-          //   case "2":
-          //     this.shopStatus2.push(this.shops[shopIndex]);
-          //     console.log("订单状态为2已付款未发货");
-          //     break;
-          //   case "3":
-          //     this.shopStatus3.push(this.shops[shopIndex]);
-          //     console.log("订单状态为已发货");
-          //     break;
-          //   case "4":
-          //     this.shopStatus4.push(this.shops[shopIndex]);
-          //     console.log("订单状态为已完成");
-          //     break;
-          //   default:
-          //     console.log("订单取消");
-          // }
+        
 
           this.totalCount += this.shops[shopIndex].commodityList.length;
           shopIndex++;
