@@ -1,10 +1,6 @@
 <template>
-<<<<<<< HEAD
-  <div class="main">
-=======
   <div class="cart">
    
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
     <div class="shop">
       <!-- 全选打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -24,16 +20,12 @@
     </div>
 
     <!------------- 购物车的主要内容 ---------------->
-<<<<<<< HEAD
-    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box">
-=======
     <div
       v-for="item  in  cartData"
       :key="item.P1"
       class="cart-product-box"
       @click="shopCheckbox(item)"
     >
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
       <!-- 打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
         <div class="shop-checkbox">
@@ -118,15 +110,9 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-<<<<<<< HEAD
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 49,
-=======
             "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
           cartProductNumber: 2 //产品选中的数量
         },
         {
@@ -135,15 +121,9 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-<<<<<<< HEAD
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 99,
-=======
             "2【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "2-6种时令水果大切盘，鲜切水果",
           price: 30,
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
           cartProductNumber: 2
         },
         {
@@ -152,11 +132,6 @@ export default {
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
-<<<<<<< HEAD
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 100,
-=======
             "3【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "3-6种时令水果大切盘，鲜切水果",
           price: 40,
@@ -183,7 +158,6 @@ export default {
             "5【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "5-6种时令水果大切盘，鲜切水果",
           price: 60,
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
           cartProductNumber: 10
         }
       ]
@@ -228,10 +202,6 @@ export default {
     // --------删除函数---------
     cartdeleteFun() {
       this.dialogVisible = false;
-<<<<<<< HEAD
-      console.log("删除--this.isCartList", this.isCartList);
-      // -------删除之后待做-------
-=======
       console.group("删除-------");
       console.log("this.isCartList", this.isCartList);
 
@@ -256,7 +226,6 @@ export default {
         this.$store.commit("cartBalanceFun", objCartBalance);
         this.$router.push({ path: "/confirmOrder" });
       }
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
     }
   },
   watch: {
@@ -268,18 +237,12 @@ export default {
         });
         //  商品总数量等于选中的数组长度
         this.cartBalance = this.isCartList.length;
-<<<<<<< HEAD
-        console.log("选中状态的列表--this.isCartList", this.isCartList);
-        if (this.isCartList.length == this.cartData.length) {
-          this.allIsCart = true;
-=======
         // 如果总的数组存在
         if (this.cartData.length) {
           // 如果选中的数组等于选中的数组，那么就全选
           if (this.isCartList.length == this.cartData.length) {
             this.allIsCart = true;
           }
->>>>>>> f6e57a46616247f38ee6dae75ee4662e5d96209c
         }
       },
       deep: true //深度监听

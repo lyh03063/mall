@@ -17,6 +17,7 @@ export default {};
   padding: 0 15px;
 }
 .foot {
+  background-image: url("http://www.dmagic.cn/images/IconS/IconS_2578.png");
   color: #bfbfc3;
   padding: 50px 0 20px;
   background-position: center 17px;

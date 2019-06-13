@@ -2,22 +2,36 @@
   <div class="main-cfo">
     <div style="background-color:white">
       <div class="delivery-btn">
-        <el-button class="iconfont iconkuaidi">商家配送</el-button>
-        <el-button class="iconfont iconbaobao">商家配送</el-button>
+        <el-button class="iconfont iconkuaidi" @click="showdelivery=true">商家配送</el-button>
+        <el-button class="iconfont iconbaobao" @click="pickup=true">到店提货</el-button>
       </div>
-      <router-link to="./memberAddress">
-        <ul :cf="title" class="address">
-          <p>{{title.phone}}</p>
-          <i class="iconfont icondizhi1"></i>
-          <li>收货人：{{title.name}}</li>
-          <li class="FS14">收货地址：{{title.address}}</li>
-        </ul>
-      </router-link>
-     
+
+      <div>
+        <router-link to="./memberAddress" @click="showdelivery">
+          <ul :cf="title" class="address">
+            <p>{{title.phone}}</p>
+            <i class="iconfont icondizhi1"></i>
+            <li>收货人：{{title.name}}</li>
+            <li class="FS14">收货地址：{{title.address}}</li>
+          </ul>
+        </router-link>
+      </div>
+
+      <div>
+        <router-link to="./memberAddress" @click="pickup" style="display:none">
+          <ul :cf="title" class="address">
+            <p>{{title.phone}}</p>
+            <i class="iconfont icondizhi1"></i>
+            <li>收货人：{{title.name}}</li>
+            <li class="FS14">收货地址11：{{title.address}}</li>
+          </ul>
+        </router-link>
+      </div>
+
       <div class="line"></div>
     </div>
     <space height="15"></space>
-   
+
     <div class="BC_fff">
       <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
@@ -49,7 +63,7 @@
         <div @click="delivery=true" class="delivery-mode">
           <span>同城配送 免运费</span>
           <br>
-           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
+          <!-- <span style="color:#999">請選擇期望送達時間</span> -->
           <span>{{value1}}</span>
         </div>
       </div>
@@ -87,7 +101,9 @@
           合計:
           <span class="C_f00">￥{{cartTotal}}</span>
         </span>
+        <router-link to="./memberOrderDetail">
         <el-button type="danger">提交订单</el-button>
+        </router-link>
       </div>
     </div>
 
@@ -112,8 +128,19 @@
 
 <script>
 export default {
+  methods: {
+    open() {
+      this.showdelivery = true;
+    },
+    abc() {
+      this.pick = true;
+    }
+  },
   data: function() {
     return {
+      showdelivery: true,
+      pickup: false,
+
       pickerOptions1: {
         disabledDate(time) {
           const curDate = new Date().getTime();
@@ -124,7 +151,7 @@ export default {
       },
       value1: "",
       URL: {
-        list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
+        list: "http://120.76.160.41:3000/crossList?page=mabang-order"
       },
       isCartList: [],
       delivery: false,
@@ -134,9 +161,8 @@ export default {
         name: "张等等",
         address: "码帮科技"
       },
-       cartData: [
+      cartData: [
         {
-      
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
@@ -146,8 +172,6 @@ export default {
           cartProductNumber: 2 //产品选中的数量
         },
         {
-       
-       
           imgUrl:
             "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
           name:
@@ -155,7 +179,7 @@ export default {
           description: "6种时令水果大切盘，鲜切水果",
           price: 99,
           cartProductNumber: 2
-        },
+        }
       ]
     };
   },
@@ -168,9 +192,7 @@ export default {
       });
       return stock;
     }
-  },
-
-
+  }
 };
 </script>
 
@@ -193,12 +215,11 @@ export default {
 }
 .shoppingmall {
   background-size: 100%;
- float: left;
+  float: left;
 
   overflow: hidden;
-  
-  display: block;
 
+  display: block;
 }
 .palce-order {
   width: 100%;
@@ -225,7 +246,7 @@ export default {
     background: white;
     color: red;
     margin-left: 32px;
-    border-color:red
+    border-color: red;
   }
 }
 
