@@ -1,23 +1,24 @@
 <template>
   <div class="main-cfo">
     <div style="background-color:white">
+      
       <div class="delivery-btn">
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
-        <el-button class="iconfont iconbaobao">商家配送</el-button>
       </div>
-      <router-link to="./memberAddress">
-        <ul :cf="title" class="address">
+
+      <div style="padding-top:50px">
+        <ul @click="Jumpaddress" :cf="title" class="address">
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>
           <li class="FS14">收货地址：{{title.address}}</li>
         </ul>
-      </router-link>
-     
+      </div>
+
       <div class="line"></div>
     </div>
     <space height="15"></space>
-   
+
     <div class="BC_fff">
       <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
@@ -28,7 +29,7 @@
       <!-----------------商品詳情--------------------->
       <div class="details" v-for="(item,index) in cartData" :key="index">
         <a>
-          <img :src="item.imgUrl">
+          <img :src="item.album[0].url">
         </a>
         <div class="title-details">
           <p>{{item.name}}</p>
@@ -42,14 +43,14 @@
     </div>
     <!-----------------配送方式--------------------->
     <div>
-      <div class="delivery-box">
+      <div class="delivery-box" @click="delivery=true">
         <div style="width:50%;float:left;font-size:16px;line-height: 30px">
           <p>配送方式</p>
         </div>
-        <div @click="delivery=true" class="delivery-mode">
+        <div class="delivery-mode">
           <span>同城配送 免运费</span>
           <br>
-           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
+          <!-- <span style="color:#999">請選擇期望送達時間</span> -->
           <span>{{value1}}</span>
         </div>
       </div>
@@ -87,7 +88,8 @@
           合計:
           <span class="C_f00">￥{{cartTotal}}</span>
         </span>
-        <el-button type="danger">提交订单</el-button>
+
+        <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
 
@@ -101,6 +103,7 @@
           placeholder="选择日期时间"
           style="width:100%"
           :picker-options="pickerOptions1"
+          value-format=" yyyy-MM-dd HH:mm"
         ></el-date-picker>
       </div>
       <div class="footer">
@@ -114,6 +117,9 @@
 export default {
   data: function() {
     return {
+      showdelivery: true,
+      pickup: false,
+      //-------------日期限制
       pickerOptions1: {
         disabledDate(time) {
           const curDate = new Date().getTime();
@@ -122,9 +128,11 @@ export default {
           return time.getTime() <= Date.now() || time.getTime() > dateRegion;
         }
       },
+
       value1: "",
+
       URL: {
-        list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
+        list: "http://120.76.160.41:3000/crossList?page=mabang-order"
       },
       isCartList: [],
       delivery: false,
@@ -134,30 +142,52 @@ export default {
         name: "张等等",
         address: "码帮科技"
       },
-       cartData: [
+      allCount:{},
+
+      cartData: [
         {
-      
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          isCart: false, //控制是否选中状态
+          P1: 1,
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 49,
+            "name",
+          description: "1-6种时令水果大切盘，鲜切水果",
+          price: 20,
+
           cartProductNumber: 2 //产品选中的数量
         },
         {
-       
-       
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          isCart: false, //控制是否选中状态
+          P1: 2,
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
-            "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-          description: "6种时令水果大切盘，鲜切水果",
-          price: 99,
-          cartProductNumber: 2
-        },
+            "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
+          description: "1-6种时令水果大切盘，鲜切水果",
+          price: 20,
+
+          cartProductNumber: 2 //产品选中的数量
+        }
       ]
     };
+  },
+  methods: {
+    JumpDetail() {
+      this.$router.push({ path: "/memberOrderDetail" });
+    },
+    Jumpaddress() {
+      this.$router.push({ path: "/memberAddress" });
+    },
+
   },
   computed: {
     cartTotal() {
@@ -168,9 +198,7 @@ export default {
       });
       return stock;
     }
-  },
-
-
+  }
 };
 </script>
 
@@ -193,12 +221,11 @@ export default {
 }
 .shoppingmall {
   background-size: 100%;
- float: left;
+  float: left;
 
   overflow: hidden;
-  
-  display: block;
 
+  display: block;
 }
 .palce-order {
   width: 100%;
@@ -220,12 +247,13 @@ export default {
 
 .delivery-btn {
   text-align: center;
+
   .el-button {
-    width: 47.5%;
+    width: 95%;
     background: white;
     color: red;
-    margin-left: 32px;
-    border-color:red
+    margin: 0 2.5%;
+    border-color: red;
   }
 }
 

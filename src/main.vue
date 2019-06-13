@@ -17,6 +17,7 @@ export default {};
   padding: 0 15px;
 }
 .foot {
+  /* background-image: url("http://www.dmagic.cn/images/IconS/IconS_2578.png"); */
   color: #bfbfc3;
   padding: 50px 0 20px;
   background-position: center 17px;
@@ -29,7 +30,7 @@ export default {};
 }
 
 /* 购物车小插件样式 */
-.cartComponent.el-dialog {
+.cartComponent .el-dialog {
   position: fixed;
   bottom: 0;
   margin-bottom: -0px;
@@ -40,6 +41,7 @@ export default {};
 .cartComponent .el-dialog__headerbtn {
   border: 1px solid #909399;
   border-radius: 50%;
+  z-index: 10000;
 }
 .cartComponent .el-dialog__header span {
   border-bottom: 0;

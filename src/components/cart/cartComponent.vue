@@ -1,5 +1,5 @@
 <template>
-  <div class="cartComponent">
+  <div class="cartComponent" style="bottom:0">
     <!-- 这是购物车插件 -->
     <div class="Shopping-box cartComponent" >
       <el-dialog
@@ -53,7 +53,6 @@ export default {
     addCartFun() {
       this.dialogCartComponent = false;
       this.cartTotal = this.doc.price * this.doc.cartProductNumber;
-
       this.cartData.unshift(this.doc);
       console.log("this.cartData=============", this.cartData);
       // 当前加入购物车状态保存到本地
@@ -61,13 +60,12 @@ export default {
         objcartData: this.doc,
         cartTotal: this.cartTotal
       }); //数组转字符串
-
       localStorage.objcartData = strArr;
-
       let strArr2 = JSON.stringify(this.cartData); //数组转字符串
-
       localStorage.cartData = strArr2;
     },
+
+
     goCartFun() {
       this.cartTotal = this.doc.price * this.doc.cartProductNumber;
       this.$store.commit("goCartFun", {

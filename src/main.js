@@ -51,11 +51,8 @@ const router = new VueRouter({
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
-
-
   ]
 })
 
@@ -113,7 +110,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     goCartFun(state, param) {
       console.log("goCartFun--param", param);
     },
-
 
 
     initListState(state, param) {//改变列表的初始状态值

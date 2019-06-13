@@ -20,15 +20,9 @@
       </div>
 
       <!------------- 购物车的主要内容 ---------------->
-      <div
-        v-for="(item,index)  in  NewcartData"
-        :key="index"
-        class="cart-product-box"
-        @click="shopCheckbox(item)"
-      >
-      
+      <div v-for="(item,index)  in  NewcartData" :key="index" class="cart-product-box">
         <!-- 打钩按钮 -->
-        <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}">
+        <div @click="shopCheckbox(item)" :class="{'shop-checkbox-box':true, isChecked:item.isCart}">
           <div class="shop-checkbox">
             <i class="el-icon-check"></i>
           </div>
@@ -42,13 +36,15 @@
         <!-- 商品名与计数器 -->
         <div class="cart-main">
           <div class="cart-name">
-            <template v-if="!isedit">{{item.name}}</template>
+            <div @click="shopCheckbox(item)" v-if="!isedit">{{item.name}}</div>
             <el-input-number v-else v-model="item.cartProductNumber" :min="1" size="mini"></el-input-number>
           </div>
           <!-- 商品介绍、价格、数量 -->
-          <div class="cart-intro">{{item.description}}</div>
-          <div class="cart-price">￥{{item.price}}</div>
-          <div class="cart-number">X{{item.cartProductNumber}}</div>
+          <div @click="shopCheckbox(item)">
+            <div class="cart-intro">{{item.description}}</div>
+            <div class="cart-price">￥{{item.price}}</div>
+            <div class="cart-number">X{{item.cartProductNumber}}</div>
+          </div>
         </div>
       </div>
 
@@ -190,10 +186,9 @@ export default {
           stock += item.price * item.cartProductNumber; //
         });
         this.cartTotal = stock;
-     
-          let strArr = JSON.stringify(this.NewcartData); //数组转字符串
-          localStorage.cartData = strArr;
-        
+
+        let strArr = JSON.stringify(this.NewcartData); //数组转字符串
+        localStorage.cartData = strArr;
       },
       deep: true //深度监听
     },

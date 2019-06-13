@@ -10,7 +10,7 @@
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
       <div class="receipt-modify FR" @click="form(item)">
-        <i class="iconfont icon-xiugai">111</i>
+        <i class="iconfont icon-xiugai"></i>
       </div>
     </div>
 
