@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 
 // var VueTouch = require('vue-touch')
 // Vue.use(VueTouch, { name: 'v-touch' })
+import confirmOrder from "./page/confirmOrder";
 
 import Home from "./page/home";
 import login from "./page/login";
@@ -32,6 +33,7 @@ import listAddModify from "./components/list-address/listAddModify";
 
 
 
+
 // 3. 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({
   routes: [
@@ -41,7 +43,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    // { path: '/confirmOrder', component: confirmOrder },
+    { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -49,11 +51,8 @@ const router = new VueRouter({
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
-
-
   ]
 })
 
@@ -87,14 +86,17 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     cartBalanceFun(state, param) {
       console.log("cartBalanceFun--param", param);
     },
+    // JumpDetail(state, param){
 
-    addCartFun(state, param){
+    // },
+
+    addCartFun(state, param) {
       console.log("addCartFun--param", param);
     },
-    goCartFun(state, param){
+    goCartFun(state, param) {
       console.log("goCartFun--param", param);
     },
-    
+
 
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);

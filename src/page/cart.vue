@@ -1,10 +1,5 @@
 <template>
   <div class="cart">
-   
-
-
-   
-
     <div class="shop">
       <!-- 全选打钩按钮 -->
       <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -24,18 +19,9 @@
     </div>
 
     <!------------- 购物车的主要内容 ---------------->
-
-    <div v-for="(item,index)  in  cartData" :key="index" class="cart-product-box"></div>
-
-    <div
-      v-for="item  in  cartData"
-      :key="item.P1"
-      class="cart-product-box"
-      @click="shopCheckbox(item)"
-     >
-
+    <div v-for="item  in  cartData" :key="item.P1" class="cart-product-box">
       <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}" @click="shopCheckbox(item)">
+      <div @click="shopCheckbox(item)" :class="{'shop-checkbox-box':true, isChecked:item.isCart}">
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
@@ -43,32 +29,23 @@
 
       <!-- 商品图片 -->
       <div class="cart-img">
-        <img :src="item.imgUrl">
+        <img :src="item.album[0].url">
       </div>
 
       <!-- 商品名与计数器 -->
       <div class="cart-main">
         <div class="cart-name">
-          <template v-if="!isedit">{{item.name}}</template>
+          <div @click="shopCheckbox(item)" v-if="!isedit">{{item.name}}</div>
           <el-input-number v-else v-model="item.cartProductNumber" :min="1" size="mini"></el-input-number>
         </div>
         <!-- 商品介绍、价格、数量 -->
-        <div class="cart-intro">{{item.description}}</div>
-        <div class="cart-price">{{item.price}}</div>
-        <div class="cart-number">X{{item.cartProductNumber}}</div>
+        <div @click="shopCheckbox(item)">
+          <div class="cart-intro">{{item.description}}</div>
+          <div class="cart-price">{{item.price}}</div>
+          <div class="cart-number">X{{item.cartProductNumber}}</div>
+        </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <!----------- 页尾 ------------->
     <footer>
@@ -88,7 +65,11 @@
             <span>合计：￥{{cartTotal}}</span>
             <p>运费</p>
           </span>
-          <el-button type="danger">结算（{{cartBalance}}）</el-button>
+          <el-button
+            type="danger"
+            @click="cartBalanceFun"
+            :disabled="cartBalance==0"
+          >结算（{{cartBalance}}）</el-button>
         </template>
         <el-button type="danger" v-else :disabled="cartBalance==0" @click="dialogVisible=true">删除</el-button>
       </div>
@@ -102,16 +83,14 @@
         <span type="primary" @click="cartdeleteFun">确 定</span>
       </div>
     </el-dialog>
-
-    
   </div>
 </template>
 
 
 <script>
-import cartComponent from "../components/cart/cartComponent"
+import cartComponent from "../components/cart/cartComponent";
 export default {
-  components:{cartComponent},
+  components: { cartComponent },
   data() {
     return {
       dialogVisible: false, //控制删除弹窗是否显示
@@ -126,11 +105,13 @@ export default {
         {
           isCart: false, //控制是否选中状态
           P1: 1,
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
-
-
             "1【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
@@ -140,11 +121,13 @@ export default {
         {
           isCart: false,
           P1: 2,
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
-
-
             "2【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "2-6种时令水果大切盘，鲜切水果",
           price: 30,
@@ -154,8 +137,12 @@ export default {
         {
           isCart: false,
           P1: 3,
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
             "3【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "3-6种时令水果大切盘，鲜切水果",
@@ -166,8 +153,12 @@ export default {
         {
           isCart: false,
           P1: 4,
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
             "4【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "4-6种时令水果大切盘，鲜切水果",
@@ -177,11 +168,16 @@ export default {
         {
           isCart: false,
           P1: 5,
-          imgUrl:
-            "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
+          album: [
+            {
+              url:
+                "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
+            }
+          ],
           name:
             "5【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
           description: "5-6种时令水果大切盘，鲜切水果",
+          price: 50,
           cartProductNumber: 10
         }
       ]
@@ -193,6 +189,7 @@ export default {
     },
     //----------点击选中函数-------
     shopCheckbox(item) {
+      console.group("shopCheckbox-------", item);
       item.isCart = !item.isCart; //对当前节点的状态取反
       // 当循环到的含有选中状态，那么不全选
       this.cartData.filter(doc => {
@@ -226,10 +223,6 @@ export default {
     // --------删除函数---------
     cartdeleteFun() {
       this.dialogVisible = false;
-
-      console.log("删除--this.isCartList", this.isCartList);
-      // -------删除之后待做-------
-
       console.group("删除-------");
       console.log("this.isCartList", this.isCartList);
 
@@ -265,18 +258,12 @@ export default {
         });
         //  商品总数量等于选中的数组长度
         this.cartBalance = this.isCartList.length;
-
-        console.log("选中状态的列表--this.isCartList", this.isCartList);
-        if (this.isCartList.length == this.cartData.length) {
-          this.allIsCart = true;
-
         // 如果总的数组存在
         if (this.cartData.length) {
           // 如果选中的数组等于选中的数组，那么就全选
           if (this.isCartList.length == this.cartData.length) {
             this.allIsCart = true;
           }
-        }
         }
       },
       deep: true //深度监听
@@ -292,7 +279,14 @@ export default {
       });
       return stock;
     }
+
+    // cartData() {
+    //   return this.$store.state.cartData;
+    // }
   }
+  // created() {
+  //   console.log("beforeCreate--cartData", this.cartData);
+  // }
 };
 </script >
 <style lang="scss" scoped>
