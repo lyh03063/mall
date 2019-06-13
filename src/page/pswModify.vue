@@ -86,17 +86,7 @@
   </div>
 </template>
 <script>
-import {
-  fetchAll,
-  fetchByID,
-  fetchList,
-  postData,
-  putData,
-  deleteByID,
-  deleteAllByID,
-  guid,
-  bytesToSize
-} from "@/api/dbhelper";
+
 //这一步很重要，一般我们直接从后台拿过来输出来会是在data里面，但是我发现却在store里面，这里就要用到vuex
 import { mapGetters } from "vuex";
 export default {
