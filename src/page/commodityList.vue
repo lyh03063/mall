@@ -28,7 +28,7 @@
               <div class="FL">
                 <div class="product-price">
                   ￥{{group.price}}
-                  <div class="el-icon-circle-plus-outline product-icon"></div>
+                  <div class="el-icon-circle-plus-outline product-icon" @click="purchase(group)"></div>
                 </div>
               </div>
             </div>
@@ -37,15 +37,17 @@
       </div>
     </div>
     <portal></portal>
+    <cartComponent v-if="isCartCom"></cartComponent>
   </div>
 </template>
 
 <script>
+import cartComponent from "../components/cart/cartComponent.vue";
 import portal from "../components/shift/portal";
 import { stringify } from "querystring";
 export default {
   name: "",
-  components: { portal },
+  components: { portal,cartComponent },
   props: {},
 
   data() {
@@ -57,23 +59,28 @@ export default {
         list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
       },
 
-      productList: [], //列表数据
-
-      groupList: {},
-      indexlist: [],
-      focusId: 1,
+      productList: [], //商品分类列表数据
+      groupList: {}, //商品列表数据
+      focusId: 1,//选项卡id聚焦
+      isCartCom: false,
       Objparma: {
         category: ""
       }
     };
   },
   methods: {
+    //------跳转加入购物车--------
+    purchase(buyEach) {
+      this.isCartCom = !this.isCartCom;
+      this.$store.commit("changeActiveProduce", buyEach);
+    },
+
+    //------聚焦选型卡函数--------
     focusTab(id) {
-      //聚焦选型卡函数
       this.focusId = id;
       this.$emit("after-focus", id); //触发自定义事件
     },
-    //-------------------------ajax获取产品列表函数-------------------------
+    //--------------获取商品分类列表接口函数--------------
     getProList() {
       axios({
         //请求接口
@@ -82,7 +89,7 @@ export default {
         data: this.Objparma //传递参数
       })
         .then(response => {
-          console.log("第一次请求结果", response.data);
+          // console.log("请求商品分类列表结果", response.data);
           let { list } = response.data; //解构赋值
           this.productList = list;
         })
@@ -90,6 +97,7 @@ export default {
           alert("异常:" + error);
         });
     },
+    //--------------获取商品列表接口函数--------------
     getList() {
       axios({
         //请求接口
@@ -103,25 +111,23 @@ export default {
       })
         .then(response => {
           let { list } = response.data; //解构赋值
+          // console.log("请求商品列表结果", response.data);
           this.groupList = list;
-          //alert(JSON.stringify(this.groupList))
-          console.log(this.groupList.name);
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
     },
+    
     getorder(index) {
       this.Objparma.category = index;
-
       this.getList();
     }
   },
   mounted() {
     //-------------------------等待模板加载后-------------------------
     this.getProList(); //第一次加载此函数，页面才不会空
-
-    this.classSkin = this.classSkin || "skin-default"; //cf.classSkin默认设成skin-default
+    this.classSkin = this.classSkin || "skin-default"; //classSkin默认设成skin-default
   },
   created() {}
 };
@@ -166,7 +172,6 @@ body {
 
 .tab-content {
   float: left;
-  // padding-top: 10px;
   display: none;
 }
 
@@ -236,6 +241,5 @@ body {
 .product-icon {
   font-size: 24px;
   float: right;
- 
 }
 </style>
