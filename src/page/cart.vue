@@ -26,6 +26,7 @@
         class="cart-product-box"
         @click="shopCheckbox(item)"
       >
+      
         <!-- 打钩按钮 -->
         <div :class="{'shop-checkbox-box':true, isChecked:item.isCart}">
           <div class="shop-checkbox">
