@@ -94,6 +94,8 @@
 
     
   </div>
+  </div>
+  </div>
 </template>
 
 
@@ -217,6 +219,9 @@ export default {
     // --------删除函数---------
     cartdeleteFun() {
       this.dialogVisible = false;
+
+
+
       console.log("删除--this.isCartList", this.isCartList);
       // -------删除之后待做-------
 
@@ -267,12 +272,15 @@ export default {
           if (this.isCartList.length == this.cartData.length) {
             this.allIsCart = true;
           }
+
+        }
+
         }
         }
         },
       deep: true //深度监听
-    }
-  },
+    },
+  
   computed: {
     //计算属性
     cartTotal() {

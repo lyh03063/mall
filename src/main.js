@@ -22,6 +22,7 @@ import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
+import confirmOrder from "./page/confirmOrder";
 
 
 import listAdded from "./components/list-address/listAdded";
@@ -43,7 +44,7 @@ const router = new VueRouter({
     { path: '/commodityList', component: commodityList },
     { path: '/commodityDetail', component: commodityDetail },
     { path: '/cart', component: cart },
-    // { path: '/confirmOrder', component: confirmOrder },
+    { path: '/confirmOrder', component: confirmOrder },
     { path: '/memberCenter', component: memberCenter },
     { path: '/memberSetting', component: memberSetting },
     { path: '/pswModify', component: pswModify },
@@ -60,6 +61,11 @@ const router = new VueRouter({
 })
 
 
+
+
+
+// var VueTouch = require('vue-touch')
+// Vue.use(VueTouch, { name: 'v-touch' })
 
 
 // var VueTouch = require('vue-touch')
@@ -79,7 +85,7 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
-    activeMenuIndex: "1",//当前激活的菜单index
+    activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
     },
@@ -87,7 +93,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
   },
   mutations: {//变更事件
     memberAddressModify(state, param) {
-
       state.AddressModify_item = param
       console.log("this.AddressModify_item",this.AddressModify_item);
       },
