@@ -95,25 +95,18 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     AddressModify_item: {},
     confirmOrderAddress:{}
   },
-  mutations: {//变更事件
 
+  mutations: {//变更事件
     confirmOrderAddressFun(state, param){
       state.confirmOrderAddress=param
+    
+      console.log(" state.confirmOrderAddress",state.confirmOrderAddress)
     },
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
       console.log("this.AddressModify_item",this.AddressModify_item);
       },
-    cartData: [],//用于存放购物车的总数据
-    confirmOrder: [],//用于确认订单的总数据
-    doc: {//用于购物车插件的数据
-      cartProductNumber: null,
-      isCart: true,
-    },
-    isCartCom: false
-  },
-  mutations: {//变更事件
 
     // JumpDetail(state, param){
 
