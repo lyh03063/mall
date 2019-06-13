@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="cartComponent">
     <!-- 这是购物车插件 -->
 
     <div class="Shopping-box cartComponent">

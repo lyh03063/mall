@@ -1,8 +1,10 @@
 <template>
   <div class="main">
     <el-form  :rules="rules" ref="ruleForm"  label-width="50px" class="demo-ruleForm"  size="small">
+
+     
         <el-form-item label="姓名" prop="name" >
-          <el-input v-model="modifyForm.name" placeholder="收货人姓名"></el-input>
+          <el-input v-model="modifyForm.name" placeholder="收货人姓名1"></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="phone" >
           <el-input v-model="modifyForm.phone" placeholder="收货人手机号"></el-input>
@@ -28,7 +30,6 @@
 
 <script>
 export default {
-
   components: {},
   data() {
     return {

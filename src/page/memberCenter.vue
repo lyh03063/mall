@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{list[activeMenuIndex].phone}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list[activeMenuIndex].userName}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
