@@ -135,7 +135,10 @@ export default {
         money: null, //已经完成
         userName: null, //已完成
         leaveMsg: "", //已完成
-        extend: {},
+        extend: {
+          //配送时间
+          distribution: "" //配送地址
+        },
         commodityList: [
           //已完成
           {
@@ -152,7 +155,13 @@ export default {
             name: "菠萝",
             P1: "2"
           }
-        ]
+        ],
+        postAddress: {
+          //获取用户填写得地址
+          address: "",
+          phone: "",
+          name: ""
+        }
       }
     };
   },
@@ -160,20 +169,20 @@ export default {
     GoOrder() {
       console.group("提交订单");
 
-      this.Objparma.commodityList = this.cartData;
+      this.Objparma.commodityList = this.cartData.map(item => {
+        let { byCount, freight, price, name, P1 } = item;
+        return { byCount, freight, price, name, P1 };
+      });
+
       this.Objparma.money = this.cartTotal;
-      this.Objparma.userName = this.userName;
-      console.group("userName", this.userName);
-      console.group("cartData", this.cartData);
-      console.group("Objparma", this.Objparma);
-      console.group("cartTotal", this.cartTotal);
+
+      this.Objparma.postAddress.address = this.title.area;
+      this.Objparma.postAddress.phone = this.title.phone;
+      this.Objparma.postAddress.name = this.title.name;
+      this.Objparma.userName = localStorage.address;
     }
   },
   computed: {
-    userName() {
-      //总的数据列表
-      return this.$store.state.user.userName;
-    },
     cartTotal() {
       //计算合计总数
       let stock = 0; //初始值设置为0

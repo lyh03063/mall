@@ -87,9 +87,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     listState: {//存放列表的共享状态，
 
     },
-    user: {
-      userName: "张三"
-    },
+
     AddressModify_item: {},
     confirmOrderAddress: {},
     doc: {//存放购物车插件的对象
@@ -99,9 +97,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于存放确认订单的总数据
-
-
-
   },
 
 
