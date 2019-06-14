@@ -43,10 +43,10 @@
 </template>
 <script>
 export default {
-  data: function(){
-return{
-  isCartCom:true
-}
+  data: function() {
+    return {
+      // isCartCom: true
+    };
   },
   methods: {
     closeDialogFun() {
@@ -56,7 +56,6 @@ return{
       this.closeDialogFun();
 
       this.cartTotal = this.doc.price * this.doc.byCount;
-
 
       // 深度拷贝
       let str = JSON.stringify(this.doc); //转化为字符串
