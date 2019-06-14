@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      count: 5,
+      count: 60,
       isOpen: false
     };
   },
@@ -19,7 +19,7 @@ export default {
       if (this.count == 0) {
         clearInterval(this.time);
         this.isOpen = false;
-        this.count = 5;
+        this.count = 60;
       }
     },
     start() {
