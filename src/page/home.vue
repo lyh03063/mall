@@ -1,4 +1,3 @@
-
 <template>
   <div class="bigg">
     <div class="box-topbox">码帮商城</div>
@@ -146,7 +145,6 @@ export default {
   width: 100%;
   padding: 0 auto;
 }
-
 //商品列表+
 .box-topbox {
   margin: 0 auto;
@@ -238,11 +236,9 @@ export default {
   background-repeat: no-repeat;
   background-size: 380px 135px;
 }
-
 .el-carousel__item:nth-child(3) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/Ft8u0o9RPHyxDwahv19iH8ixFWXM.jpg!large.jpg");
 }
-
 .el-carousel__item:nth-child(5) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FvAWQmPIRX4Qr6baCOfvf1rTOHBj.jpg!large.jpg");
 }

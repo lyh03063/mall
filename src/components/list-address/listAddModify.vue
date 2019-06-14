@@ -44,21 +44,17 @@ export default {
         delete: "http://120.76.160.41:3000/crossDelete?page=mabang-address"
       },
       // modifyForm: {
-      //   name: "",
-      //   phone: "",
-      //   area: "",
-      //   extend: "",
-      //   userName: ""
+      //   // name: "",
+      //   // phone: "",
+      //   // area: "",
+      //   // extend: "",
+      //   // userName: ""
       // },
 
       //验证表单
       rules: {
         name: [
-          {
-            required: true,
-            message: "请填写收货人姓名",
-            trigger: "blur"
-          }
+          { required: true, message: "请填写收货人姓名", trigger: "blur" }
         ],
         phone: [
           { required: true, message: "请输入收货人电话", trigger: "blur" },
@@ -97,7 +93,7 @@ export default {
       });
     },
     modifyAddress() {
-     this.modifyForm.area= this.modifyForm.area.join(" ");
+      // this.modifyForm.area = this.modifyForm.area.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
       axios({
         //请求修改接口
@@ -140,18 +136,19 @@ export default {
 .modifyAdd {
   display: block;
   margin: 0 auto;
-  width: 60%;
+  width: 98%;
   height: 44px;
   background-color: #f44;
-    border: 0px
+   color: #fff;
+  border: 0px;
 }
 .deleteButton {
   display: block;
   margin: 0 auto;
-  width: 60%;
+  width: 98%;
   height: 44px;
   margin-top: 20px;
   background-color: #fff;
-  border: 0px
+  border: 0px;
 }
 </style>
