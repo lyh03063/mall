@@ -9,14 +9,12 @@
           </div>
         </div>
 
-<<<<<<< HEAD
-   
-=======
+
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
         <div class="shop-name">码帮商城</div>
->>>>>>> 3800ac6054b7b106acc06e50ff6d1ae033957c48
+
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
@@ -142,7 +140,7 @@ export default {
 
       let arr = this.NewcartData.filter(item => item.isCart == false);
       this.NewcartData = arr;
-      
+
       let strArr = JSON.stringify(this.NewcartData); //数组转字符串
       localStorage.cartData = strArr;
       // this.NewcartData.forEach((item, i) => {
