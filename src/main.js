@@ -19,6 +19,7 @@ import memberSetting from "./page/memberSetting";
 import pswModify from "./page/pswModify";
 import memberAddress from "./page/memberAddress";
 import memberOrder from "./page/memberOrder";
+import memberOrderpay from "./page/memberOrderpay";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
@@ -53,6 +54,7 @@ const router = new VueRouter({
     { path: '/pswModify', component: pswModify },
     { path: '/memberAddress', component: memberAddress },
     { path: '/memberOrder', component: memberOrder },
+    { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
@@ -77,6 +79,8 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
+
+    newdetail: {}, //存放列表详情
     activeCellphoneVerify: "",//手机验证码
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
@@ -92,12 +96,26 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     },
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
-    confirmOrder: []//用于存放确认订单的总数据
+    confirmOrder: [],//用于存放确认订单的总数据
+
+
+
   },
 
 
- 
-  mutations: {//变更事件
+
+  mutations: {
+
+
+    ///--------hjp开始-------
+    orderlistdetail(state, param) {//改变列表的初始状态值
+      console.log("param", param);
+      state.newdetail = param
+
+    },
+    ///--------hjp结束-------
+
+    //变更事件
     confirmOrderAddressFun(state, param) {
       state.confirmOrderAddress = param
       console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
