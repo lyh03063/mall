@@ -1,47 +1,46 @@
 <template>
   <div class="main">
-    <div :class="['tab-box',classSkin]">
-      <div class="tab-menu-box">
-        <a
-          :class="{'tab-box-menu':true,'tab-menu-focus':(focusId==index+1)}"
-          href="javascript:;"
-          v-for="(commoditySort,index) in commoditySortList"
-          :key="commoditySort.P1"
-          @click="focusTab(index+1),getorder(commoditySort.P1)"
-        >{{commoditySort.name}}</a>
-      </div>
-      <div style="position:absolute;top:0;left: 100px;">
-        <div
-          :class="{'tab-content':true,'content-focus':true}"
-          v-for="commodity in commodityList"
-          :key="commodity.index"
-        >
-          <div class="commodity-group" :v-model="Objparma.prop">
-            <router-link :to="'/commodityDetail?id=' + commodity.P1">
-              <img
-                class="commodity-img"
-                v-if="commodity.album&&commodity.album.length"
-                :src="commodity.album[0].url"
-                @click="$store.commit('changeActiveProduce',commodity)"
-              >
-            </router-link>
-            <div class="commodity-intro">
-              <p class="commodity-name">{{commodity.name}}</p>
-              <p class="commodity-description">{{commodity.description}}</p>
-              <div class="FL">
-                <div class="commodity-price">
-                  ￥{{commodity.price}}
-                  <div
-                    class="el-icon-circle-plus-outline commodity-icon"
-                    @click="purchase(commodity)"
-                  ></div>
+    <el-tabs tab-position="left">
+      <el-tab-pane
+        :label="commoditySort.name"
+        v-for="commoditySort in commoditySortList"
+        :key="commoditySort.P1"
+      >
+        <ul class="commodity-list">
+          <div class="commodity-title">{{commoditySort.name}}</div>
+          <template v-for="commodity in commodityList">
+            <li
+              class="commodity-group"
+              :key="commodity.index"
+              :v-model="findJson.prop"
+              v-if="commodity.category==commoditySort.P1"
+            >
+              <router-link :to="'/commodityDetail?id=' + commodity.P1">
+                <img
+                  class="commodity-img"
+                  v-if="commodity.album&&commodity.album.length"
+                  :src="commodity.album[0].url"
+                  @click="$store.commit('changeActiveProduce',commodity)"
+                >
+              </router-link>
+              <div class="commodity-intro">
+                <p class="commodity-name">{{commodity.name}}</p>
+                <p class="commodity-description">{{commodity.description}}</p>
+                <div class="FL">
+                  <div class="commodity-price">
+                    ￥{{commodity.price}}
+                    <div
+                      class="el-icon-circle-plus-outline commodity-icon"
+                      @click="purchase(commodity)"
+                    ></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </li>
+          </template>
+        </ul>
+      </el-tab-pane>
+    </el-tabs>
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
   </div>
@@ -58,7 +57,6 @@ export default {
 
   data() {
     return {
-      classSkin: "skin-red-tab", //皮肤
       // -------------------------请求接口的地址-------------------------
       objURL: {
         Prolist: "http://120.76.160.41:3000/crossList?page=mabang-category",
@@ -67,10 +65,7 @@ export default {
 
       commoditySortList: [], //商品分类列表数据
       commodityList: {}, //商品列表数据
-      focusId: 1, //选项卡id聚焦
-      Objparma: {
-        category: ""
-      }
+      findJson: {}
     };
   },
   methods: {
@@ -80,21 +75,15 @@ export default {
       this.$store.commit("changeActiveProduce", commodity);
     },
 
-    //------聚焦选型卡函数--------
-    focusTab(id) {
-      this.focusId = id;
-      this.$emit("after-focus", id); //触发自定义事件
-    },
     //--------------获取商品分类列表接口函数--------------
-    getProList() {
+    getCommoditySortList() {
       axios({
         //请求接口
         method: "post",
         url: this.objURL.Prolist,
-        data: this.Objparma //传递参数
+        data: this.findJson //传递参数
       })
         .then(response => {
-          // console.log("请求商品分类列表结果", response.data);
           let { list } = response.data; //解构赋值
           this.commoditySortList = list;
         })
@@ -103,42 +92,26 @@ export default {
         });
     },
     //--------------获取商品列表接口函数--------------
-    getList() {
+    getCommodityList() {
       axios({
         //请求接口
         method: "post",
         url: this.objURL.list,
-        data: {
-          findJson: {
-            category: this.Objparma.category
-          }
-        }
+        data: this.findJson //传递参数
       })
         .then(response => {
           let { list } = response.data; //解构赋值
-          // console.log("请求商品列表结果", response.data);
           this.commodityList = list;
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
-    },
-
-    getorder(index) {
-      this.Objparma.category = index;
-      this.getList();
-    }
-  },
-  computed: {
-    activeMenuIndex() {
-      return this.$store.state.user;
     }
   },
   mounted() {
     //-------------------------等待模板加载后-------------------------
-    this.getProList(); //第一次加载此函数，页面才不会空
-    this.getList((this.Objparma.category = 5));
-    this.classSkin = this.classSkin || "skin-default"; //classSkin默认设成skin-default
+    this.getCommoditySortList(); //第一次加载此函数，页面才不会空
+    this.getCommodityList();
   },
   computed: {
     isCartCom() {
@@ -159,76 +132,36 @@ body {
   max-width: 640px;
   width: 100%;
   margin: 0 auto;
-  position: relative;
 }
 
-.skin-default .tab-menu-focus:link,
-.skin-default .tab-menu-focus:visited {
-  color: red;
-  font-weight: bold;
+.commodity-list {
+  width: 100%;
+  padding: 10px 10px 0 10px;
+  background-color: #fff;
 }
-
-.skin-default .tab-box-menu {
-  width: 100px;
-  height: 80px;
-  padding: 10px;
-  display: inline-block;
-  margin: 0 10px 0 0;
-  background-color: #f8f8f8;
-  padding: 5px 20px;
-}
-
-.tab-menu-box {
-  width: 100px;
-}
-.skin-default .tab-menu-box {
-  padding: 10px;
-  overflow: hidden;
-}
-
-.tab-content {
-  float: left;
-  display: none;
-}
-
-.content-focus {
-  display: block;
-}
-
-.skin-red-tab .tab-menu-focus:link,
-.skin-red-tab .tab-menu-focus:visited {
-  border-left: 2px solid #e4393c;
-  background: #fff;
-  font-weight: bold;
-  height: 80px;
-}
-
-.skin-red-tab .tab-box-menu {
-  width: 100px;
-  height: 80px;
-  display: inline-block;
-  margin: 0 5px 0 0;
-  background: #f8f8f8;
-  padding: 10px 20px;
+.commodity-title {
+  font-size: 12px;
+  font-weight: normal;
+  color: #666;
+  padding-bottom: 10px;
 }
 .commodity-group {
-  max-width: 500px;
   width: 100%;
   overflow: hidden;
   background-color: #fff;
+  margin-bottom: 10px;
 }
 .commodity-img {
   width: 30%;
   float: left;
 }
-
 .commodity-intro {
   float: left;
   width: 60%;
 }
 .commodity-name {
   width: 100%;
-  padding: 10px;
+  padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -240,7 +173,7 @@ body {
   max-height: 40px;
   font-size: 12px;
   color: #999;
-  margin: 10px;
+  padding: 5px 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -257,5 +190,11 @@ body {
 .commodity-icon {
   font-size: 24px;
   float: right;
+}
+
+.el-tabs--left .el-tabs__header.is-left {
+  float: left;
+  margin-bottom: 0;
+  margin-right: 0;
 }
 </style>
