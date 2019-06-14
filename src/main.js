@@ -23,19 +23,8 @@ import memberOrder from "./page/memberOrder";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
-
-
-
-
-
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
-
-
-
-
-
-
 
 
 
@@ -76,8 +65,6 @@ const router = new VueRouter({
 // // Vue.use(VueTouch, { name: 'v-touch' })
 
 
-
-
 import axios from "axios";
 window.axios = axios;
 
@@ -86,43 +73,32 @@ Vue.use(Vuex)//应用组件
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
-    AddressModify_item: {},
-      confirmOrderAddress: {},
     activeCellphoneVerify: "",//手机验证码
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-      user: {},
-      
+
     },
-   
+    AddressModify_item: {},
+    confirmOrderAddress:{},
+    confirmOrder:{},
+    cartData:[],
+    
   },
 
   mutations: {//变更事件
-    confirmOrderAddressFun(state, param) {
-      state.confirmOrderAddress = param
-
-      console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
+    confirmOrderAddressFun(state, param){
+      state.confirmOrderAddress=param
+    
+      console.log(" state.confirmOrderAddress",state.confirmOrderAddress)
     },
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
-      console.log("this.AddressModify_item", this.AddressModify_item);
-    },
-    cartData: [],//用于存放购物车的总数据
-    confirmOrder: [],//用于确认订单的总数据
-    doc: {//用于购物车插件的数据
-      cartProductNumber: null,
-      isCart: true,
-    },
-    getForm(state, param) {
-      console.log("123123", param);
-      state.user = param
-    },
-    isCartCom: false
-  },
-  mutations: {//变更事件
-
+      console.log("this.AddressModify_item",this.AddressModify_item);
+      },
+    
+   
     // JumpDetail(state, param){
 
     // },
@@ -151,6 +127,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
+
+
+
+
+
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
       state.listState[param.listIndex] = param.objState;

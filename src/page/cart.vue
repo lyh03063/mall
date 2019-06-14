@@ -8,7 +8,7 @@
             <i class="el-icon-check"></i>
           </div>
         </div>
-
+ 
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
@@ -93,7 +93,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 
@@ -180,9 +179,8 @@ export default {
     },
     isCartList: {
       handler: function() {
-        
         this.cartBalance = this.isCartList.length;
-        if (this.isCartList.length != 0) {
+        if (this.isCartList.length != 1) {
           if (this.isCartList.length == this.cartData.length) {
             this.allIsCart = true;
           }

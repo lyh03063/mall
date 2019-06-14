@@ -49,7 +49,6 @@ export default {
   name: "",
   components: { portal, cartComponent },
   props: {},
-
   data() {
     return {
       classSkin: "skin-red-tab", //皮肤
@@ -58,7 +57,6 @@ export default {
         Prolist: "http://120.76.160.41:3000/crossList?page=mabang-category",
         list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
       },
-
       productList: [], //商品分类列表数据
       groupList: {}, //商品列表数据
       focusId: 1, //选项卡id聚焦
@@ -74,7 +72,6 @@ export default {
       this.isCartCom = !this.isCartCom;
       this.$store.commit("changeActiveProduce", buyEach);
     },
-
     //------聚焦选型卡函数--------
     focusTab(id) {
       this.focusId = id;
@@ -118,7 +115,6 @@ export default {
           alert("异常:" + error);
         });
     },
-
     getorder(index) {
       this.Objparma.category = index;
       this.getList();
@@ -139,20 +135,17 @@ export default {
 body {
   background-color: #f8f8f8;
 }
-
 .main {
   max-width: 640px;
   width: 100%;
   margin: 0 auto;
   position: relative;
 }
-
 .skin-default .tab-menu-focus:link,
 .skin-default .tab-menu-focus:visited {
   color: red;
   font-weight: bold;
 }
-
 .skin-default .tab-box-menu {
   width: 100px;
   height: 80px;
@@ -162,7 +155,6 @@ body {
   background-color: #f8f8f8;
   padding: 5px 20px;
 }
-
 .tab-menu-box {
   width: 100px;
 }
@@ -170,16 +162,13 @@ body {
   padding: 10px;
   overflow: hidden;
 }
-
 .tab-content {
   float: left;
   display: none;
 }
-
 .content-focus {
   display: block;
 }
-
 .skin-red-tab .tab-menu-focus:link,
 .skin-red-tab .tab-menu-focus:visited {
   border-left: 2px solid #e4393c;
@@ -187,7 +176,6 @@ body {
   font-weight: bold;
   height: 80px;
 }
-
 .skin-red-tab .tab-box-menu {
   width: 100px;
   height: 80px;
@@ -206,7 +194,6 @@ body {
   width: 30%;
   float: left;
 }
-
 .product-intro {
   float: left;
   width: 60%;

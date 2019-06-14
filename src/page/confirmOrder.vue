@@ -3,21 +3,21 @@
     <div style="background-color:white">
       <div class="delivery-btn">
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
-        <el-button class="iconfont iconbaobao">商家配送</el-button>
       </div>
-      <router-link to="./memberAddress">
-        <ul :cf="title" class="address">
+
+      <div style="padding-top:50px">
+        <ul @click="Jumpaddress" :cf="title" class="address">
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>
           <li class="FS14">收货地址：{{title.area}}</li>
         </ul>
-      </router-link>
-     
+      </div>
+
       <div class="line"></div>
     </div>
     <space height="15"></space>
-   
+
     <div class="BC_fff">
       <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
@@ -28,7 +28,7 @@
       <!-----------------商品詳情--------------------->
       <div class="details" v-for="(item,index) in cartData" :key="index">
         <a>
-          <img :src="item.imgUrl">
+          <img :src="item.album[0].url">
         </a>
         <div class="title-details">
           <p>{{item.name}}</p>
@@ -42,14 +42,14 @@
     </div>
     <!-----------------配送方式--------------------->
     <div>
-      <div class="delivery-box">
+      <div class="delivery-box" @click="delivery=true">
         <div style="width:50%;float:left;font-size:16px;line-height: 30px">
           <p>配送方式</p>
         </div>
-        <div @click="delivery=true" class="delivery-mode">
+        <div class="delivery-mode">
           <span>同城配送 免运费</span>
           <br>
-           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
+          <!-- <span style="color:#999">請選擇期望送達時間</span> -->
           <span>{{value1}}</span>
         </div>
       </div>
@@ -87,7 +87,8 @@
           合計:
           <span class="C_f00">￥{{cartTotal}}</span>
         </span>
-        <el-button type="danger">提交订单</el-button>
+
+        <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
 
@@ -101,6 +102,7 @@
           placeholder="选择日期时间"
           style="width:100%"
           :picker-options="pickerOptions1"
+          value-format=" yyyy-MM-dd HH:mm"
         ></el-date-picker>
       </div>
       <div class="footer">
@@ -110,8 +112,18 @@
   </div>
 </template>
 
+
 <script>
 export default {
+   methods: {
+    JumpDetail() {
+      this.$router.push({ path: "/memberOrderDetail" });
+       
+    },
+    Jumpaddress() {
+      this.$router.push({ path: "/memberAddress" });
+    }
+  },
   data: function() {
     return {
       pickerOptions1: {
@@ -129,10 +141,7 @@ export default {
       isCartList: [],
       delivery: false,
 
-      // title: [],
-       cartData: [
-        
-      ]
+      // cartData: []
     };
   },
   computed: {
@@ -144,15 +153,18 @@ export default {
       });
       return stock;
     },
-    title(){
-       return this.$store.state.confirmOrderAddress; 
+    confirmOrder() {
+      return this.$store.state.confirmOrder;
+    },
+    title() {
+      return this.$store.state.confirmOrderAddress;
     }
   },
-
-
+  created() {
+    this.cartData = this.confirmOrder;
+  }
 };
 </script>
-
 
 
 
@@ -172,12 +184,10 @@ export default {
 }
 .shoppingmall {
   background-size: 100%;
- float: left;
-
+  float: left;
   overflow: hidden;
-  
-  display: block;
 
+  display: block;
 }
 .palce-order {
   width: 100%;
@@ -192,11 +202,9 @@ export default {
     color: white;
   }
 }
-
 .main {
   background-color: #f8f8f8;
 }
-
 .delivery-btn {
   text-align: center;
   .el-button {
@@ -204,10 +212,9 @@ export default {
     background: white;
     color: red;
     margin-left: 32px;
-    border-color:red
+    border-color: red;
   }
 }
-
 .address {
   padding: 10px 2.5%;
   font-size: 16px;
@@ -225,7 +232,6 @@ export default {
   margin-top: 13px;
   margin-left: 10px;
 }
-
 .details {
   background-color: #f8f8f8;
   padding: 5px 2.5%;
@@ -246,7 +252,6 @@ export default {
     font-size: 16px;
   }
 }
-
 .delivery-box {
   background-color: white;
   padding: 10px 2.5%;
@@ -265,7 +270,6 @@ export default {
   overflow: hidden;
   margin-top: 2px;
 }
-
 .total-price {
   margin-top: 10px;
   padding: 10px 2.5%;
@@ -279,7 +283,6 @@ export default {
     margin: 10px 0;
   }
 }
-
 .line {
   left: 0;
   right: 0;
@@ -310,7 +313,6 @@ export default {
   );
   background-size: 80px;
 }
-
 .el-dialog.abc {
   position: fixed;
   bottom: 0;

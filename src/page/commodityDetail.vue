@@ -265,13 +265,11 @@ export default {
         });
     },
     purchase(buyEach) {
-
 this.isCartCom = !this.isCartCom;
 this.$store.commit("changeActiveProduce", buyEach);
 },
   },
   mounted() {
-
     this.getProList();
   },
   computed: {

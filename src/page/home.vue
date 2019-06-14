@@ -101,12 +101,6 @@ export default {
         });
     }
   },
-  computed: {
-    activeMenuIndex() {
-      return this.$store.state.user;
-    },
- 
-  },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
