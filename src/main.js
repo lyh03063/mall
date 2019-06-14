@@ -85,7 +85,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-      user: {}
+      user: {} //会员列表当前用户的P1
 
     },
     AddressModify_item: {},

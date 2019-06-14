@@ -96,7 +96,7 @@ export default {
         userName: [{ validator: validateuserName, trigger: "blur" }],
         password: [{ validator: validatepassword, trigger: "blur" }]
       },
-      userLog: ""
+      userLog: {}
     };
   },
   methods: {
@@ -112,13 +112,14 @@ export default {
           })
             .then(response => {
               let { list } = response.data;
+              this.userLog = list;
               // var userList = JSON.stringify(list);
               console.log("list", list);
               // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
-              list.forEach(item => {
-                this.userLog = item.userName;
-              });
-              console.log("response.data", response.data);
+              // list.forEach(item => {
+              //   this.userLog = item.userName;
+              // });
+              // console.log("response.data", response.data);
 
               if (list.length > 0) {
                 //接口测试工具中,只要传数据过去其中一个为错的,数组就为空,这里用数组长度判断最佳
