@@ -48,7 +48,8 @@ export default {
         phone: "",
         area: [],
         extend: "",
-        userName: ""
+        userName: "",
+
       },
 
       //验证表单
@@ -62,7 +63,7 @@ export default {
           }
         ],
         phone: [
-          { required: true, message: "请输入收货人电话", trigger: "change" }
+          { required: true, message: "请输入收货人电话", trigger: "blur" }
           // { min: 11, message: "电话格式填写错误", trigger: "blur" }
         ],
 
@@ -100,10 +101,11 @@ export default {
   created() {
     // this.addedForm();
   },
-  mounted() {
-    this.addForm.userName = localStorage.loginnickName;
-    // alert(this.addForm.userName)
-    this.getProList();
+   mounted() {
+    this.addForm.userName = localStorage.loginnickName
+    //  alert(this.addForm.userName)
+    // this.getProList();
+     
   }
 };
 </script>
