@@ -48,7 +48,8 @@ export default {
         phone: "",
         area: [],
         extend: "",
-        userName: ""
+        userName: "",
+
       },
 
       //验证表单
@@ -102,6 +103,12 @@ export default {
   },
   created() {
     // this.addedForm();
+  },
+   mounted() {
+    this.addForm.userName = localStorage.loginnickName
+    //  alert(this.addForm.userName)
+    this.getProList();
+     
   }
 };
 </script>
