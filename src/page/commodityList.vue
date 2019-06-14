@@ -17,7 +17,7 @@
           :key="commodity.index"
         >
           <div class="commodity-group" :v-model="Objparma.prop">
-            <router-link to="'/commodityDetail?id='+item">
+            <router-link :to="'/commodityDetail?id=' + commodity.P1">
               <img
                 class="commodity-img"
                 v-if="commodity.album&&commodity.album.length"
@@ -31,7 +31,10 @@
               <div class="FL">
                 <div class="commodity-price">
                   ￥{{commodity.price}}
-                  <div class="el-icon-circle-plus-outline commodity-icon" @click="purchase(commodity)"></div>
+                  <div
+                    class="el-icon-circle-plus-outline commodity-icon"
+                    @click="purchase(commodity)"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -124,7 +127,6 @@ export default {
     getorder(index) {
       this.Objparma.category = index;
       this.getList();
-    
     }
   },
   computed: {
