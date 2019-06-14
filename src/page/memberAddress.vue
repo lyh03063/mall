@@ -8,7 +8,7 @@
     
     >
       <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}"  @click="shopCheckbox(item)">
+      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}"  @click="shopCheckbox(item)" v-if="selection">
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
@@ -52,7 +52,7 @@ export default {
       this.isCart = item.P1; //对当前节点的状态取反
       console.log("shopCheckbox", item.isCart);
       this.$router.push({ path: "/confirmOrder" }); //跳转到listAddModify
-      this.$store.commit("confirmOrderAddressFun", item);
+     this.$store.commit("confirmOrderAddressFun", item);
     },
     form(item) {
       //alert(JSON.stringify(item))
@@ -88,7 +88,23 @@ export default {
   },
   mounted() {
     this.getProList();
+  },
+  computed:{
+    //计算属性
+    //从vuex拿到数据
+    selection(){
+      return this.$store.state.selection;
+    }
   }
+//   },beforeCreate() {
+// //------------如果未登录------------
+// if (localStorage.isLogin == 0) {
+// this.$router.push({ path: "/login" }); //跳转到后台首页
+// } else {
+// this.$router.push({ path: "/home" });
+// }
+// console.log("beforeCreate-this.msg", this.msg);
+// }
 };
 </script>
 
