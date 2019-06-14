@@ -4,10 +4,11 @@
       class="P30"
       v-for="item in tableData"
       :key="item.tableData"
-      style="border-bottom: 1px solid #ebedf0" 
+      style="border-bottom: 1px solid #ebedf0"
+    
     >
       <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}" @click="shopCheckbox(item)">
+      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}"  @click="shopCheckbox(item)">
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
@@ -16,12 +17,15 @@
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
-      <div class="receipt-modify FR" @click="form(item)" >
+      <div class="receipt-modify FR" @click="form(item)">
         <i class="iconfont icon-xiugai"></i>
       </div>
     </div>
 
-    <div class="added" @click="submitForm()">新增地址</div>
+    <div class="added" @click="submitForm()">
+      新增地址
+      
+      </div>
   </div>
 </template>
 
@@ -32,7 +36,7 @@ export default {
   components: { listAdded, listAddModify },
   data() {
     return {
-      isCart:null,
+      isCart: null,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "000",
@@ -47,8 +51,8 @@ export default {
     shopCheckbox(item) {
       this.isCart = item.P1; //对当前节点的状态取反
       console.log("shopCheckbox", item.isCart);
-       this.$router.push({ path: "/confirmOrder" }); //跳转到confirmOrder
-       this.$store.commit("confirmOrderAddressFun", item);
+      this.$router.push({ path: "/confirmOrder" }); //跳转到listAddModify
+      this.$store.commit("confirmOrderAddressFun", item);
     },
     form(item) {
       //alert(JSON.stringify(item))

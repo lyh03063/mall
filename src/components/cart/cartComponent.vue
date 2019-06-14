@@ -2,12 +2,7 @@
   <div class="cartComponent">
     <!-- 这是购物车插件 -->
     <div class="Shopping-box cartComponent">
-      <el-dialog
-        :visible.sync="dialogCartComponent"
-        width="100%"
-        style="padding: 0;"
-        class="dialog-fade-in"
-      >
+      <el-dialog :visible.sync="isCartCom" width="100%" style="padding: 0;" class="dialog-fade-in">
         <header class="header-box">
           <span class="header-img">
             <img :src="doc.album[0].url">
@@ -42,73 +37,47 @@
 </template>
 <script>
 export default {
-  computed: {
-    //计算属性
-
-    cartData() {
-      return this.$store.state.cartData;
-    }
-  },
   methods: {
     addCartFun() {
-      this.dialogCartComponent = false;
+      this.$store.commit("isCartComClose");
+
       this.cartTotal = this.doc.price * this.doc.cartProductNumber;
-      this.cartData.unshift(this.doc);
-      console.log("this.cartData=============", this.cartData);
-      // 当前加入购物车状态保存到本地
-      let strArr = JSON.stringify({
-        objcartData: this.doc,
-        cartTotal: this.cartTotal
-      }); //数组转字符串
-      localStorage.objcartData = strArr;
+
+      // 深度拷贝
+      let str = JSON.stringify(this.doc); //转化为字符串
+      let rowNew = JSON.parse(str); //转化为对象
+
+      this.cartData.unshift(rowNew); //
+
       let strArr2 = JSON.stringify(this.cartData); //数组转字符串
       localStorage.cartData = strArr2;
     },
 
     goCartFun() {
-      this.$router.push({ path: "/confirmOrder", });
-      // this.cartTotal = this.doc.price * this.doc.cartProductNumber;
+      this.$store.commit("isCartComClose");
+      this.$router.push({ path: "/confirmOrder" });
       this.$store.commit("goCartFun", this.doc);
     }
   },
   data() {
     return {
-      dialogCartComponent: true,
-
-      cartTotal: 0,
-      doc: {
-        cartProductNumber: 1,
-        isCart: true,
-        _id: "5cfefc577352e31858b62470",
-        P1: 1,
-        name: "牛皮西瓜",
-        description: "牛皮西瓜注释",
-        detail:
-          '<p>牛皮西瓜<span style="color: rgb(51, 51, 51);">详情</span></p>',
-        price: 100,
-        store: 5,
-        prop: [
-          {
-            value: "6个装",
-            title: "净含量"
-          },
-          {
-            value: "2斤",
-            title: "重量"
-          }
-        ],
-        album: [
-          {
-            url:
-              "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%"
-          },
-          {
-            aaa: "图片2地址"
-          }
-        ],
-        freight: 5
-      }
+      cartTotal: 1
     };
+  },
+  computed: {
+    //计算属性
+
+    //从vuex拿到的数据
+    doc() {
+      //总的数据列表
+      return this.$store.state.doc;
+    },
+    cartData() {
+      return this.$store.state.cartData;
+    },
+    isCartCom() {
+      return this.$store.state.isCartCom;
+    }
   }
 };
 </script>

@@ -1,10 +1,6 @@
 <template>
-
-
-
   <div class="cart">
     <div v-if="NewcartData.length">
-
       <div class="shop">
         <!-- 全选打钩按钮 -->
         <div :class="{'shop-checkbox-box':true, isChecked:allIsCart}" @click="AllshopCheckbox">
@@ -16,10 +12,7 @@
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
-        <div class="shop-name">米柚生活</div>
-
-        <div class="shop-name">码帮生活</div>
-
+        <div class="shop-name">码帮商城</div>
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
@@ -109,13 +102,12 @@ export default {
   components: { cartComponent },
   data() {
     return {
-      NewcartData: [],
-      cartTotal: null,
+      NewcartData: [], //当前渲染的数据
+      cartTotal: null, //合计
       dialogVisible: false, //控制删除弹窗是否显示
       allIsCart: false, //控制全选的按钮
       cartBalance: 0, //选中之后总的商品数量
       isedit: false, //是否为编辑状态
-
       isCartList: [] //选中之后的列表
     };
   },
@@ -141,33 +133,28 @@ export default {
     },
     // --------删除函数---------
     cartdeleteFun() {
-      this.dialogVisible = false;
-      console.group("删除-------");
+      this.dialogVisible = false; //删除弹窗隐藏
 
       this.NewcartData.forEach((item, i) => {
+        //当为点击状态时，进行删除
         if (item.isCart == true) {
           this.cartData.splice(i, 1); //删除一个数组元素
         }
       });
-
-      console.group("cartdeleteFun-------", this.cartData);
-      if (this.allIsCart) {
-        this.cartData = [];
-        this.allIsCart = false;
-      }
     },
     // // --------结算函数---------
     cartBalanceFun() {
+      //当选中之后的列表不为0时
       if (this.isCartList.lenght != 0) {
         this.$store.commit("cartBalanceFun", this.isCartList);
         this.$router.push({ path: "/confirmOrder" });
       }
     },
-    
+
     //----------点击选中函数-------
     shopCheckbox(item) {
-      console.group("shopCheckbox-------", item);
-      item.isCart = !item.isCart; //对当前节点的状态取反
+      item.isCart = !item.isCart;
+
       // 当循环到的含有选中状态，那么不全选
       this.cartData.filter(doc => {
         if (doc.isCart == true) {
@@ -180,17 +167,18 @@ export default {
   watch: {
     cartData: {
       handler: function() {
-        // 如果总的数组存在
-
+        //筛选点击状态的数组
         this.isCartList = this.cartData.filter(item => {
           return item.isCart;
         });
 
+        // 计算总价钱
         let stock = 0; //初始值设置为0
         this.isCartList.forEach(item => {
           stock += item.price * item.cartProductNumber; //
         });
         this.cartTotal = stock;
+
 
         let strArr = JSON.stringify(this.NewcartData); //数组转字符串
         localStorage.cartData = strArr;
@@ -199,6 +187,7 @@ export default {
     },
     isCartList: {
       handler: function() {
+        
         this.cartBalance = this.isCartList.length;
         if (this.isCartList.length != 0) {
           if (this.isCartList.length == this.cartData.length) {
@@ -207,8 +196,6 @@ export default {
         } else {
           this.allIsCart = false;
         }
-
-        // 如果总的数组存在
       },
       deep: true //深度监听
     }
@@ -226,7 +213,6 @@ export default {
   },
 
   created() {
-    // 初始化列表的数据 this.cartData
     this.$store.commit("init");
     this.NewcartData = this.cartData;
   }
