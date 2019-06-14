@@ -19,12 +19,8 @@
           </div>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            type="passwordword"
-            v-model="ruleForm.password"
-            placeholder="密码"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="ruleForm.password" placeholder="请输入密码" show-password></el-input>
+     
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="WP100" @click="submitForm('ruleForm')">登录</el-button>
