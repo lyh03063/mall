@@ -101,7 +101,7 @@ export default {
     selection() {
       return this.$store.state.selection;
     }
-  }
+  },
   //  beforeCreate() {
   // //------------如果未登录------------
   // if (localStorage.isLogin == 0) {

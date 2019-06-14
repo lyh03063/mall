@@ -16,7 +16,7 @@
       </el-form-item>
 
       <el-form-item label="地区" prop="area">
-        <el-cascader :options="options" v-model="modifyForm.area"></el-cascader>
+        <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
 
       <el-form-item label="详细地址" prop="extend">
@@ -36,6 +36,8 @@ export default {
   components: {},
   data() {
     return {
+      userName:[],
+      cityArray:[],
       options: option,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
@@ -93,7 +95,8 @@ export default {
       });
     },
     modifyAddress() {
-      // this.modifyForm.area = this.modifyForm.area.join(" ");
+    
+      this.modifyForm.area = this.cityArray.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
       axios({
         //请求修改接口
