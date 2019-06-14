@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  props: ["cf", "isnote"],
   data() {
     return {
       count: 60,
@@ -23,21 +24,25 @@ export default {
       }
     },
     start() {
-      this.time = setInterval(this.reciprocal, 1000);
-      this.isOpen = true;
-      this.sms()
-        this.$store.commit("changeActiveCellphone", mobileVCode);
+      console.log("this.isnote", this.isnote);
+      if (this.isnote) {
+        this.time = setInterval(this.reciprocal, 1000);
+        this.isOpen = true;
+        this.sms();
+      }
+
+      // this.$store.commit("changeActiveCellphone", mobileVCode);
     },
     sms() {
       axios({
         method: "post",
         url: "http://120.76.160.41:3000/mabangMall/sendMobileMessage",
         data: {
-          mobile:this.mobile
+          mobile: this.cf
         }
       })
         .then(response => {
-          let { code,message,data } = response.data; //解构赋值
+          let { code, message, data } = response.data; //解构赋值
           console.log("code", code);
           console.log("message", message);
           console.log("data", data);
@@ -47,13 +52,12 @@ export default {
         });
     }
   },
- computed: {
-   
+  computed: {
     mobile() {
       //总的数据列表
       return this.$store.state.activeCellphoneVerify;
     }
-  },
+  }
 };
 </script>
 
@@ -64,15 +68,17 @@ export default {
   text-align: center;
   line-height: 25px;
   position: relative;
-  border:1px solid black;
+  /* border:1px solid black; */
 }
 .defense {
-  width: 100px;
-  height: 30px;
-  background-color: #ffffff;
+  width: 100%;
+  height: 38px;
+  text-align: center;
+  line-height: 38px;
+  color: #ffffff;
+  background-color: #409eff;
   position: absolute;
   top: 0;
   left: 0;
-
 }
 </style>

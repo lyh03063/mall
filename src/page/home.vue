@@ -1,4 +1,3 @@
-
 <template>
   <div class="bigg">
     <div class="box-topbox">码帮商城</div>
@@ -12,8 +11,8 @@
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
           <div>
-            <router-link :to="'/commodityDetail?id=' + item">
-              <div class="box-item"></div>
+            <router-link :to="'/commodityDetail' + item">
+              <div @click="goto(item)" class="box-item"></div>
             </router-link>
           </div>
         </el-carousel-item>
@@ -28,7 +27,7 @@
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
-            <div class="img-box" >
+            <div class="img-box">
               <router-link :to="'/commodityDetail?id=' + buyEach.P1">
                 <img
                   class="box-commodity"
@@ -57,6 +56,7 @@ export default {
   components: { portal, cartComponent },
   data() {
     return {
+      isCartCom: false,
       buy: [],
       imgg: [
         {
@@ -83,6 +83,9 @@ export default {
     };
   },
   methods: {
+    goto(i) {
+      alert(i);
+    },
     purchase(buyEach) {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
@@ -99,7 +102,7 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.buy = list;
-          console.log("数据打印", response.data);
+     
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -111,6 +114,14 @@ export default {
       return this.$store.state.user;
     }
   },
+  beforeCreate() {
+    //------------如果未登录------------
+    // console.log("用戶手機", localStorage.loginUserName)
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    } 
+  
+  },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
@@ -120,9 +131,6 @@ export default {
     //     //此处返回vuex的值到外部
     //     return this.$store.state.activeProduceId;
     //   }
-    isCartCom() {
-      return this.$store.state.isCartCom;
-    }
   }
 };
 </script>
@@ -135,7 +143,6 @@ export default {
   width: 100%;
   padding: 0 auto;
 }
-
 //商品列表+
 .box-topbox {
   margin: 0 auto;
@@ -227,11 +234,9 @@ export default {
   background-repeat: no-repeat;
   background-size: 380px 135px;
 }
-
 .el-carousel__item:nth-child(3) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/Ft8u0o9RPHyxDwahv19iH8ixFWXM.jpg!large.jpg");
 }
-
 .el-carousel__item:nth-child(5) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FvAWQmPIRX4Qr6baCOfvf1rTOHBj.jpg!large.jpg");
 }

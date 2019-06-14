@@ -1,11 +1,13 @@
 <template>
-  <div class="main">
+  <div class="commodity-main">
     <el-tabs tab-position="left">
+      <!-- 商品分类列表 -->
       <el-tab-pane
         :label="commoditySort.name"
         v-for="commoditySort in commoditySortList"
         :key="commoditySort.P1"
       >
+        <!-- 商品列表 -->
         <ul class="commodity-list">
           <div class="commodity-title">{{commoditySort.name}}</div>
           <template v-for="commodity in commodityList">
@@ -54,7 +56,6 @@ export default {
   name: "",
   components: { portal, cartComponent },
   props: {},
-
   data() {
     return {
       // -------------------------请求接口的地址-------------------------
@@ -74,7 +75,6 @@ export default {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", commodity);
     },
-
     //--------------获取商品分类列表接口函数--------------
     getCommoditySortList() {
       axios({
@@ -122,13 +122,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
-body {
-  background-color: #f8f8f8;
-}
 
-.main {
+.commodity-main {
   max-width: 640px;
   width: 100%;
   margin: 0 auto;
@@ -191,10 +188,31 @@ body {
   font-size: 24px;
   float: right;
 }
-
-.el-tabs--left .el-tabs__header.is-left {
-  float: left;
-  margin-bottom: 0;
-  margin-right: 0;
+//-------el-组件修改样式------
+.commodity-main {
+  .el-tabs--left {
+    .el-tabs__header.is-left {
+      margin-right: 0;
+    }
+    .el-tabs__active-bar.is-left {
+      right: 0;
+      left: 0;
+      background-color: #f00;
+    }
+    .el-tabs__item.is-left {
+      text-align: left;
+      color: #999;
+      font-weight: bold;
+    }
+    .el-tabs__item.is-left.is-active {
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
+    }
+  }
+  .el-tabs__item {
+    height: 80px;
+    line-height: 80px;
+  }
 }
 </style>

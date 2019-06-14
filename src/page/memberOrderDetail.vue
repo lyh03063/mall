@@ -8,39 +8,39 @@
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/31/85f176382a5babc1eeed69ab34eac3ab.png"
           >
-          <h3>v-if="row.status==1"等待买家付款</h3>
+          <h3>等待买家付款</h3>
           <p>亲，您的订单超时未付款，订单自动关闭</p>
         </div>
         <!-- 等待买家付款 -->
-        <div v-if="row.status==2">
+        <div v-else-if="row.status==2">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/31/6eb5418154ef15f9454b0500c800cfcb.png"
           >
-          <h3>v-if="row.status==2"买家已付款</h3>
+          <h3>买家已付款</h3>
           <p>亲，您的订单已成功付款</p>
         </div>
         <!-- 订单交易成功开始 -->
-        <div v-if="row.status==3">
+        <div v-else-if="row.status==3">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/30/345a61fbbf62d65a3a8c528272426666.png"
           >
-          <h3>v-if="row.status==3"商家已发货</h3>
+          <h3>商家已发货</h3>
           <p>亲，商家已发货，请你耐心等待宝贝的到来！</p>
         </div>
 
         <!-- 订单交易成功开始 -->
-        <div v-if="row.status==4">
+        <div v-else-if="row.status==4">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/30/345a61fbbf62d65a3a8c528272426666.png"
           >
-          <h3>v-if="row.status==4"交易成功</h3>
+          <h3>交易成功</h3>
           <p>亲，您的订单已完成</p>
         </div>
 
         <!-- 订单取消 -->
-        <div v-if="row.status==5">
+        <div v-else>
           <img src="https://img.yzcdn.cn/v2/image/wap/trade/result/order_status/icon_topay2@2x.png">
-          <h3>v-if="row.status==5"订单取消</h3>
+          <h3>订单取消</h3>
           <p>亲，订单已被取消，需要重新下单</p>
         </div>
       </div>
@@ -57,7 +57,7 @@
       </div>
 
       <!-- 等待买家付款 -->
-      <div class="order-flow order-color" v-if="row.status==2">
+      <div class="order-flow order-color" v-else-if="row.status==2">
         <el-steps :active="1" align-center>
           <el-step title="买家已付款"></el-step>
           <el-step title="商家已发货"></el-step>
@@ -66,7 +66,7 @@
       </div>
 
       <!-- 订单交易成功开始 -->
-      <div class="order-flow order-color" v-if="row.status==3">
+      <div class="order-flow order-color" v-else-if="row.status==3">
         <el-steps :active="2" align-center>
           <el-step title="买家已付款"></el-step>
           <el-step title="商家已发货"></el-step>
@@ -75,7 +75,7 @@
       </div>
 
       <!-- 订单交易成功开始 -->
-      <div class="order-flow order-color" v-if="row.status==4">
+      <div class="order-flow order-color" v-else-if="row.status==4">
         <el-steps :active="3" align-center>
           <el-step title="买家已付款"></el-step>
           <el-step title="商家已发货"></el-step>
@@ -84,7 +84,7 @@
       </div>
 
       <!-- 订单取消 -->
-      <div class="order-flow order-color" v-if="row.status==5">
+      <div class="order-flow order-color" v-else>
         <el-steps :active="1" align-center>
           <el-step title="已生成订单"></el-step>
           <el-step title="订单取消"></el-step>
@@ -294,7 +294,7 @@ export default {
   data() {
     return {
       allCount: null, //总记录数
-      shops: {},
+      OrderList: {},
       page: {},
       totalMoney: 0, //总价格
       totalCount: 0, //总共条数
