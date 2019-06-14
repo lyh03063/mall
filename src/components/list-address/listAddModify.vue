@@ -36,7 +36,7 @@ export default {
   components: {},
   data() {
     return {
-      userName:[],
+      
       cityArray:[],
       options: option,
       objURL: {

@@ -112,15 +112,7 @@ export default {
       return this.$store.state.selection;
     }
   },
-  //  beforeCreate() {
-  // //------------如果未登录------------
-  // if (localStorage.isLogin == 0) {
-  // this.$router.push({ path: "/login" }); //跳转到后台首页
-  // } else {
-  // this.$router.push({ path: "/home" });
-  // }
-  // console.log("beforeCreate-this.msg", this.msg);
-  // }
+
 };
 </script>
 

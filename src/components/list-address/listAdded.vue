@@ -16,7 +16,7 @@
       </el-form-item>
 
       <el-form-item label="地区" prop="area">
-        <el-cascader :options="options" v-model="addForm.area"></el-cascader>
+        <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
 
       <el-form-item label="详细地址" prop="extend">
@@ -35,6 +35,7 @@ export default {
   components: {portal},
   data() {
     return {
+       cityArray:[],
       region: "",
       options: option,
       objURL: {
@@ -65,10 +66,7 @@ export default {
           { required: true, message: "请输入收货人电话", trigger: "change" }
           // { min: 11, message: "电话格式填写错误", trigger: "blur" }
         ],
-        area: [
-          { required: true, message: "请输入收货人地区", trigger: "change" },
-          
-        ],
+       
         extend: [{ required: true, message: "请填写详细地址", trigger: "blur" }]
       }
     };
@@ -77,7 +75,7 @@ export default {
   methods: {
     //---------- 新增函数
     addedAddress() {
-      // this.addForm.area = this.addForm.area.join(" ");
+      this.addForm.area = this.cityArray.join(" ");
       console.log("this.addForm.area", this.addForm.area);
 
       axios({
