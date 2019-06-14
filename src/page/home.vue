@@ -2,19 +2,22 @@
 <template>
   <div class="bigg">
     <div class="box-topbox">码帮商城</div>
-    <div class="box-top">
+    <!-- <div class="box-top">
       <img
         class="box-top-img"
         src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg"
       >
-    </div>
+    </div>-->
     <div class="block">
-      <router-link to="/commodityDetail">
-        <el-carousel trigger="click" height="135px">
-          <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
-        </el-carousel>
-      </router-link>
-
+      <el-carousel trigger="click" height="135px">
+        <el-carousel-item v-for="item in 3" :key="item">
+          <div>
+            <router-link :to="'/commodityDetail?id=' + item">
+              <div class="box-item"></div>
+            </router-link>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
@@ -25,8 +28,8 @@
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
-            <div class="img-box" @click="$store.commit('changeActiveProduce',buyEach)">
-              <router-link to="/commodityDetail">
+            <div class="img-box" >
+              <router-link :to="'/commodityDetail?id=' + buyEach.P1">
                 <img
                   class="box-commodity"
                   v-if="buyEach.album&&buyEach.album.length"
@@ -55,7 +58,6 @@ export default {
   data() {
     return {
       buy: [],
-
       imgg: [
         {
           id: 1,
@@ -81,14 +83,9 @@ export default {
     };
   },
   methods: {
-    goto(i) {
-      alert(i);
-    },
     purchase(buyEach) {
-    
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
-    
     },
     getProList() {
       axios({
@@ -112,18 +109,17 @@ export default {
   computed: {
     activeMenuIndex() {
       return this.$store.state.user;
-    },
- 
+    }
   },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
   },
   computed: {
-    // activeProduceId() {
-    //   //此处返回vuex的值到外部
-    //   return this.$store.state.activeProduceId;
-    // }
+    //   activeProduceId() {
+    //     //此处返回vuex的值到外部
+    //     return this.$store.state.activeProduceId;
+    //   }
     isCartCom() {
       return this.$store.state.isCartCom;
     }
@@ -242,10 +238,9 @@ export default {
 .el-carousel__item:nth-child(4) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FsfFgmOHGm6WZsnloJo22RImEJ6p.jpg!large.jpg");
 }
-.box-item{
-  width:380px;
-  height:135px;
-  background-color: #64d9f6;
+.box-item {
+  width: 380px;
+  height: 135px;
 }
 //轮播图-
 //底部查看+
