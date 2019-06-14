@@ -1,18 +1,19 @@
 <template>
-<div>
-  <div class="main-cfo">
-    <div style="background-color:white">
-      <div class="delivery-btn">
-        <el-button class="iconfont iconkuaidi">商家配送</el-button>
-      </div>
-      <router-link to="./memberAddress" >
-        <ul :cf="title" class="address" @click="$store.commit('selection');"><!--勾选显示 -->
-          <p>{{title.phone}}</p>
-          <i class="iconfont icondizhi1"></i>
-          <li>收货人：{{title.name}}</li>
-          <li class="FS14">收货地址：{{title.area}}</li>
-        </ul>
-      </router-link>
+  <div>
+    <div class="main-cfo">
+      <div style="background-color:white">
+        <div class="delivery-btn">
+          <el-button class="iconfont iconkuaidi">商家配送</el-button>
+        </div>
+        <router-link to="./memberAddress">
+          <ul :cf="title" class="address" @click="$store.commit('selection');">
+            <!--勾选显示 -->
+            <p>{{title.phone}}</p>
+            <i class="iconfont icondizhi1"></i>
+            <li>收货人：{{title.name}}</li>
+            <li class="FS14">收货地址：{{title.area}}</li>
+          </ul>
+        </router-link>
       </div>
 
       <div class="line"></div>
@@ -36,7 +37,7 @@
           <p style="color:#999;font-size:12px">{{item.description}}</p>
           <div>
             <span style="color:red">￥{{item.price}}</span>
-            <span style="float:right">X{{item.cartProductNumber}}</span>
+            <span style="float:right">X{{item.byCount}}</span>
           </div>
         </div>
       </div>
@@ -63,6 +64,7 @@
           <textarea
             style="width:100%;float:right;border:0;font-size:16px"
             placeholder="建议留言前先于商家沟通确认"
+            v-model="Objparma.leaveMsg"
           ></textarea>
         </div>
       </div>
@@ -93,37 +95,36 @@
         <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
-     <div>
-    <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
-      <div style="text-align:center">
-        <el-button type="danger" style="background-color:red;width:95%" round>同城配送 免運費</el-button>
-      </div>
-      <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
+    <div>
+      <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
+        <div style="text-align:center">
+          <el-button type="danger" style="background-color:red;width:95%" round>同城配送 免運費</el-button>
+        </div>
+        <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
 
-      <el-date-picker
-        style="width:50%"
-        value-format="MM-dd"
-        :picker-options="pickerOptions1"
-        v-model="day"
-        type="date"
-        placeholder="选择日期"
-      ></el-date-picker>
+        <el-date-picker
+          style="width:50%"
+          value-format="MM-dd"
+          :picker-options="pickerOptions1"
+          v-model="day"
+          type="date"
+          placeholder="选择日期"
+        ></el-date-picker>
 
-      <el-time-select
-        style="width:50%"
-        is-range
-        v-model="times"
-        :picker-options="time"
-        placeholder="选择时间"
-      ></el-time-select>
-   
-      <div class="footer" style="margin-top:100px">
-        <span type="primary" @click="delivery=false">确 定</span>
-      </div>
+        <el-time-select
+          style="width:50%"
+          is-range
+          v-model="times"
+          :picker-options="time"
+          placeholder="选择时间"
+        ></el-time-select>
 
-    </el-dialog>
+        <div class="footer" style="margin-top:100px">
+          <span type="primary" @click="delivery=false">确 定</span>
+        </div>
+      </el-dialog>
+    </div>
   </div>
-</div>
 </template>
 
 
@@ -132,11 +133,22 @@ export default {
   methods: {
     JumpDetail() {
       this.$router.push({ path: "/memberOrderDetail" });
+
+      this.Objparma.commodityList = this.cartData.map(item => {
+        let { byCount, freight, price, name, P1 } = item;
+        return { byCount, freight, price, name, P1 };
+      });
+
+      this.Objparma.money = this.cartTotal;
+
+      this.Objparma.postAddress.address = this.title.area;
+      this.Objparma.postAddress.phone = this.title.phone;
+      this.Objparma.postAddress.name = this.title.name;
+      this.Objparma.userName = localStorage.address;
     },
     Jumpaddress() {
       this.$router.push({ path: "/memberAddress" });
-    },
-   
+    }
   },
   data: function() {
     return {
@@ -159,18 +171,50 @@ export default {
         end: "17:30"
       },
 
-      isCartList: [],
       delivery: false,
-
-      cartData: []
+      cartData: [],
+      Objparma: {
+        status: "1",
+        money: null, //已经完成
+        userName: null, //已完成
+        leaveMsg: "", //已完成
+        extend: {
+          //配送时间
+          distribution: "" //配送地址
+        },
+        commodityList: [
+          //已完成
+          {
+            byCount: "2",
+            freight: "5",
+            price: "100",
+            name: "西瓜",
+            P1: "1"
+          },
+          {
+            byCount: "1",
+            freight: "5",
+            price: "100",
+            name: "菠萝",
+            P1: "2"
+          }
+        ],
+        postAddress: {
+          //获取用户填写得地址
+          address: "",
+          phone: "",
+          name: ""
+        }
+      }
     };
   },
+
   computed: {
     cartTotal() {
       //计算合计总数
       let stock = 0; //初始值设置为0
       this.cartData.forEach(item => {
-        stock += item.price * item.cartProductNumber; //
+        stock += item.price * item.byCount; //
       });
       return stock;
     },
