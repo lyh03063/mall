@@ -49,12 +49,20 @@
                       <!-- 订单列表中的页脚 -->
                     </div>
                   </div>
+
+
+                   <div
+                  class="order-cap-order-item__more"
+                  v-if="shop.commodityList.length>=1? true:false"
+                >查看全部{{shop.commodityList.length}}件商品</div>
+
+
                   <!-- 订单页脚 -->
                   <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
                     <div class="order-cap-order-item__footer">
                       <div class="order-cap-order-item__total-price">
                         合计 ：
-                        <span style="color:red">{{totalMoney}}</span>
+                        <span style="color:red">{{getTotalMoney(shop.commodityList)}}</span>
                       </div>
                     </div>
                     <router-link to="/memberOrderDetail" icon="el-icon-notebook-2">
@@ -63,10 +71,7 @@
                   </div>
                 </div>
                 <!-------------------查看全部商品数量----------------------------->
-                <div
-                  class="order-cap-order-item__more"
-                  v-if="totalCount>=1? true:false"
-                >查看全部{{totalCount}}件商品</div>
+               
               </el-tab-pane>
 
               <!-- 已付款 -->
@@ -192,6 +197,14 @@ export default {
     };
   },
   methods: {
+    getTotalMoney(commodityList) {
+      let money = 0;
+      commodityList.forEach(commodityEach => {
+        //循环：{商品数组}
+        money += commodityEach.byCount * commodityEach.price;
+      });
+      return money;
+    },
     getlist(data) {
       //将列表信息传递到列表详情页面
       this.$store.commit("orderlistdetail", data);
@@ -216,23 +229,25 @@ export default {
         this.allCount = page.allCount; //更改总数据量
         this.orderlistdata = response.data;
 
-        var shopIndex = 0;
-        // 计算总价格
-        for (let i = 0; i < this.shops.length; i++) {
-          for (let j = 0; j < this.shops[shopIndex].commodityList.length; j++) {
-            this.totalMoney +=
-              this.shops[shopIndex].commodityList[j].price *
-              this.shops[shopIndex].commodityList[j].byCount;
-          }
-          if (this.shops[shopIndex].status == 1) {
-            this.shopStatus1.push(this.shops[shopIndex]);
-            console.log("订单状态为1已下单未付款");
-          }
-        
+        this.shopStatus1 = this.shops.filter(shopEach => shopEach.status == 1);
+        this.shopStatus2 = this.shops.filter(shopEach => shopEach.status == 2);
 
-          this.totalCount += this.shops[shopIndex].commodityList.length;
-          shopIndex++;
-        }
+        // var shopIndex = 0;
+        // // 计算总价格
+        // for (let i = 0; i < this.shops.length; i++) {
+        //   for (let j = 0; j < this.shops[shopIndex].commodityList.length; j++) {
+        //     this.totalMoney +=
+        //       this.shops[shopIndex].commodityList[j].price *
+        //       this.shops[shopIndex].commodityList[j].byCount;
+        //   }
+        //   // if (this.shops[shopIndex].status == 1) {
+        //   //   this.shopStatus1.push(this.shops[shopIndex]);
+        //   //   console.log("订单状态为1已下单未付款");
+        //   // }
+
+        //   this.totalCount += this.shops[shopIndex].commodityList.length;
+        //   shopIndex++;
+        // }
       })
       .catch(function(error) {
         alert("异常:" + error);
