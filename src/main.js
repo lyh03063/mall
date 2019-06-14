@@ -54,7 +54,7 @@ const router = new VueRouter({
     { path: '/memberAddress', component: memberAddress },
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderDetail', component: memberOrderDetail },
-    { path: '/register', component: register },
+    // { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
   ]
@@ -153,7 +153,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       console.log("changeActiveProduce--state.doc", state.doc)
       console.log("changeActiveProduce--activeProduceId", activeProduceId)
       Object.assign(state.doc, activeProduceId);
-
+      state.activeProduceId = activeProduceId;
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex
