@@ -52,8 +52,8 @@
           <span>同城配送 免运费</span>
           <br>
           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
-          <span style="margin-right:10px">{{day}}</span>
-          <span>{{times}}</span>
+          <span style="margin-right:10px">{{distribution.day}}</span>
+          <span>{{distribution.times}}</span>
         </div>
       </div>
       <div class="message">
@@ -106,7 +106,7 @@
           style="width:50%"
           value-format="MM-dd"
           :picker-options="pickerOptions1"
-          v-model="day"
+          v-model="distribution.day"
           type="date"
           placeholder="选择日期"
         ></el-date-picker>
@@ -114,7 +114,7 @@
         <el-time-select
           style="width:50%"
           is-range
-          v-model="times"
+          v-model="distribution.times"
           :picker-options="time"
           placeholder="选择时间"
         ></el-time-select>
@@ -130,30 +130,13 @@
 
 <script>
 export default {
-  methods: {
-    JumpDetail() {
-      this.$router.push({ path: "/memberOrderDetail" });
-
-      this.Objparma.commodityList = this.cartData.map(item => {
-        let { byCount, freight, price, name, P1 } = item;
-        return { byCount, freight, price, name, P1 };
-      });
-
-      this.Objparma.money = this.cartTotal;
-
-      this.Objparma.postAddress.address = this.title.area;
-      this.Objparma.postAddress.phone = this.title.phone;
-      this.Objparma.postAddress.name = this.title.name;
-      this.Objparma.userName = localStorage.address;
-    },
-    Jumpaddress() {
-      this.$router.push({ path: "/memberAddress" });
-    }
-  },
   data: function() {
     return {
-      day: "",
-      times: "",
+      distribution: {
+        day: "",
+        times: ""
+      },
+
       pickerOptions1: {
         disabledDate(time) {
           const curDate = new Date().getTime();
@@ -180,7 +163,7 @@ export default {
         leaveMsg: "", //已完成
         extend: {
           //配送时间
-          distribution: "" //配送地址
+          distribution: {} //配送地址
         },
         commodityList: [
           //已完成
@@ -207,6 +190,54 @@ export default {
         }
       }
     };
+  },
+  methods: {
+    JumpDetail() {
+      if (this.title.phone && this.title.phone && this.title.area) {
+        this.Objparma.commodityList = this.cartData.map(item => {
+          let { byCount, freight, price, name, P1 } = item;
+          return { byCount, freight, price, name, P1 };
+        });
+
+        this.Objparma.money = this.cartTotal;
+
+        this.Objparma.postAddress.address = this.title.area;
+        this.Objparma.postAddress.phone = this.title.phone;
+        this.Objparma.postAddress.name = this.title.name;
+        this.Objparma.userName = localStorage.loginnickName;
+
+        this.Objparma.extend.distribution = this.distribution;
+        console.log("this.Objparma", this.Objparma);
+        this.getAddorder();
+        this.$router.push({ path: "/memberOrder" });
+      } else {
+         this.$message.error('请选择收货人，收货地址');
+  
+      }
+    },
+    Jumpaddress() {
+      this.$router.push({ path: "/memberAddress" });
+    },
+    getAddorder() {
+      axios({
+        method: "post",
+        url: "http://120.76.160.41:3000/crossAdd?page=mabang-order",
+
+        data: {
+          data: this.Objparma
+        }
+      })
+        .then(response => {
+          this.$message({
+            message: "新增订单成功",
+            type: "success"
+          });
+          console.log("response.data", response.data);
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    }
   },
 
   computed: {
