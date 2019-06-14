@@ -67,7 +67,7 @@ const router = new VueRouter({
 
 
 
-
+localStorage.isLogin=0
 
 import axios from "axios";
 window.axios = axios;
@@ -93,9 +93,8 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
     confirmOrder: []//用于存放确认订单的总数据
+
   },
-
-
  
   mutations: {//变更事件
     confirmOrderAddressFun(state, param) {
