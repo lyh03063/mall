@@ -136,7 +136,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     // getForm(state, param) {//单个会员列表对象
     //   console.log("123123", param);
     //   state.user = param
-    // },
+    // }, 
     // JumpDetail(state, param){
 
     // },

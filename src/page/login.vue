@@ -185,7 +185,7 @@ export default {
     } else {
       this.$router.push({ path: "/home" });
     }
-    console.log("beforeCreate-this.msg", this.msg);
+
   }
 };
 </script>
