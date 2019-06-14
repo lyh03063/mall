@@ -57,7 +57,7 @@ const router = new VueRouter({
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
-    // { path: '/register', component: register },
+    { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
 
@@ -72,7 +72,7 @@ const router = new VueRouter({
 
 
 
-
+localStorage.isLogin=0
 
 import axios from "axios";
 window.axios = axios;
@@ -88,7 +88,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-      user: {}
+      user: {} //会员列表当前用户的P1
 
     },
     AddressModify_item: {},

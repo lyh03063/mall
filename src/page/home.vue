@@ -110,6 +110,12 @@ export default {
     activeMenuIndex() {
       return this.$store.state.user;
     }
+  } ,beforeCreate() {
+    //------------如果未登录------------
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    }
+    console.log("beforeCreate-this.msg", this.msg);
   },
   mounted() {
     //mounted：等待模板加载后，
