@@ -5,10 +5,10 @@
       v-for="item in tableData"
       :key="item.tableData"
       style="border-bottom: 1px solid #ebedf0"
-      @click="shopCheckbox(item)"
+    
     >
       <!-- 打钩按钮 -->
-      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}">
+      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}"  @click="shopCheckbox(item)">
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
@@ -22,7 +22,10 @@
       </div>
     </div>
 
-    <div class="added" @click="submitForm()">新增地址</div>
+    <div class="added" @click="submitForm()">
+      新增地址
+      
+      </div>
   </div>
 </template>
 
