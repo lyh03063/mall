@@ -36,7 +36,6 @@ export default {
   components: {},
   data() {
     return {
-      
       cityArray:[],
       options: option,
       objURL: {
@@ -95,7 +94,6 @@ export default {
       });
     },
     modifyAddress() {
-    
       this.modifyForm.area = this.cityArray.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
       axios({
