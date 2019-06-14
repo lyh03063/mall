@@ -17,11 +17,13 @@
           :key="group.index"
         >
           <div class="product-group" :v-model="Objparma.prop">
-            <img
-              class="product-img"
-              v-if="group.album&&group.album.length"
-              :src="group.album[0].url"
-            >
+            <router-link to="/commodityDetail">
+              <img
+                class="product-img"
+                v-if="group.album&&group.album.length"
+                :src="group.album[0].url"
+              >
+            </router-link>
             <div class="product-intro">
               <p class="product-name">{{group.name}}</p>
               <p class="product-description">{{group.description}}</p>
