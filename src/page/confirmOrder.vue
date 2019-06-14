@@ -1,17 +1,18 @@
 <template>
+<div>
   <div class="main-cfo">
     <div style="background-color:white">
       <div class="delivery-btn">
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
       </div>
-
-      <div style="padding-top:50px">
-        <ul @click="Jumpaddress" :cf="title" class="address">
+      <router-link to="./memberAddress" >
+        <ul :cf="title" class="address" @click="$store.commit('selection');"><!--勾选显示 -->
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>
           <li class="FS14">收货地址：{{title.area}}</li>
         </ul>
+      </router-link>
       </div>
 
       <div class="line"></div>
@@ -92,7 +93,7 @@
         <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
-
+     <div>
     <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
       <div style="text-align:center">
         <el-button type="danger" style="background-color:red;width:95%" round>同城配送 免運費</el-button>
@@ -122,6 +123,7 @@
 
     </el-dialog>
   </div>
+</div>
 </template>
 
 
@@ -158,7 +160,7 @@ export default {
       },
 
       isCartList: [],
-      delivery: true,
+      delivery: false,
 
       cartData: []
     };

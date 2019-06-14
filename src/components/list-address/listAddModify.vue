@@ -23,10 +23,9 @@
         <el-input type="textarea" v-model="modifyForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
       </el-form-item>
 
-       <button class="modifyAdd" @click="modifyAddress()">保存并使用</button>
+      <button class="modifyAdd" @click="modifyAddress()">保存并使用</button>
 
-        <button class="deleteButton" @click="deleteForm()" >删除收货地址</button>
-      
+      <button class="deleteButton" @click="deleteForm()">删除收货地址</button>
     </el-form>
   </div>
 </template>
@@ -75,29 +74,31 @@ export default {
       this.$confirm("是否继续删除收货信息？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
-        
-      })
-        .then(() => {
-          axios({
-            //请求删除接口
-            method: "post",
-            // url: this.objURL.list,
-            url: this.objURL.delete,
-            data: {
-              findJson: {
-                P1: this.modifyForm.P1
-              },
-            } //传递参数
-          })
-          .then(response => {
-            this.$message({ message: "删除成功",duration: 1000, type: "success" });
-          this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+        type: "warning"
+      }).then(() => {
+        axios({
+          //请求删除接口
+          method: "post",
+          // url: this.objURL.list,
+          url: this.objURL.delete,
+          data: {
+            findJson: {
+              P1: this.modifyForm.P1
+            }
+          } //传递参数
+        }).then(response => {
+          this.$message({
+            message: "删除成功",
+            duration: 1000,
+            type: "success"
           });
-        })
-        
+          this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+        });
+      });
     },
     modifyAddress() {
+     this.modifyForm.area= this.modifyForm.area.join(" ");
+      console.log("this.modifyForm.area", this.modifyForm.area);
       axios({
         //请求修改接口
         method: "post",
@@ -109,12 +110,13 @@ export default {
           },
           modifyJson: this.modifyForm
         } //传递参数
-       
       })
         .then(response => {
-           let string=modifyAddress.join("")
-           return string;
-          this.$message({ message: "修改成功",duration: 1000, type: "success" });
+          this.$message({
+            message: "修改成功",
+            duration: 1000,
+            type: "success"
+          });
           this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
         })
         .catch(function(error) {
@@ -124,31 +126,32 @@ export default {
   },
   computed: {
     modifyForm() {
-      //  alert(JSON.stringify(AddressModify_item))
+      //  alert(JSON.stringify(this.AddressModify_item))
       return this.$store.state.AddressModify_item;
     }
   },
   mounted() {
-    //alert(JSON.stringify(this.modifyForm));
-  },
+    // alert(JSON.stringify(this.modifyForm));
+  }
 };
 </script>
 
 <style lang="scss" >
 .modifyAdd {
-   display: block;
+  display: block;
   margin: 0 auto;
-  width:60%;
+  width: 60%;
   height: 44px;
   background-color: #f44;
+    border: 0px
 }
 .deleteButton {
   display: block;
   margin: 0 auto;
-  width:60%;
+  width: 60%;
   height: 44px;
   margin-top: 20px;
   background-color: #fff;
-  
+  border: 0px
 }
 </style>
