@@ -42,7 +42,7 @@
             :md="17"
             :lg="16"
             :xl="16"
-            v-if="activeProduceId!=''"
+            v-if="product!=''"
             style="background-color:rgb(255,255,255)"
           >
             <div class style="; padding:5%">
@@ -50,16 +50,16 @@
                 <div class>
                   <el-row :gutter="10">
                     <el-col :xs="0" :sm="10" :md="12" :lg="12" :xl="12" class>
-                      <img :src="activeProduceId.album[0].url" width="100%" height="100%">
+                      <img :src="product.album[0].url" width="100%" height="100%" >
                     </el-col>
                     <el-col :xs="24" :sm="14" :md="12" :lg="12" :xl="12" class>
                       <div
                         class="FWB"
                         style="font-size:16px;margin-top:30px;margin-bottom:30px; "
-                      >{{activeProduceId.description}}</div>
+                      >{{product.description}}</div>
                       <div
                         style="font-size:35px; color:rgb(255,103,2);margin-bottom:20px;"
-                      >${{activeProduceId.price}}</div>
+                      >${{product.price}}</div>
                       <div style="background-color:rgb(248,248,248);padding:5%">
                         <div style="padding-bottom:25px">
                           <div style="float:left;color:gray;font-size:13px;width:70px;">运费:</div>
@@ -77,7 +77,7 @@
                       <div style="margin-top:30px;">
                         <div style="float:left">
                           <!-- <router-link to="/confirmOrder"> -->
-                            <el-button type="primary" round size="medium"  @click="purchase(activeProduceId)">
+                            <el-button type="primary" round size="medium"  @click="purchase(product)">
                               <!-- <div style="font-size:25px;">立即购买</div> -->立即购买
                             </el-button>
                           <!-- </router-link> -->
@@ -141,8 +141,8 @@
                 ，含有一种叫“凤梨朊酶”的物质，它能分解蛋白质。 凤梨中所含糖、盐类和酶有利尿作用，适当食用对肾炎，
                 高血压病患者有益，具有健胃消食、补脾止泻、清胃解渴等功用。
               </div>
-              <div v-for="img in activeProduceId.album" :key="img.url" style="width:100%">
-                <img :src="img.url" v-if="img.url!=activeProduceId.album[0].url" width="100%">
+              <div v-for="img in product.album" :key="img.url" style="width:100%">
+                <img :src="img.url" v-if="img.url!=product.album[0].url" width="100%">
               </div>
               <div>
                 <h3 style="color:red">【写字楼配送服务】</h3>
@@ -159,63 +159,6 @@
               </div>
               <hr>
               <div></div>
-            </div>
-          </el-col>
-          <el-col :xs="0" :sm="5" :md="5" :lg="4" :xl="4" v-if="products!=''">
-            <div class="WP100" style="padding:15%">
-              <div>
-                <div>
-                  <el-row>
-                    <el-col :xs="0" :sm="4" :md="8" :lg="8" :xl="8">
-                      <img
-                        src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg"
-                        width="100%"
-                        alt
-                      >
-                    </el-col>
-                    <el-col :xs="24" :sm="20" :md="16" :lg="16" :xl="16">
-                      <div
-                        style="font-size:13px;color:gray;margin-top:6px;margin-bottom:6px;padding-left:10px;"
-                      >米柚生活</div>
-                      <div style="padding-left:10px;">
-                        <el-popover
-                          placement="top"
-                          width="250"
-                          v-model="isShowWechar"
-                          trigger="hover"
-                        >
-                          <div class="WP100">
-                            <div class="WP100 FWB" style="text-align:center;">扫一扫,加微信好友</div>
-                            <div style="float:left">
-                              <img
-                                src="https://h5.youzan.com/v2/common/url/create?type=homepage&kdt_id=859457"
-                                width="100%"
-                              >
-                            </div>
-                          </div>
-                          <el-button type="success" size="mini" slot="reference">加微信好友</el-button>
-                        </el-popover>
-                      </div>
-                    </el-col>
-                  </el-row>
-                </div>
-                <div style=" clear: both ;margin-top:25px">
-                  <div style="width:100%;text-align:center;color:gray ;margin-bottom:20px">热门商品</div>
-                  <div v-for="product in products" :key="product.P1" style="margin-bottom:15px; ">
-                    <router-link to="/commodityDetail">
-                    <img
-                      v-if="product.album&&product.album.length"
-                      :src="product.album[0].url"
-                      width="100%"
-                      style=" cursor:pointer"
-                      @click="$store.commit('changeActiveProduce',product)"
-                    >
-                    </router-link>
-                    <div style="font-size:12px;color:gary">{{product.description}}</div>
-                    <div style="color:red;font-size:12px">${{product.price}}</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </el-col>
           <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="2">
@@ -235,6 +178,7 @@ export default {
   data() {
    
     return {
+      product:[],
       products: [],
       // isCartCom: false,
       isShowShop: false,
@@ -250,20 +194,50 @@ export default {
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
         data: {
-          pageSize: 4,
-          sortJson: { P1: -1 }
-        }
+          
+            findJson: {
+                 P1: this.$route.query.id,
+           }
+        },
+        
       })
         .then(response => {
           //这有函数，不知道this指向谁
           console.log("第一次请求结果", response.data);
+          
           let { list } = response.data; //解构赋值
-          this.products = list;
+
+          this.product = list[0];
+          console.log("第四次请求结果", this.product);
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
     },
+    // getProLists() {
+    //   //获取产品列表函数
+    //   axios({
+    //     //请求接口
+    //     method: "post",
+    //     url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
+    //     data: {
+    //       pageSize: 4,
+    //       sortJson: { P1: -1 },
+      
+    //     },
+        
+    //   })
+    //     .then(response => {
+    //       //这有函数，不知道this指向谁
+    //       console.log("第一次请求结果", response.data);
+    //       console.log("第二次请求结果", this.$route.query.id);
+    //       let { list } = response.data; //解构赋值
+    //       this.products = list;
+    //     })
+    //     .catch(function(error) {
+    //       alert("异常:" + error);
+    //     });
+    // },
     purchase(buyEach) {
 this.$store.commit("isCartComOpen");
 
@@ -271,8 +245,8 @@ this.$store.commit("changeActiveProduce", buyEach);
 },
   },
   mounted() {
-
     this.getProList();
+    // this.getProLists()
   },
   computed: {
     activeProduceId() {

@@ -93,7 +93,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     },
     AddressModify_item: {},
     confirmOrderAddress: {},
-    
+
     doc: {//存放购物车插件的对象
       cartProductNumber: null,
       isCart: true
@@ -124,6 +124,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     //变更事件
     confirmOrderAddressFun(state, param) {
       state.confirmOrderAddress = param
+
       console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
     },
     //----cdx-----
@@ -131,6 +132,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.AddressModify_item = param
       console.log("this.AddressModify_item", this.AddressModify_item);
     },
+
+
+  },
+  mutations: {//变更事件
+
     getForm(state, param) {
       console.log("123123", param);
       state.user = param
@@ -207,7 +213,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 Vue.prototype.$store = store//让vue实例中可访问$store
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
 Vue.use(ElementUI);
 
 
