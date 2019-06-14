@@ -82,8 +82,10 @@ export default {
   },
   methods: {
     purchase(buyEach) {
+    
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
+    
     },
     getProList() {
       axios({

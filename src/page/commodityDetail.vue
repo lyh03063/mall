@@ -236,7 +236,7 @@ export default {
    
     return {
       products: [],
-      isCartCom: false,
+      // isCartCom: false,
       isShowShop: false,
       isShowWechar: false,
       isShowCollect: false
@@ -265,8 +265,8 @@ export default {
         });
     },
     purchase(buyEach) {
+this.$store.commit("isCartComOpen");
 
-this.isCartCom = !this.isCartCom;
 this.$store.commit("changeActiveProduce", buyEach);
 },
   },
@@ -278,7 +278,11 @@ this.$store.commit("changeActiveProduce", buyEach);
     activeProduceId() {
       //此处返回vuex的值到外部
       return this.$store.state.activeProduceId;
+    },isCartCom() {
+      //此处返回vuex的值到外部
+      return this.$store.state.isCartCom;
     }
+    ,
   }
 };
 </script>
