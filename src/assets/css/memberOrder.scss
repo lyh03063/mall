@@ -127,9 +127,6 @@
     float: right;
 }
 
-// 订单列表中的页脚
-.order-cap-order-item__footer {}
-
 .order-cap-order-item__more {
     color           : #3283fa;
     position        : relative;
@@ -152,9 +149,50 @@
     background: #fff;
 }
 
+
 .order-button__text {
     float: right;
 }
 
+.order-button__footer {
+    margin-right: 10px;
+    clear       : both;
+}
 
 /*----------------- 头部样式结束 ---------------- */
+/*------------------------  底部固定栏开始 ----------------------------*/
+.order-submit-bar {
+    left    : 0;
+    bottom  : 0;
+    width   : 100%;
+    z-index : 100;
+    position: fixed;
+}
+
+.order-submit-bar__bar {
+    height          : 40px;
+    line-height     : 40px;
+    display         : flex;
+    font-size       : 14px;
+    align-items     : center;
+    background-color: #fff;
+}
+
+.order-submit-bar__content {
+    padding-right: 10px;
+    flex         : 1;
+}
+
+/*------------------------  底部固定栏结束 ----------------------------*/
+/*----------------- 订单列表有赞版权页脚开始 ---------------- */
+
+.order-footer__links a {
+    padding-right: 20px;
+}
+
+.order-footer__copyright {
+    background-color: #f8f8f8;
+    color           : #999;
+}
+
+/*----------------- 订单列表有赞版权页脚结束 ---------------- */

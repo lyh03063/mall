@@ -9,6 +9,7 @@
       >
     </div>
     <div class="block">
+<<<<<<< HEAD
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
           <div >
@@ -18,6 +19,13 @@
           </div>
         </el-carousel-item>
       </el-carousel>
+=======
+      <router-link to="/commodityDetail">
+        <el-carousel trigger="click" height="135px">
+          <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
+        </el-carousel>
+      </router-link>
+>>>>>>> 8e61be04579663ba0bb56310c6a4b56816d1634b
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
