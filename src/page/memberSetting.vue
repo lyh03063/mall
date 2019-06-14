@@ -13,13 +13,13 @@
         <div style="float: left; margin-left:0px;">姓名</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[activeMenuIndex].nickName}}&nbsp;></div>
+        >{{memberMessage[0].nickName}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer">
       <div class="message-box">
         <div style="float: left; margin-left:0px;">手机号</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[activeMenuIndex].userName}}</div>
+        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[0].userName}}</div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowGender = true">
@@ -27,13 +27,13 @@
         <div style="float: left; margin-left:0px;">性别</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[activeMenuIndex].gender=setGender(memberMessage[activeMenuIndex].sex)}}&nbsp;></div>
+        >{{memberMessage[0].gender=setGender(memberMessage[0].sex)}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowBirthday= true">
       <div class="message-box">
         <div style="float: left; margin-left:0px;">生日</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[activeMenuIndex].birthday}}&nbsp;></div>
+        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[0].birthday}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowCity = true">
@@ -41,7 +41,7 @@
         <div style="float: left; margin-left:0px;">地区</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[activeMenuIndex].area}}&nbsp;></div>
+        >{{memberMessage[0].area}}&nbsp;></div>
       </div>
     </div>
     <div class="memberSetting-message" style="cursor:pointer" @click="isShowWechat=true">
@@ -49,7 +49,7 @@
         <div style="float: left; margin-left:0px;">微信号</div>
         <div
           style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[activeMenuIndex].wechat}}&nbsp;></div>
+        >{{memberMessage[0].wechat}}&nbsp;></div>
       </div>
     </div>
     <router-link to="/memberAddress">
@@ -71,16 +71,16 @@
       <el-input placeholder="请输入您的姓名" v-model="name" ></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShowName=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage[activeMenuIndex].nickName=closeName(isShowName,name)">确 定</el-button>
+        <el-button type="primary" @click="memberMessage[0].nickName=closeName(isShowName,name)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 性别弹框 -->
     <el-dialog title="请选择您的性别" :visible.sync="isShowGender" width="100%" top="150px" @close="modifyMessage">
-      <el-radio v-model="memberMessage[activeMenuIndex].sex" label="1">男</el-radio>
-      <el-radio v-model="memberMessage[activeMenuIndex].sex" label="0">女</el-radio>
-      <el-radio v-model="memberMessage[activeMenuIndex].sex" label="2">保密</el-radio>
+      <el-radio v-model="memberMessage[0].sex" label="1">男</el-radio>
+      <el-radio v-model="memberMessage[0].sex" label="0">女</el-radio>
+      <el-radio v-model="memberMessage[0].sex" label="2">保密</el-radio>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="memberMessage[activeMenuIndex].gender=closeGender(isShowGender,memberMessage[activeMenuIndex].sex)">确 定</el-button>
+        <el-button type="primary" @click="memberMessage[0].gender=closeGender(isShowGender,memberMessage[0].sex)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 生日弹框 -->
@@ -103,7 +103,7 @@
   </el-select>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShowBirthday=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage[activeMenuIndex].birthday=closeBirthday(isShowBirthday,birthday)">确 定</el-button>
+        <el-button type="primary" @click="memberMessage[0].birthday=closeBirthday(isShowBirthday,birthday)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 城市弹框 -->
@@ -115,7 +115,7 @@
         <el-button @click="isShowCity=false">取 消</el-button>
         <el-button
           type="primary"
-          @click="memberMessage[activeMenuIndex].area=closeCity(isShowCity,cityArray)"
+          @click="memberMessage[0].area=closeCity(isShowCity,cityArray)"
         >确 定</el-button>
       </span>
     </el-dialog>
@@ -124,7 +124,7 @@
       <el-input  placeholder="请输入您的微信号" v-model="myWeChat"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShowWechat=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage[activeMenuIndex].wechat=closeWechat(isShowWechat,myWeChat)">确 定</el-button>
+        <el-button type="primary" @click="memberMessage[0].wechat=closeWechat(isShowWechat,myWeChat)">确 定</el-button>
       </span>
     </el-dialog>
     <portal></portal>
@@ -163,7 +163,11 @@ export default {
         //请求接口
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-member",
-        // data: this.Objparma //传递参数
+        data: {
+           findJson: {
+                 userName: localStorage.loginUserName
+           }
+        }
       })
         .then(response => {
           //这有函数，不知道this指向谁
@@ -182,10 +186,10 @@ export default {
       url: "http://120.76.160.41:3000/crossModify?page=mabang-member",
       data: {
         findJson: {
-          P1: this.memberMessage[this.activeMenuIndex].P1
+          P1: this.memberMessage[0].P1
         },
         
-        modifyJson: this.memberMessage[this.activeMenuIndex]
+        modifyJson: this.memberMessage[0]
       } //传递参数
     })
       .then(response => {
@@ -242,9 +246,7 @@ export default {
     
   },
   computed:{
-    activeMenuIndex(){
-      return this.$store.state.activeMenuIndex;
-    }
+   
   },
    mounted() {
     this.getProList(); 

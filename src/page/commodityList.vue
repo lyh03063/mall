@@ -56,7 +56,6 @@ export default {
   name: "",
   components: { portal, cartComponent },
   props: {},
-
   data() {
     return {
       // -------------------------请求接口的地址-------------------------
@@ -76,7 +75,6 @@ export default {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", commodity);
     },
-
     //--------------获取商品分类列表接口函数--------------
     getCommoditySortList() {
       axios({

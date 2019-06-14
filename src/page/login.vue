@@ -20,7 +20,6 @@
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model="ruleForm.password" placeholder="请输入密码" show-password></el-input>
-     
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="WP100" @click="submitForm('ruleForm')">登录</el-button>
@@ -112,17 +111,23 @@ export default {
               // var userList = JSON.stringify(list);
               console.log("list", list);
               // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
-              // list.forEach(item => {
-              //   this.userLog = item.userName;
-              // });
-              // console.log("response.data", response.data);
+              list.forEach(item => {
+                this.userLog = item.userName;
+                 this.nickName = item.nickName;
+
+              });
+              console.log("response.data", response.data);
 
               if (list.length > 0) {
                 //接口测试工具中,只要传数据过去其中一个为错的,数组就为空,这里用数组长度判断最佳
                 // 登录成功
-                alert("登录成功");
+                this.$message({ message: "登录成功", type: "success" });
                 // this.getForm();
                 localStorage.isLogin = 1;
+                localStorage.loginUserName = this.userLog;
+                localStorage.loginnickName = this.nickName;
+
+                console.log("userName", this.userLog);
                 // activeMenuIndex = this.list; //每个ID的登录状态
                 this.$router.push({ path: "/home" });
               } else {
@@ -162,9 +167,9 @@ export default {
         }
       });
     },
-    getForm() {
-      this.$store.commit("getForm", this.userLog);
-    }
+    // getForm() {
+    //   this.$store.commit("getForm", this.userLog);
+    // }
   },
 
   // computed: {
@@ -180,7 +185,7 @@ export default {
     } else {
       this.$router.push({ path: "/home" });
     }
-    console.log("beforeCreate-this.msg", this.msg);
+
   }
 };
 </script>
