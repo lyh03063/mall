@@ -103,21 +103,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
   },
 
 
-
-  mutations: {
-
-
-    ///--------hjp开始-------
-    orderlistdetail(state, param) {//改变列表的初始状态值
-      console.log("param", param);
-      state.newdetail = param
-
-    },
-    ///--------hjp结束-------
-
-    //变更事件
+  mutations: {//变更事件
     confirmOrderAddressFun(state, param) {
       state.confirmOrderAddress = param
+
       console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
     },
     //----cdx-----
@@ -125,6 +114,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.AddressModify_item = param
       console.log("this.AddressModify_item", this.AddressModify_item);
     },
+
+
+  },
+  mutations: {//变更事件
+
     getForm(state, param) {
       console.log("123123", param);
       state.user = param
@@ -201,7 +195,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 Vue.prototype.$store = store//让vue实例中可访问$store
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
 Vue.use(ElementUI);
 
 
