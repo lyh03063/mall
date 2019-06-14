@@ -143,6 +143,7 @@ export default {
   width: 60%;
   height: 44px;
   background-color: #f44;
+    border: 0px
 }
 .deleteButton {
   display: block;
@@ -151,5 +152,6 @@ export default {
   height: 44px;
   margin-top: 20px;
   background-color: #fff;
+  border: 0px
 }
 </style>

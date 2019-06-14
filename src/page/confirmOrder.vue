@@ -5,8 +5,8 @@
         <el-button class="iconfont iconkuaidi">商家配送</el-button>
         <el-button class="iconfont iconbaobao">商家配送</el-button>
       </div>
-      <router-link to="./memberAddress">
-        <ul :cf="title" class="address">
+      <router-link to="./memberAddress" >
+        <ul :cf="title" class="address" @click="$store.commit('selection');"><!--勾选显示 -->
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>

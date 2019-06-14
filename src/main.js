@@ -39,6 +39,7 @@ import listAddModify from "./components/list-address/listAddModify";
 
 
 
+
 // 3. 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({
   routes: [
@@ -59,6 +60,8 @@ const router = new VueRouter({
     // { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
+   
+    
   ]
 })
 
@@ -90,6 +93,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     },
     AddressModify_item: {},
     confirmOrderAddress: {},
+    
     doc: {//存放购物车插件的对象
       cartProductNumber: null,
       isCart: true
@@ -98,14 +102,16 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于存放确认订单的总数据
 
-
+    selection:false,
 
   },
 
 
 
   mutations: {
-
+    selection(state){
+      state.selection=true
+    },
 
     ///--------hjp开始-------
     orderlistdetail(state, param) {//改变列表的初始状态值
