@@ -67,7 +67,7 @@ export default {
         ],
         area: [
           { required: true, message: "请输入收货人地区", trigger: "change" },
-          { min: 11, message: "请输入正确11位电话号码", trigger: "blur" }
+          
         ],
         extend: [{ required: true, message: "请填写详细地址", trigger: "blur" }]
       }

@@ -22,7 +22,7 @@
           <img class="box-img" :src="imgg.immg">
         </div>
       </div>-->
-    </div>s
+    </div>
     <div class="block">
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
