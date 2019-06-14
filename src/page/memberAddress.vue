@@ -16,7 +16,7 @@
           <i class="el-icon-check"></i>
         </div>
       </div>
-      {{item}}
+      
       
 
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
@@ -48,7 +48,7 @@ export default {
         delete: "000"
       },
       tableData: [],
-      userAddress: ""
+      userAddress:[],
     };
   },
   methods: {
@@ -80,7 +80,6 @@ export default {
         url: this.objURL.list,
         //data: this.Objparma //传递参数
         data:{
-           
           findJson:{
             userName:this.userAddress
           }
@@ -101,7 +100,7 @@ export default {
   },
   mounted() {
     this.userAddress = localStorage.loginnickName
-     alert(this.userAddress)
+    //  alert(this.userAddress)
     this.getProList();
      
   },
@@ -112,15 +111,7 @@ export default {
       return this.$store.state.selection;
     }
   },
-  //  beforeCreate() {
-  // //------------如果未登录------------
-  // if (localStorage.isLogin == 0) {
-  // this.$router.push({ path: "/login" }); //跳转到后台首页
-  // } else {
-  // this.$router.push({ path: "/home" });
-  // }
-  // console.log("beforeCreate-this.msg", this.msg);
-  // }
+
 };
 </script>
 
