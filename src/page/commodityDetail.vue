@@ -202,7 +202,7 @@
                 <div style=" clear: both ;margin-top:25px">
                   <div style="width:100%;text-align:center;color:gray ;margin-bottom:20px">热门商品</div>
                   <div v-for="product in products" :key="product.P1" style="margin-bottom:15px; ">
-                    <!-- <router-link to="/commodityDetail"> -->
+                    <router-link to="/commodityDetail">
                     <img
                       v-if="product.album&&product.album.length"
                       :src="product.album[0].url"
@@ -210,7 +210,7 @@
                       style=" cursor:pointer"
                       @click="$store.commit('changeActiveProduce',product)"
                     >
-                    <!-- </router-link> -->
+                    </router-link>
                     <div style="font-size:12px;color:gary">{{product.description}}</div>
                     <div style="color:red;font-size:12px">${{product.price}}</div>
                   </div>
@@ -236,7 +236,7 @@ export default {
    
     return {
       products: [],
-      isCartCom: false,
+      // isCartCom: false,
       isShowShop: false,
       isShowWechar: false,
       isShowCollect: false
@@ -265,8 +265,8 @@ export default {
         });
     },
     purchase(buyEach) {
+this.$store.commit("isCartComOpen");
 
-this.isCartCom = !this.isCartCom;
 this.$store.commit("changeActiveProduce", buyEach);
 },
   },
@@ -278,7 +278,11 @@ this.$store.commit("changeActiveProduce", buyEach);
     activeProduceId() {
       //此处返回vuex的值到外部
       return this.$store.state.activeProduceId;
+    },isCartCom() {
+      //此处返回vuex的值到外部
+      return this.$store.state.isCartCom;
     }
+    ,
   }
 };
 </script>

@@ -5,7 +5,15 @@
       v-for="item in tableData"
       :key="item.tableData"
       style="border-bottom: 1px solid #ebedf0"
+      @click="shopCheckbox(item)"
     >
+      <!-- 打钩按钮 -->
+      <div :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}">
+        <div class="shop-checkbox">
+          <i class="el-icon-check"></i>
+        </div>
+      </div>
+
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
@@ -20,11 +28,12 @@
 
 <script>
 import listAdded from "../components/list-address/listAdded";
-import listModify from "../components/list-address/listAddModify";
+import listAddModify from "../components/list-address/listAddModify";
 export default {
-  components: { listAdded },
+  components: { listAdded, listAddModify },
   data() {
     return {
+      isCart: null,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "000",
@@ -35,10 +44,18 @@ export default {
     };
   },
   methods: {
+    //----------点击选中函数-------
+    shopCheckbox(item) {
+      this.isCart = item.P1; //对当前节点的状态取反
+      console.log("shopCheckbox", item.isCart);
+      this.$router.push({ path: "/confirmOrder" }); //跳转到listAddModify
+      this.$store.commit("confirmOrderAddressFun", item);
+    },
     form(item) {
-       this.$store.commit("memberAddressModify", item);
+      //alert(JSON.stringify(item))
+      this.$store.commit("memberAddressModify", item);
+      console.log("memberAddressModify", item);
       this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
-     
     },
 
     submitForm() {
@@ -85,5 +102,34 @@ export default {
   height: 50px;
   text-align: center;
   line-height: 50px;
+}
+.shop-checkbox-box {
+  float: left;
+  height: 52px;
+  line-height: 52px;
+  margin-top: 20px;
+}
+.shop-checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
+  // margin-top: 16px;
+  // margin-right: 8px;
+  position: relative;
+  border: #ddd 1px solid;
+}
+// ------选中状态的样式------
+.isChecked .shop-checkbox {
+  background-color: red;
+  border: 0;
+}
+.isChecked .el-icon-check {
+  display: block;
+}
+.el-icon-check {
+  display: none;
+  font-weight: bold;
+  color: #fff;
 }
 </style>

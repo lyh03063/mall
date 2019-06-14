@@ -54,7 +54,6 @@ export default {
   components: { portal, cartComponent },
   data() {
     return {
-      isCartCom: false,
       buy: [],
 
       imgg: [
@@ -83,8 +82,10 @@ export default {
   },
   methods: {
     purchase(buyEach) {
-      this.isCartCom = !this.isCartCom;
+    
+      this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
+    
     },
     getProList() {
       axios({
@@ -104,16 +105,25 @@ export default {
         });
     }
   },
+  computed: {
+    activeMenuIndex() {
+      return this.$store.state.user;
+    },
+ 
+  },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
+  },
+  computed: {
+    // activeProduceId() {
+    //   //此处返回vuex的值到外部
+    //   return this.$store.state.activeProduceId;
+    // }
+    isCartCom() {
+      return this.$store.state.isCartCom;
+    }
   }
-  // computed: {
-  //   activeProduceId() {
-  //     //此处返回vuex的值到外部
-  //     return this.$store.state.activeProduceId;
-  //   }
-  // }
 };
 </script>
 
