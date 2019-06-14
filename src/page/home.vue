@@ -9,12 +9,15 @@
       >
     </div>
     <div class="block">
-       <router-link to="/commodityDetail">
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
+          <div >
+            <router-link to="/commodityDetail">
+            <div  @click="goto(item)"></div>
+            </router-link>
+          </div>
         </el-carousel-item>
       </el-carousel>
-       </router-link>
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
@@ -27,11 +30,11 @@
           <div class="box-1" :key="index" v-if="index<6">
             <div class="img-box" @click="$store.commit('changeActiveProduce',buyEach)">
               <router-link to="/commodityDetail">
-              <img
-                class="box-commodity"
-                v-if="buyEach.album&&buyEach.album.length"
-                :src="buyEach.album[0].url"
-              >
+                <img
+                  class="box-commodity"
+                  v-if="buyEach.album&&buyEach.album.length"
+                  :src="buyEach.album[0].url"
+                >
               </router-link>
             </div>
             <div class="box-title">{{buyEach.description}}</div>
@@ -42,19 +45,8 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-<<<<<<< HEAD
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
-=======
-
-    <portal></portal>
-    <cartComponent v-if="isCartCom"></cartComponent>
-
-    
-    <portal></portal>
-   <cartComponent v-if="isCartCom"></cartComponent>
-
->>>>>>> a15cd1ead70b4f19639d998b48a710da444784be
   </div>
 </template>
 
@@ -67,7 +59,7 @@ export default {
     return {
       isCartCom: false,
       buy: [],
-      
+
       imgg: [
         {
           id: 1,
@@ -93,8 +85,10 @@ export default {
     };
   },
   methods: {
+    goto(i) {
+      alert(i);
+    },
     purchase(buyEach) {
-
       this.isCartCom = !this.isCartCom;
       this.$store.commit("changeActiveProduce", buyEach);
     },
@@ -110,6 +104,7 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.buy = list;
+          console.log("数据打印", response.data);
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -119,7 +114,7 @@ export default {
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
-  },
+  }
   // computed: {
   //   activeProduceId() {
   //     //此处返回vuex的值到外部
@@ -144,11 +139,11 @@ export default {
   width: 380px;
   height: 90px;
   text-align: center;
-  line-height:90px;
-  font-weight:bold;
-  font-size:40px;
-  background-color:#ffffff;
-  color:#64D9F6;
+  line-height: 90px;
+  font-weight: bold;
+  font-size: 40px;
+  background-color: #ffffff;
+  color: #64d9f6;
   background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1560425120&di=627560e18211e7caad5d3bde52b51781&src=http://img.nongji360.com/n/image/2015/08/11/151247223025.jpg");
   background-size: 380px 200px;
   background-repeat: no-repeat;
@@ -239,6 +234,11 @@ export default {
 }
 .el-carousel__item:nth-child(4) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FsfFgmOHGm6WZsnloJo22RImEJ6p.jpg!large.jpg");
+}
+.box-item{
+  width:380px;
+  height:135px;
+  background-color: #64d9f6;
 }
 //轮播图-
 //底部查看+
