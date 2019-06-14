@@ -23,13 +23,9 @@ import memberOrderpay from "./page/memberOrderpay";
 import memberOrderDetail from "./page/memberOrderDetail";
 import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
-
-
-
-
-
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
+
 
 
 
@@ -56,9 +52,11 @@ const router = new VueRouter({
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
-    // { path: '/register', component: register },
+    { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
+
+
   ]
 })
 
@@ -85,11 +83,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-
     },
 
     AddressModify_item: {},
     confirmOrderAddress: {},
+
     doc: {//存放购物车插件的对象
       byCount: null,
       isCart: true
@@ -97,12 +95,16 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于存放确认订单的总数据
+
+    selection: false,
+
+
   },
-
-
-
-  mutations: {
-
+ 
+  mutations: {//变更事件
+    selection(state) {
+      state.selection = true
+    },
 
     ///--------hjp开始-------
     orderlistdetail(state, param) {//改变列表的初始状态值
@@ -122,10 +124,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.AddressModify_item = param
       console.log("this.AddressModify_item", this.AddressModify_item);
     },
-    getForm(state, param) {
-      console.log("123123", param);
-      state.user = param
-    },
+    // getForm(state, param) {//单个会员列表对象
+    //   console.log("123123", param);
+    //   state.user = param
+    // },
     // JumpDetail(state, param){
 
     // },
@@ -154,6 +156,9 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
+
+
+
     initListState(state, param) {//改变列表的初始状态值
       console.log("param", param);
       state.listState[param.listIndex] = param.objState;

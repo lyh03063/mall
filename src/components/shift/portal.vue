@@ -55,6 +55,7 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 100;
 }
 .box li {
   display: block;

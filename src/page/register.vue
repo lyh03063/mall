@@ -1,40 +1,56 @@
 <template>
-  <div class="login-box">
-    <h1>免费注册</h1>
-    <el-form
-      :model="registerruleForm"
-      status-icon
-      :rules="rules"
-      ref="registerruleForm"
-      label-width="0"
-      class="demo-registerruleForm"
-    >
-      <el-form-item prop="mobile">
-        <div>
-          <div style="float:left;text-align:center;">中国+86</div>
-          <div style="float:left;width:90%">
-            <el-input v-model.number="registerruleForm.mobile" placeholder="用户手机"></el-input>
+  <div class="register-f-box">
+    <div class="login-box">
+      <h1>免费注册</h1>
+      <el-form
+        :model="registerruleForm"
+        status-icon
+        :rules="rules"
+        ref="registerruleForm"
+        label-width="0"
+        class="demo-registerruleForm"
+      >
+        <el-form-item prop="mobile">
+          <div>
+            <el-input v-model.number="registerruleForm.mobile">
+              <template slot="prepend">中国+86</template>
+            </el-input>
           </div>
-        </div>
-      </el-form-item>
-      <el-form-item prop="mobileVCode">
-        <div class>
-          <div style="float:left;width:90%">
-            <el-input v-model.number="registerruleForm.mobileVCode" placeholder="验证码"></el-input>
+        </el-form-item>
+        <el-form-item prop="mobileVCode">
+          <div class>
+            <el-input v-model.number="registerruleForm.mobileVCode" placeholder="验证码">
+              <template slot="append">
+                <accredit :cf="registerruleForm.mobile" :isnote="isnote"></accredit>
+              </template>
+            </el-input>
           </div>
-          <accredit></accredit>
-        </div>
-      </el-form-item>
-      <el-form-item placeholder="请输入密码" prop="password">
-        <el-input type="password" v-model="registerruleForm.password" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item placeholder="请再输入一次密码" prop="checkPass">
-        <el-input type="password" v-model="registerruleForm.checkPass" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="registerSubmitForm('registerruleForm')">注册</el-button>
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            show-password
+            v-model="registerruleForm.password"
+            placeholder="请输入密码"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="checkPass">
+          <el-input
+            show-password
+            v-model="registerruleForm.checkPass"
+            placeholder="请再输入一次密码"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" class="WP100" @click="registerSubmitForm('registerruleForm')">注册</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <footer>
+      注册即代表同意
+      《用户使用协议》
+    </footer>
   </div>
 </template>
 <script>
@@ -47,8 +63,10 @@ export default {
       if (value === "") {
         callback(new Error("请输入用户手机"));
       } else if (!regnumber.test(value)) {
+        this.isnote = false;
         callback(new Error("请输入正确手机格式"));
       } else {
+        this.isnote = true;
         callback(); //通过校验
       }
     };
@@ -72,6 +90,7 @@ export default {
       }
     };
     return {
+      isnote: false,
       tableData: [],
       objURL: {
         register: "http://120.76.160.41:3000/mabangMall/register"
@@ -92,6 +111,7 @@ export default {
     };
   },
   methods: {
+    mobileFun() {},
     registerSubmitForm(formName) {
       this.$refs[formName].validate(valid => {
         //表单组件执行validate校验方法
@@ -113,13 +133,15 @@ export default {
               let { code, message } = response.data; //返回数据里,如果没有赋值的对象的话,则返回为未定义code和message在里面有则可以调用
               console.log("data", code);
               console.log("response.data", message);
-              // if(code == 0 ){
-              //   alert("请重新注册")
-              // }else if(code == 1 ){
-              //   alert("验证码错误,请重填")
-              // }else{
-              //    alert("注册成功")
-              // }
+              if (code == 0) {
+                alert("请重新注册");
+              } else if (code == 1) {
+                alert("验证码错误,请重填");
+              } else if (code == 2) {
+                alert("验证码错误");
+              } else {
+                alert("注册成功");
+              }
               this.registerruleForm = {};
             })
             .catch(error => {
@@ -147,7 +169,7 @@ export default {
   width: 100%;
   padding: 40px;
   h1 {
-    padding: 20px 20px 20px 5px;
+    padding: 20px 20px 30px 5px;
     font-size: 28px;
     font-weight: 400;
   }
@@ -155,6 +177,14 @@ export default {
 .login-form {
   width: 330px;
   margin: 0 auto;
+}
+.register-f-box {
+  footer {
+    font-weight: 700;
+    font-size: 12px;
+    color: #c4d4e5;
+    text-align: center;
+  }
 }
 @import "../assets/css/util.scss"; //导入公共样式文件
 </style>

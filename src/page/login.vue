@@ -1,43 +1,44 @@
 <template>
-  <div class="login-box">
-    <h1>用户登录</h1>
-    <h2>为了你的帐号安全，请用手机号登录</h2>
-    <el-form
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      ref="ruleForm"
-      label-width="0"
-      class="demo-ruleForm"
-    >
-      <el-form-item prop="userName">
-        <div class>
-          <div style="float:left;width:10%;text-align:center;">中国+86</div>
-          <div style="float:left;width:90%">
-            <el-input v-model.number="ruleForm.userName" placeholder="用户手机"></el-input>
+  <div class="login-father-box">
+    <div class="login-box">
+      <h1>用户登录</h1>
+      <h2>为了你的帐号安全，请用手机号登录</h2>
+      <el-form
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        ref="ruleForm"
+        label-width="0"
+        class="demo-ruleForm"
+      >
+        <el-form-item prop="userName">
+          <div class>
+            <el-input v-model.number="ruleForm.userName" placeholder="用户手机">
+              <template slot="prepend">中国+86</template>
+            </el-input>
           </div>
-        </div>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          type="passwordword"
-          v-model="ruleForm.password"
-          placeholder="密码"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" class="WP100" @click="submitForm('ruleForm')">登录</el-button>
-      </el-form-item>
-      <el-row>
-        <el-col :span="24">
-          <div style="margin-top:15px;">
-            <div style="float:left">验证码登录</div>
-            <div style="float:right">免费注册 | 忘记密码</div>
-          </div>
-        </el-col>
-      </el-row>
-    </el-form>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input v-model="ruleForm.password" placeholder="请输入密码" show-password></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" class="WP100" @click="submitForm('ruleForm')">登录</el-button>
+        </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <div style="margin-top:15px;">
+              <div style="float:left">
+                <a href="JavaScript:;">验证码登录</a>
+              </div>
+              <div style="float:right">
+                <router-link to="/register">免费注册</router-link>| 忘记密码
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+
     <footer>
       登录即代表同意
       <a href="JavaScript:;">《用户使用协议》</a>
@@ -90,7 +91,7 @@ export default {
         userName: [{ validator: validateuserName, trigger: "blur" }],
         password: [{ validator: validatepassword, trigger: "blur" }]
       },
-      userLog:{}
+      userLog: {}
     };
   },
   methods: {
@@ -106,17 +107,27 @@ export default {
           })
             .then(response => {
               let { list } = response.data;
-              // var userList = JSON.stringify(list);
-              console.log(list);
               this.userLog = list;
-              alert(JSON.stringify(this.userLog))
+              // var userList = JSON.stringify(list);
+              console.log("list", list);
+              // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
+              list.forEach(item => {
+                this.userLog = item.userName;
+                 this.nickName = item.nickName;
+
+              });
+              console.log("response.data", response.data);
+
               if (list.length > 0) {
                 //接口测试工具中,只要传数据过去其中一个为错的,数组就为空,这里用数组长度判断最佳
                 // 登录成功
-
-                alert("登录成功");
-                this.getForm();
+                this.$message({ message: "登录成功", type: "success" });
+                // this.getForm();
                 localStorage.isLogin = 1;
+                localStorage.loginUserName = this.userLog;
+                localStorage.loginnickName = this.nickName;
+
+                console.log("userName", this.userLog);
                 // activeMenuIndex = this.list; //每个ID的登录状态
                 this.$router.push({ path: "/home" });
               } else {
@@ -148,7 +159,6 @@ export default {
               // if (userStatus == 0) {
               //   alert("账户不存在,请注册");
               // }
-              
             })
             .catch(error => {
               console.log(error);
@@ -157,24 +167,25 @@ export default {
         }
       });
     },
-    getForm(){
-     
-    this.$store.commit("getForm",this.userLog)
+    // getForm() {
+    //   this.$store.commit("getForm", this.userLog);
+    // }
   },
-  },
-  
+
   // computed: {
   //   activeMenuIndex() {
   //     return this.$store.state.user;
   //   },
- 
+
   // },
   beforeCreate() {
     //------------如果未登录------------
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
+    } else {
+      this.$router.push({ path: "/home" });
     }
-    console.log("beforeCreate-this.msg", this.msg);
+
   }
 };
 </script>
@@ -196,6 +207,14 @@ export default {
     color: #999999;
     font-size: 16px;
     font-weight: 400;
+  }
+}
+.login-father-box {
+  footer {
+    font-weight: 700;
+    font-size: 12px;
+    color: #c4d4e5;
+    text-align: center;
   }
 }
 

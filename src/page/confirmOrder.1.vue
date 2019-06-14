@@ -88,11 +88,9 @@
           合計:
           <span class="C_f00">￥{{cartTotal}}</span>
         </span>
-
         <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
-
     <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
       <el-button type="danger" style="background-color:red;width:50%" round>同城配送 免運費</el-button>
       <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
@@ -112,7 +110,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 export default {
   data: function() {
@@ -128,22 +125,18 @@ export default {
           return time.getTime() <= Date.now() || time.getTime() > dateRegion;
         }
       },
-
       value1: "",
-
       URL: {
         list: "http://120.76.160.41:3000/crossList?page=mabang-order"
       },
       isCartList: [],
       delivery: false,
-
       title: {
         phone: "18123456454",
         name: "张等等",
         address: "码帮科技"
       },
       allCount:{},
-
       cartData: [
         {
           isCart: false, //控制是否选中状态
@@ -159,8 +152,9 @@ export default {
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
 
+
           byCount: 2 //产品选中的数量
-        },
+},
         {
           isCart: false, //控制是否选中状态
           P1: 2,
@@ -175,6 +169,7 @@ export default {
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
 
+
           byCount: 2 //产品选中的数量
         }
       ]
@@ -187,7 +182,6 @@ export default {
     Jumpaddress() {
       this.$router.push({ path: "/memberAddress" });
     },
-
   },
   computed: {
     cartTotal() {
@@ -201,10 +195,6 @@ export default {
   }
 };
 </script>
-
-
-
-
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
 .delivery-mode::before {
@@ -222,9 +212,7 @@ export default {
 .shoppingmall {
   background-size: 100%;
   float: left;
-
   overflow: hidden;
-
   display: block;
 }
 .palce-order {
@@ -240,14 +228,11 @@ export default {
     color: white;
   }
 }
-
 .main {
   background-color: #f8f8f8;
 }
-
 .delivery-btn {
   text-align: center;
-
   .el-button {
     width: 95%;
     background: white;
@@ -256,7 +241,6 @@ export default {
     border-color: red;
   }
 }
-
 .address {
   padding: 10px 2.5%;
   font-size: 16px;
@@ -274,7 +258,6 @@ export default {
   margin-top: 13px;
   margin-left: 10px;
 }
-
 .details {
   background-color: #f8f8f8;
   padding: 5px 2.5%;
@@ -295,7 +278,6 @@ export default {
     font-size: 16px;
   }
 }
-
 .delivery-box {
   background-color: white;
   padding: 10px 2.5%;
@@ -314,7 +296,6 @@ export default {
   overflow: hidden;
   margin-top: 2px;
 }
-
 .total-price {
   margin-top: 10px;
   padding: 10px 2.5%;
@@ -328,7 +309,6 @@ export default {
     margin: 10px 0;
   }
 }
-
 .line {
   left: 0;
   right: 0;
@@ -359,7 +339,6 @@ export default {
   );
   background-size: 80px;
 }
-
 .el-dialog.abc {
   position: fixed;
   bottom: 0;

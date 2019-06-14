@@ -43,20 +43,25 @@
 </template>
 <script>
 export default {
+  data: function(){
+return{
+  isCartCom:true
+}
+  },
   methods: {
     closeDialogFun() {
       this.$store.commit("isCartComClose");
     },
     addCartFun() {
       this.closeDialogFun();
+
       this.cartTotal = this.doc.price * this.doc.byCount;
+
 
       // 深度拷贝
       let str = JSON.stringify(this.doc); //转化为字符串
       let rowNew = JSON.parse(str); //转化为对象
-
       this.cartData.unshift(rowNew); //
-
       let strArr2 = JSON.stringify(this.cartData); //数组转字符串
       localStorage.cartData = strArr2;
 
