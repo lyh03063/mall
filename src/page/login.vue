@@ -32,8 +32,9 @@
       <el-row>
         <el-col :span="24">
           <div style="margin-top:15px;">
-            <div style="float:left">验证码登录</div>
-            <div style="float:right">免费注册 | 忘记密码</div>
+            <div style="float:left"><a href="JavaScript:;">验证码登录</a></div>
+            <div style="float:right">
+              <router-link to="/register">免费注册</router-link> | 忘记密码</div>
           </div>
         </el-col>
       </el-row>
@@ -108,14 +109,13 @@ export default {
               let { list } = response.data;
               // var userList = JSON.stringify(list);
               console.log(list);
-              this.userLog = list;
-              alert(JSON.stringify(this.userLog))
+              // this.userLog = list;
+             
               if (list.length > 0) {
                 //接口测试工具中,只要传数据过去其中一个为错的,数组就为空,这里用数组长度判断最佳
                 // 登录成功
-
                 alert("登录成功");
-                this.getForm();
+                // this.getForm();
                 localStorage.isLogin = 1;
                 // activeMenuIndex = this.list; //每个ID的登录状态
                 this.$router.push({ path: "/home" });
@@ -157,10 +157,10 @@ export default {
         }
       });
     },
-    getForm(){
+  //   getForm(){
      
-    this.$store.commit("getForm",this.userLog)
-  },
+  //   this.$store.commit("getForm",this.userLog)
+  // },
   },
   
   // computed: {
@@ -173,6 +173,8 @@ export default {
     //------------如果未登录------------
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
+    }else{
+       this.$router.push({ path: "/home" });
     }
     console.log("beforeCreate-this.msg", this.msg);
   }
@@ -197,10 +199,14 @@ export default {
     font-size: 16px;
     font-weight: 400;
   }
+  footer{
+    text-align: center
+  }
 }
 
 .login-form {
   width: 100%;
   margin: 20px;
 }
+
 </style>

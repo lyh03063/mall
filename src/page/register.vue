@@ -25,11 +25,11 @@
           <accredit></accredit>
         </div>
       </el-form-item>
-      <el-form-item placeholder="请输入密码" prop="password">
-        <el-input type="password" v-model="registerruleForm.password" autocomplete="off"></el-input>
+      <el-form-item   prop="password">
+        <el-input type="password" v-model="registerruleForm.password"  placeholder="请输入密码" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item placeholder="请再输入一次密码" prop="checkPass">
-        <el-input type="password" v-model="registerruleForm.checkPass" autocomplete="off"></el-input>
+      <el-form-item  prop="checkPass">
+        <el-input type="password" v-model="registerruleForm.checkPass" placeholder="请再输入一次密码" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="registerSubmitForm('registerruleForm')">注册</el-button>
@@ -147,7 +147,7 @@ export default {
   width: 100%;
   padding: 40px;
   h1 {
-    padding: 20px 20px 20px 5px;
+    padding: 20px 20px 30px 5px;
     font-size: 28px;
     font-weight: 400;
   }
