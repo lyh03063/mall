@@ -8,7 +8,8 @@
             <i class="el-icon-check"></i>
           </div>
         </div>
- 
+
+
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
@@ -132,12 +133,18 @@ export default {
     // --------删除函数---------
     cartdeleteFun() {
       this.dialogVisible = false; //删除弹窗隐藏
-      this.NewcartData.forEach((item, i) => {
-        //当为点击状态时，进行删除
-        if (item.isCart == true) {
-          this.cartData.splice(i, 1); //删除一个数组元素
-        }
-      });
+
+      let arr = this.NewcartData.filter(item => item.isCart == false);
+      this.NewcartData = arr;
+
+      let strArr = JSON.stringify(this.NewcartData); //数组转字符串
+      localStorage.cartData = strArr;
+      // this.NewcartData.forEach((item, i) => {
+      //   //当为点击状态时，进行删除
+      //   if (item.isCart == true) {
+      //     this.cartData.splice(i, 1); //删除一个数组元素
+      //   }
+      // });
     },
     // // --------结算函数---------
     cartBalanceFun() {
@@ -172,8 +179,6 @@ export default {
           stock += item.price * item.cartProductNumber; //
         });
         this.cartTotal = stock;
-        let strArr = JSON.stringify(this.NewcartData); //数组转字符串
-        localStorage.cartData = strArr;
       },
       deep: true //深度监听
     },
@@ -203,6 +208,11 @@ export default {
     this.$store.commit("init");
     this.NewcartData = this.cartData;
   }
+  // beforeCreate() {
+  //   if (localStorage.isLogin == "0") {
+  //     this.$router.push({ path: "/login" });
+  //   }
+  // }
 };
 </script >
 <style lang="scss" scoped>

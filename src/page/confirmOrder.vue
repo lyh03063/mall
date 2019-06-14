@@ -50,7 +50,8 @@
           <span>同城配送 免运费</span>
           <br>
           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
-          <span>{{value1}}</span>
+          <span style="margin-right:10px">{{day}}</span>
+          <span>{{times}}</span>
         </div>
       </div>
       <div class="message">
@@ -93,21 +94,32 @@
     </div>
 
     <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
-      <el-button type="danger" style="background-color:red;width:50%" round>同城配送 免運費</el-button>
-      <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
-      <div class="block" style="height:200px;width:100%">
-        <el-date-picker
-          v-model="value1"
-          type="datetime"
-          placeholder="选择日期时间"
-          style="width:100%"
-          :picker-options="pickerOptions1"
-          value-format=" yyyy-MM-dd HH:mm"
-        ></el-date-picker>
+      <div style="text-align:center">
+        <el-button type="danger" style="background-color:red;width:95%" round>同城配送 免運費</el-button>
       </div>
-      <div class="footer">
+      <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
+
+      <el-date-picker
+        style="width:50%"
+        value-format="MM-dd"
+        :picker-options="pickerOptions1"
+        v-model="day"
+        type="date"
+        placeholder="选择日期"
+      ></el-date-picker>
+
+      <el-time-select
+        style="width:50%"
+        is-range
+        v-model="times"
+        :picker-options="time"
+        placeholder="选择时间"
+      ></el-time-select>
+   
+      <div class="footer" style="margin-top:100px">
         <span type="primary" @click="delivery=false">确 定</span>
       </div>
+
     </el-dialog>
   </div>
 </template>
@@ -115,33 +127,40 @@
 
 <script>
 export default {
-   methods: {
+  methods: {
     JumpDetail() {
       this.$router.push({ path: "/memberOrderDetail" });
-       
     },
     Jumpaddress() {
       this.$router.push({ path: "/memberAddress" });
-    }
+    },
+   
   },
   data: function() {
     return {
+      day: "",
+      times: "",
       pickerOptions1: {
         disabledDate(time) {
           const curDate = new Date().getTime();
-          const day = 3 * 24 * 3600 * 1000;
+          const day = 2 * 24 * 3600 * 1000;
           const dateRegion = curDate + day;
-          return time.getTime() <= Date.now() || time.getTime() > dateRegion;
+          return (
+            time.getTime() < Date.now() - 8.64e7 || time.getTime() > dateRegion
+          );
         }
       },
-      value1: "",
-      URL: {
-        list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
-      },
-      isCartList: [],
-      delivery: false,
 
-      // cartData: []
+      time: {
+        start: "08:30",
+        step: "01:00",
+        end: "17:30"
+      },
+
+      isCartList: [],
+      delivery: true,
+
+      cartData: []
     };
   },
   computed: {
@@ -153,11 +172,11 @@ export default {
       });
       return stock;
     },
-    confirmOrder() {
-      return this.$store.state.confirmOrder;
-    },
     title() {
       return this.$store.state.confirmOrderAddress;
+    },
+    confirmOrder() {
+      return this.$store.state.confirmOrder;
     }
   },
   created() {
@@ -208,10 +227,10 @@ export default {
 .delivery-btn {
   text-align: center;
   .el-button {
-    width: 47.5%;
-    background: white;
-    color: red;
-    margin-left: 32px;
+    width: 95%;
+    background: red;
+    color: white;
+    margin-left: 2.5%;
     border-color: red;
   }
 }
@@ -317,10 +336,12 @@ export default {
   position: fixed;
   bottom: 0;
   margin: 0;
+  // text-align:center
 }
+
 .footer span {
   width: 100%;
-  height: 50px;
+  height: 40px;
   display: inline-block;
   text-align: center;
   border: 1px solid red;

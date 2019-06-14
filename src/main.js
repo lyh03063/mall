@@ -7,8 +7,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
+
 
 import Home from "./page/home";
 import login from "./page/login";
@@ -44,7 +43,7 @@ const router = new VueRouter({
     { path: '/memberAddress', component: memberAddress },
     { path: '/memberOrder', component: memberOrder },
     { path: '/memberOrderDetail', component: memberOrderDetail },
-    { path: '/register', component: register },
+    // { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
   ]
@@ -54,15 +53,7 @@ const router = new VueRouter({
 
 
 
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
 
-
-// var VueTouch = require('vue-touch')
-// Vue.use(VueTouch, { name: 'v-touch' })
-
-// // var VueTouch = require('vue-touch')
-// // Vue.use(VueTouch, { name: 'v-touch' })
 
 
 import axios from "axios";
@@ -77,28 +68,36 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
+      user: {}
 
     },
     AddressModify_item: {},
-    confirmOrderAddress:{},
-    confirmOrder:{},
-    cartData:[],
-    
+    confirmOrderAddress: {},
+    doc: {//存放购物车插件的对象
+      cartProductNumber: null,
+      isCart: true
+    },
+    isCartCom: false,//控制购物车弹窗
+    cartData: [],//用于存放购物车的总数据
+    confirmOrder: []//用于存放确认订单的总数据
   },
 
+
+ 
   mutations: {//变更事件
-    confirmOrderAddressFun(state, param){
-      state.confirmOrderAddress=param
-    
-      console.log(" state.confirmOrderAddress",state.confirmOrderAddress)
+    confirmOrderAddressFun(state, param) {
+      state.confirmOrderAddress = param
+      console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
     },
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
-      console.log("this.AddressModify_item",this.AddressModify_item);
-      },
-    
-   
+      console.log("this.AddressModify_item", this.AddressModify_item);
+    },
+    getForm(state, param) {
+      console.log("123123", param);
+      state.user = param
+    },
     // JumpDetail(state, param){
 
     // },
@@ -143,9 +142,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.activeCellphoneVerify = activeCellphoneVerify
     },
     changeActiveProduce(state, activeProduceId) {//获取当前商品详情
-
+      console.log("changeActiveProduce--state.doc", state.doc)
+      console.log("changeActiveProduce--activeProduceId", activeProduceId)
       Object.assign(state.doc, activeProduceId);
-      console.log("changeActiveProduce", state.doc)
+      state.activeProduceId = activeProduceId;
     },
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex
@@ -175,7 +175,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 Vue.prototype.$store = store//让vue实例中可访问$store
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
 Vue.use(ElementUI);
 
 

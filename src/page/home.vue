@@ -40,7 +40,6 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
   </div>
@@ -79,9 +78,14 @@ export default {
     };
   },
   methods: {
+    goto(i) {
+      alert(i);
+    },
     purchase(buyEach) {
+    
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
+    
     },
     getProList() {
       axios({
@@ -95,6 +99,7 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.buy = list;
+          console.log("数据打印", response.data);
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -224,6 +229,11 @@ export default {
 }
 .el-carousel__item:nth-child(4) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FsfFgmOHGm6WZsnloJo22RImEJ6p.jpg!large.jpg");
+}
+.box-item{
+  width:380px;
+  height:135px;
+  background-color: #64d9f6;
 }
 //轮播图-
 //底部查看+

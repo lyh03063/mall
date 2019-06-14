@@ -10,6 +10,7 @@
           @click="focusTab(index+1),getorder(product.P1)"
         >{{product.name}}</a>
       </div>
+
       <div style="position:absolute;top:0;left: 100px;">
         <div
           :class="{'tab-content':true,'content-focus':true}"
@@ -35,6 +36,7 @@
           </div>
         </div>
       </div>
+      
     </div>
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
