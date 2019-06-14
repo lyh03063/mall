@@ -66,11 +66,9 @@ export default {
 
       this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
     },
-
     submitForm() {
       this.$router.push({ path: "/listAdded" }); //跳转到listAdded
     },
-
     getProList() {
       axios({
         //请求接口
@@ -116,7 +114,6 @@ export default {
 
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
-
 .added {
   position: fixed;
   bottom:50px;
