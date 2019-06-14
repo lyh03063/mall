@@ -26,6 +26,7 @@ export default {
       this.time = setInterval(this.reciprocal, 1000);
       this.isOpen = true;
       this.sms()
+        this.$store.commit("changeActiveCellphone", mobileVCode);
     },
     sms() {
       axios({
