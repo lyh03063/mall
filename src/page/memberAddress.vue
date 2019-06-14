@@ -16,7 +16,7 @@
           <i class="el-icon-check"></i>
         </div>
       </div>
-      {{item}}
+     
       
 
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
