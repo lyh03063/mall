@@ -55,8 +55,8 @@ const router = new VueRouter({
     { path: '/register', component: register },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
-   
-    
+
+
   ]
 })
 
@@ -97,15 +97,17 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于存放确认订单的总数据
 
-    selection:false,
+    selection: false,
 
   },
 
 
 
-  mutations: {
-    selection(state){
-      state.selection=true
+
+  mutations: {//变更事件
+
+    selection(state) {
+      state.selection = true
     },
 
     ///--------hjp开始-------
@@ -119,7 +121,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     //变更事件
     confirmOrderAddressFun(state, param) {
       state.confirmOrderAddress = param
-
       console.log(" state.confirmOrderAddress", state.confirmOrderAddress)
     },
     //----cdx-----
@@ -129,10 +130,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     },
 
 
-  },
-  mutations: {//变更事件
-
-    getForm(state, param) {//单个会员列表对象
+    getForm(state, param) {
       console.log("123123", param);
       state.user = param
     },

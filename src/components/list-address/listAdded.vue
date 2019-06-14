@@ -22,15 +22,17 @@
       <el-form-item label="详细地址" prop="extend">
         <el-input type="textarea" v-model="addForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
       </el-form-item>
-
-      <div class="preserve" @click="addedAddress()">保存并使用</div>
+      <button class="preserve" @click="addedAddress()">保存并使用</button>
+      
     </el-form>
+     <portal></portal>
   </div>
 </template>
 
 <script>
+import portal from "../shift/portal";
 export default {
-  components: {},
+  components: {portal},
   data() {
     return {
       region: "",
@@ -44,7 +46,7 @@ export default {
       addForm: {
         name: "",
         phone: "",
-        area: "",
+        area: [],
         extend: "",
         userName: ""
       },
@@ -75,8 +77,7 @@ export default {
   methods: {
     //---------- 新增函数
     addedAddress() {
-
-      this.addForm.area = this.addForm.area.join(" ");
+      // this.addForm.area = this.addForm.area.join(" ");
       console.log("this.addForm.area", this.addForm.area);
 
       axios({
@@ -107,11 +108,14 @@ export default {
 
 <style lang="scss" >
 .preserve {
-  color: #fff;
-  background-color: #f44;
-  width: 100%;
+  display: block;
+  margin: 0 auto;
+  width: 98%;
   height: 44px;
-  text-align: center;
-  line-height: 50px;
+  margin-top: 20px;
+  background-color:#f44;
+  color: #fff;
+  border: 0px;
+  
 }
 </style>
