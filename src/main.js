@@ -85,13 +85,15 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-      user: {}
 
+    },
+    user: {
+      userName: "张三"
     },
     AddressModify_item: {},
     confirmOrderAddress: {},
     doc: {//存放购物车插件的对象
-      cartProductNumber: null,
+      byCount: null,
       isCart: true
     },
     isCartCom: false,//控制购物车弹窗

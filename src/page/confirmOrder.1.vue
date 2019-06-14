@@ -36,7 +36,7 @@
           <p style="color:#999;font-size:12px">{{item.description}}</p>
           <div>
             <span style="color:red">￥{{item.price}}</span>
-            <span style="float:right">X{{item.cartProductNumber}}</span>
+            <span style="float:right">X{{item.byCount}}</span>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@ export default {
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
 
-          cartProductNumber: 2 //产品选中的数量
+          byCount: 2 //产品选中的数量
         },
         {
           isCart: false, //控制是否选中状态
@@ -175,7 +175,7 @@ export default {
           description: "1-6种时令水果大切盘，鲜切水果",
           price: 20,
 
-          cartProductNumber: 2 //产品选中的数量
+          byCount: 2 //产品选中的数量
         }
       ]
     };
@@ -194,7 +194,7 @@ export default {
       //计算合计总数
       let stock = 0; //初始值设置为0
       this.cartData.forEach(item => {
-        stock += item.price * item.cartProductNumber; //
+        stock += item.price * item.byCount; //
       });
       return stock;
     }

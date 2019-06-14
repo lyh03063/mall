@@ -30,7 +30,7 @@
         <footer>
           <span class="footer-name">购买数量：</span>
           <span class="footer-input">
-            <el-input-number :min="1" :max="doc.store" size="mini" v-model="doc.cartProductNumber"></el-input-number>
+            <el-input-number :min="1" :max="doc.store" size="mini" v-model="doc.byCount"></el-input-number>
           </span>
           <div class="footer-bt-box">
             <div class="footer-bt" @click="addCartFun">加入购物车</div>
@@ -49,7 +49,7 @@ export default {
     },
     addCartFun() {
       this.closeDialogFun();
-      this.cartTotal = this.doc.price * this.doc.cartProductNumber;
+      this.cartTotal = this.doc.price * this.doc.byCount;
 
       // 深度拷贝
       let str = JSON.stringify(this.doc); //转化为字符串

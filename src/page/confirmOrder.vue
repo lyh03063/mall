@@ -35,7 +35,7 @@
           <p style="color:#999;font-size:12px">{{item.description}}</p>
           <div>
             <span style="color:red">￥{{item.price}}</span>
-            <span style="float:right">X{{item.cartProductNumber}}</span>
+            <span style="float:right">X{{item.byCount}}</span>
           </div>
         </div>
       </div>
@@ -61,6 +61,7 @@
           <textarea
             style="width:100%;float:right;border:0;font-size:16px"
             placeholder="建议留言前先于商家沟通确认"
+            v-model="Objparma.leaveMsg"
           ></textarea>
         </div>
       </div>
@@ -87,7 +88,7 @@
           合計:
           <span class="C_f00">￥{{cartTotal}}</span>
         </span>
-        <el-button type="danger">提交订单</el-button>
+        <el-button type="danger" @click="GoOrder">提交订单</el-button>
       </div>
     </div>
 
@@ -126,59 +127,71 @@ export default {
       URL: {
         list: "http://120.76.160.41:3000/crossList?page=mabang-commodity"
       },
-      isCartList: [],
-      delivery: false,
 
-      // title: {
-      //   phone: "18123456454",
-      //   name: "张等等",
-      //   address: "码帮科技"
-      // },
-       cartData: [
-        // {
-      
-        //   imgUrl:
-        //     "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
-        //   name:
-        //     "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-        //   description: "6种时令水果大切盘，鲜切水果",
-        //   price: 49,
-        //   cartProductNumber: 2 //产品选中的数量
-        // },
-        // {
-       
-       
-        //   imgUrl:
-        //     "https://img.yzcdn.cn/upload_files/2016/03/16/FvXCq8Ye4m5XIoCyOI4w7SvwLqqe.jpg?imageView2%2F2%2Fw%2F200%2Fh%2F200%2Fq%2F75%2Fformat%",
-        //   name:
-        //     "【商务中号切盘，4-6人份】6种时令水果，企业下午茶、会议茶歇、亲朋聚会，分享快乐，分享精彩！",
-        //   description: "6种时令水果大切盘，鲜切水果",
-        //   price: 99,
-        //   cartProductNumber: 2
-        // },
-      ]
+      delivery: false,
+      cartData: [],
+      Objparma: {
+        status: "1",
+        money: null, //已经完成
+        userName: null, //已完成
+        leaveMsg: "", //已完成
+        extend: {},
+        commodityList: [
+          //已完成
+          {
+            byCount: "2",
+            freight: "5",
+            price: "100",
+            name: "西瓜",
+            P1: "1"
+          },
+          {
+            byCount: "1",
+            freight: "5",
+            price: "100",
+            name: "菠萝",
+            P1: "2"
+          }
+        ]
+      }
     };
   },
+  methods: {
+    GoOrder() {
+      console.group("提交订单");
+
+      this.Objparma.commodityList = this.cartData;
+      this.Objparma.money = this.cartTotal;
+      this.Objparma.userName = this.userName;
+      console.group("userName", this.userName);
+      console.group("cartData", this.cartData);
+      console.group("Objparma", this.Objparma);
+      console.group("cartTotal", this.cartTotal);
+    }
+  },
   computed: {
+    userName() {
+      //总的数据列表
+      return this.$store.state.user.userName;
+    },
     cartTotal() {
       //计算合计总数
       let stock = 0; //初始值设置为0
       this.cartData.forEach(item => {
-        stock += item.price * item.cartProductNumber; //
+        stock += item.price * item.byCount; //
       });
       return stock;
     },
-    title(){
-       return this.$store.state.confirmOrderAddress; 
+    title() {
+      return this.$store.state.confirmOrderAddress;
     },
     confirmOrder() {
       return this.$store.state.confirmOrder;
     }
   },
-  created(){
-    this.cartData=this.confirmOrder}
-
-
+  created() {
+    this.cartData = this.confirmOrder;
+  }
 };
 </script>
 

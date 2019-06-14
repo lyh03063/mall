@@ -40,13 +40,13 @@
         <div class="cart-main">
           <div class="cart-name">
             <div @click="shopCheckbox(item)" v-if="!isedit">{{item.name}}</div>
-            <el-input-number v-else v-model="item.cartProductNumber" :min="1" size="mini"></el-input-number>
+            <el-input-number v-else v-model="item.byCount" :min="1" size="mini"></el-input-number>
           </div>
           <!-- 商品介绍、价格、数量 -->
           <div @click="shopCheckbox(item)">
             <div class="cart-intro">{{item.description}}</div>
             <div class="cart-price">￥{{item.price}}</div>
-            <div class="cart-number">X{{item.cartProductNumber}}</div>
+            <div class="cart-number">X{{item.byCount}}</div>
           </div>
         </div>
       </div>
@@ -143,12 +143,7 @@ export default {
 
       let strArr = JSON.stringify(this.NewcartData); //数组转字符串
       localStorage.cartData = strArr;
-      // this.NewcartData.forEach((item, i) => {
-      //   //当为点击状态时，进行删除
-      //   if (item.isCart == true) {
-      //     this.cartData.splice(i, 1); //删除一个数组元素
-      //   }
-      // });
+
     },
     // // --------结算函数---------
     cartBalanceFun() {
@@ -183,7 +178,7 @@ export default {
         // 计算总价钱
         let stock = 0; //初始值设置为0
         this.isCartList.forEach(item => {
-          stock += item.price * item.cartProductNumber; //
+          stock += item.price * item.byCount; //
         });
         this.cartTotal = stock;
       },
