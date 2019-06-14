@@ -9,6 +9,7 @@
       >
     </div>
     <div class="block">
+<<<<<<< HEAD
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
           <div >
@@ -18,6 +19,13 @@
           </div>
         </el-carousel-item>
       </el-carousel>
+=======
+      <router-link to="/commodityDetail">
+        <el-carousel trigger="click" height="135px">
+          <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
+        </el-carousel>
+      </router-link>
+>>>>>>> 9bd61c4e5367ab5e42e2fbdb2cbf9b7dfcefe180
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
@@ -45,6 +53,10 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9bd61c4e5367ab5e42e2fbdb2cbf9b7dfcefe180
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
   </div>
@@ -57,7 +69,6 @@ export default {
   components: { portal, cartComponent },
   data() {
     return {
-      isCartCom: false,
       buy: [],
 
       imgg: [
@@ -89,8 +100,14 @@ export default {
       alert(i);
     },
     purchase(buyEach) {
+<<<<<<< HEAD
       this.isCartCom = !this.isCartCom;
+=======
+    
+      this.$store.commit("isCartComOpen");
+>>>>>>> 9bd61c4e5367ab5e42e2fbdb2cbf9b7dfcefe180
       this.$store.commit("changeActiveProduce", buyEach);
+    
     },
     getProList() {
       axios({
@@ -111,9 +128,16 @@ export default {
         });
     }
   },
+  computed: {
+    activeMenuIndex() {
+      return this.$store.state.user;
+    },
+ 
+  },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
+<<<<<<< HEAD
   }
   // computed: {
   //   activeProduceId() {
@@ -121,6 +145,18 @@ export default {
   //     return this.$store.state.activeProduceId;
   //   }
   // }
+=======
+  },
+  computed: {
+    // activeProduceId() {
+    //   //此处返回vuex的值到外部
+    //   return this.$store.state.activeProduceId;
+    // }
+    isCartCom() {
+      return this.$store.state.isCartCom;
+    }
+  }
+>>>>>>> 9bd61c4e5367ab5e42e2fbdb2cbf9b7dfcefe180
 };
 </script>
 
