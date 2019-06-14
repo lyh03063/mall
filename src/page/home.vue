@@ -14,6 +14,7 @@
           <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
         </el-carousel>
       </router-link>
+
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">
@@ -41,7 +42,6 @@
         <router-link class="look" to="/commodityList">点击查看全部商品</router-link>
       </div>
     </div>
-
     <portal></portal>
     <cartComponent v-if="isCartCom"></cartComponent>
   </div>
@@ -81,6 +81,9 @@ export default {
     };
   },
   methods: {
+    goto(i) {
+      alert(i);
+    },
     purchase(buyEach) {
     
       this.$store.commit("isCartComOpen");
@@ -99,6 +102,7 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.buy = list;
+          console.log("数据打印", response.data);
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -237,6 +241,11 @@ export default {
 }
 .el-carousel__item:nth-child(4) {
   background-image: url("https://img.yzcdn.cn/upload_files/2018/12/11/FsfFgmOHGm6WZsnloJo22RImEJ6p.jpg!large.jpg");
+}
+.box-item{
+  width:380px;
+  height:135px;
+  background-color: #64d9f6;
 }
 //轮播图-
 //底部查看+
