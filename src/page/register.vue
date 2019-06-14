@@ -26,13 +26,13 @@
         </div>
       </el-form-item>
       <el-form-item   prop="password">
-        <el-input type="password" v-model="registerruleForm.password"  placeholder="请输入密码" autocomplete="off"></el-input>
+        <el-input show-password v-model="registerruleForm.password"  placeholder="请输入密码" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item  prop="checkPass">
-        <el-input type="password" v-model="registerruleForm.checkPass" placeholder="请再输入一次密码" autocomplete="off"></el-input>
+        <el-input show-password v-model="registerruleForm.checkPass" placeholder="请再输入一次密码" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="registerSubmitForm('registerruleForm')">注册</el-button>
+        <el-button type="primary" class="WP100" @click="registerSubmitForm('registerruleForm')">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
