@@ -14,6 +14,7 @@
           <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
         </el-carousel>
       </router-link>
+
       <!-- <div class="box-span">
         <div v-for="imgg in imgg" :key="imgg.id">
           <img class="box-img" :src="imgg.immg">

@@ -2,10 +2,16 @@
   <div class="cartComponent">
     <!-- 这是购物车插件 -->
     <div class="Shopping-box cartComponent">
-      <el-dialog :visible.sync="isCartCom" width="100%" style="padding: 0;" class="dialog-fade-in">
+      <el-dialog
+        :visible.sync="isCartCom"
+        width="100%"
+        style="padding: 0;"
+        class="dialog-fade-in"
+        :before-close="closeDialogFun"
+      >
         <header class="header-box">
           <span class="header-img">
-            <img :src="doc.album[0].url">
+            <img :src="doc.album[0].url" v-if="doc.album">
           </span>
           <div class="header-main">
             <div class="header-name">{{doc.name}}</div>
@@ -38,9 +44,11 @@
 <script>
 export default {
   methods: {
-    addCartFun() {
+    closeDialogFun() {
       this.$store.commit("isCartComClose");
-
+    },
+    addCartFun() {
+      this.closeDialogFun();
       this.cartTotal = this.doc.price * this.doc.cartProductNumber;
 
       // 深度拷贝
@@ -51,10 +59,15 @@ export default {
 
       let strArr2 = JSON.stringify(this.cartData); //数组转字符串
       localStorage.cartData = strArr2;
+
+      this.$message({
+        message: "加入购物车成功",
+        type: "success"
+      });
     },
 
     goCartFun() {
-      this.$store.commit("isCartComClose");
+      this.closeDialogFun();
       this.$router.push({ path: "/confirmOrder" });
       this.$store.commit("goCartFun", this.doc);
     }
