@@ -72,7 +72,7 @@ const router = new VueRouter({
 
 
 
-localStorage.isLogin=0
+
 
 import axios from "axios";
 window.axios = axios;
@@ -137,10 +137,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
   },
   mutations: {//变更事件
 
-    getForm(state, param) {//单个会员列表对象
-      console.log("123123", param);
-      state.user = param
-    },
+    // getForm(state, param) {//单个会员列表对象
+    //   console.log("123123", param);
+    //   state.user = param
+    // },
     // JumpDetail(state, param){
 
     // },
