@@ -211,8 +211,7 @@ export default {
         this.getAddorder();
         this.$router.push({ path: "/memberOrder" });
       } else {
-         this.$message.error('请选择收货人，收货地址');
-  
+        this.$message.error("请选择收货人，收货地址");
       }
     },
     Jumpaddress() {
@@ -247,7 +246,7 @@ export default {
       this.cartData.forEach(item => {
         stock += item.price * item.byCount; //
       });
-      return stock;
+      return stock.toFixed(2);
     },
     title() {
       return this.$store.state.confirmOrderAddress;
@@ -258,6 +257,14 @@ export default {
   },
   created() {
     this.cartData = this.confirmOrder;
+  },
+
+  beforeCreate() {
+    //------------如果未登录------------
+    // console.log("用戶手機", localStorage.loginUserName)
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    }
   }
 };
 </script>
