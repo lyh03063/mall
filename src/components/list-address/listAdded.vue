@@ -102,7 +102,7 @@ export default {
     // this.addedForm();
   },
    mounted() {
-    this.addForm.userName = localStorage.loginnickName
+    this.addForm.userName = localStorage.loginUserName
     //  alert(this.addForm.userName)
     // this.getProList();
      

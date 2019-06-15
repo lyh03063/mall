@@ -17,8 +17,6 @@
         </div>
       </div>
       
-      
-
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
@@ -48,7 +46,7 @@ export default {
         delete: "000"
       },
       tableData: [],
-      userAddress:[],
+      // userAddress:[],
     };
   },
   methods: {
@@ -81,7 +79,8 @@ export default {
         //data: this.Objparma //传递参数
         data:{
           findJson:{
-            userName:this.userAddress
+             userName: localStorage.loginUserName
+            // userName:this.userAddress
           }
         }
       })
@@ -99,7 +98,7 @@ export default {
     }
   },
   mounted() {
-    this.userAddress = localStorage.loginnickName
+    // this.userAddress = localStorage.loginUserName
     //  alert(this.userAddress)
     this.getProList();
      
@@ -157,4 +156,5 @@ export default {
   font-weight: bold;
   color: #fff;
 }
+
 </style>
