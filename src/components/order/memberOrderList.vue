@@ -44,10 +44,10 @@
           </div>
         </div>
         <!-- 查看全部商品数量 -->
-        <div
+        <!-- <div
           class="order-cap-order-item__more"
           v-if="shop.commodityList.length>=1? true:false"
-        >查看全部{{shop.commodityList.length}}件商品</div>
+        >查看全部{{shop.commodityList.length}}件商品</div>-->
 
         <!-- 订单页脚 -->
         <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
@@ -64,16 +64,33 @@
           </div>
           <!-- 订单按钮 -->
           <div class="order-button__footer">
-            <router-link to="/memberOrderDetail" icon="el-icon-notebook-2">
-              <el-button type="info" plain @click="getlist(shop)" size="mini">查看订单详情</el-button>
+            <router-link
+              class="order-buttonstyle"
+              to="/memberOrderDetail"
+              icon="el-icon-notebook-2"
+            >
+              <el-button type="primary" plain @click="getlist(shop)" size="mini" round>查看订单详情</el-button>
             </router-link>
 
-            <router-link to="/memberOrderpay" icon="el-icon-notebook-2" v-if="shop.status==1">
-              <el-button type="primary" plain @click="getlist(shop)" size="mini">去支付</el-button>
+            <router-link
+              class="order-buttonstyle"
+              to="/memberOrderpay"
+              icon="el-icon-notebook-2"
+              v-if="shop.status==1"
+            >
+              <el-button type="primary" plain @click="getlist(shop)" size="mini" round>去支付</el-button>
             </router-link>
 
             <!-- 弹框取消 -->
-            <el-button type="danger" @click="cancelorder" size="mini" v-if="shop.status==1">取消</el-button>
+            <el-button
+              class="order-buttonstyle"
+              type="primary"
+              plain
+              @click="cancelorder(shop.P1)"
+              size="mini"
+              v-if="shop.status==1"
+              round
+            >取消</el-button>
           </div>
         </div>
       </div>
@@ -94,7 +111,9 @@ export default {
       page: {},
       totalMoney: 0,
       totalCount: 0,
-      orderlistdata: [] //指向vuex的对应的字段
+      orderlistdata: [], //指向vuex的对应的字段
+      queryName: "",
+      imgId: []
     };
   },
   methods: {
@@ -110,17 +129,39 @@ export default {
       //将列表信息传递到列表详情页面
       // let aaa = JSON.stringify(data);
       // alert(aaa);
-
       this.$store.commit("orderlistdetail", data);
     },
     //取消订单
-    cancelorder() {
+    cancelorder(P1) {
       this.$confirm("此操作将取消订单, 是否继续?", "提示", {
         confirmButtonText: "确定取消",
         cancelButtonText: "关闭",
         type: "warning"
       })
         .then(() => {
+          axios({
+            //请求接口
+            method: "post",
+            // url: this.objURL.list,
+            url: "http://120.76.160.41:3000/crossModify?page=mabang-order",
+            data: {
+              findJson: {
+                P1: P1
+              },
+              modifyJson: {
+                status: 5
+              }
+            } //传递参数
+          })
+            .then(response => {
+              console.log("第一次请求结果", response.data);
+              let { code, message } = response.data; //解构赋值
+              alert(message);
+            })
+            .catch(function(error) {
+              alert("异常:" + error);
+            });
+
           this.$message({
             type: "success",
             message: "已取消订单!"
@@ -132,29 +173,69 @@ export default {
             message: "未取消订单"
           });
         });
+    },
+    getorderList() {
+      axios({
+        //请求接口
+        method: "post",
+        // url: this.objURL.list,
+        url: "http://120.76.160.41:3000/crossList?page=mabang-order",
+        data: {
+          findJson: {
+            userName: this.queryName
+          }
+        } //传递参数
+      })
+        .then(response => {
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
+          this.OrderList = list;
+          this.page = page;
+          this.allCount = page.allCount; //更改总数据量
+          this.orderlistdata = response.data;
+
+          list.forEach(listEach => {
+            listEach.commodityList.forEach(commodityListEach => {
+               this.imgId.push(commodityListEach.P1)
+            });
+          });
+                //alert(this.imgId)
+          // this.queryimg();
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    },
+    queryimg(){
+      // alert(this.imgId)
+      axios({
+        //请求接口
+        method: "post",
+        // url: this.objURL.list,
+        url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
+        data: {
+          findJson: {
+            P1: this.imgId
+          }
+        } //传递参数
+      })
+        .then(response => {
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
+          this.imgList = list;
+
+          //alert(JSON.stringify(list))      
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+
     }
   },
   beforeCreate() {},
   mounted() {
-    axios({
-      //请求接口
-      method: "post",
-      // url: this.objURL.list,
-      url: "http://120.76.160.41:3000/crossList?page=mabang-order"
-      // data: this.Objparma //传递参数
-    })
-      .then(response => {
-        console.log("第一次请求结果", response.data);
-        let { list, page } = response.data; //解构赋值
-        this.OrderList = list;
-
-        this.page = page;
-        this.allCount = page.allCount; //更改总数据量
-        this.orderlistdata = response.data;
-      })
-      .catch(function(error) {
-        alert("异常:" + error);
-      });
+    this.queryName = localStorage.loginnickName;
+    this.getorderList();
   }
 };
 </script>

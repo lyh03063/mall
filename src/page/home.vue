@@ -11,8 +11,8 @@
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
           <div>
-            <router-link :to="'/commodityDetail' + item">
-              <div @click="goto(item)" class="box-item"></div>
+            <router-link :to="'/commodityDetail?id=' + item">
+              <div  class="box-item"></div>
             </router-link>
           </div>
         </el-carousel-item>
@@ -34,6 +34,9 @@
                   v-if="buyEach.album&&buyEach.album.length"
                   :src="buyEach.album[0].url"
                 >
+                <div class="img-logo">
+                  <img src="../img/img-logo.png" width="32px" height="32px">
+                </div>
               </router-link>
             </div>
             <div class="box-title">{{buyEach.description}}</div>
@@ -82,9 +85,6 @@ export default {
     };
   },
   methods: {
-    goto(i) {
-      alert(i);
-    },
     purchase(buyEach) {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
@@ -187,6 +187,7 @@ export default {
 .img-box {
   width: 167.5px;
   height: 175.5px;
+  position:relative;
 }
 .box-commodity {
   width: 167.5px;
@@ -194,6 +195,16 @@ export default {
   background-size: 167.5px 167.5px;
   background-repeat: no-repeat;
   margin: 0 4px;
+  position:absolute;
+  top:0;
+  left:0;
+}
+.img-logo{
+  width:32px;
+  height:32px;
+  position:absolute;
+  top:0;
+  left:10px;
 }
 .box-title {
   height: 40px;

@@ -1,7 +1,7 @@
 <template>
   <div class="register-f-box">
     <div class="login-box">
-      <h1>免费注册</h1>
+      <h1>修改密码</h1>
       <el-form
         :model="registerruleForm"
         status-icon
@@ -134,25 +134,13 @@ export default {
               console.log("data", code);
               console.log("response.data", message);
               if (code == 0) {
-                this.$message({ message: "注册成功~", type: "success" });
-                this.$router.push({ path: "/login" });
-              } else if (code == 2) {
-                if (message == "该手机号已经被注册") {//code的值为2的时候后台返回两种不同的判断
-                  this.$message.error("该手机号已经被注册,即将返回登录页面");
-                  setTimeout(() => {
-                      this.$router.push({ path: "/login" });
-                  },3000)
-                } else {
-                   this.$message({
-                  message: "验证码错误,请检查验证码~",
-                  type: "warning"
-                });
-                }
-              } else {
-                this.$message({
-                  message: "注册失败,请重新注册",
-                  type: "warning"
-                });
+              this.$message({ message: "", type: "warning" });
+              } else if (code == 1 || code == 2) {
+                this.$message({ message: "验证码错误,请重填", type: "warning" });
+                
+    
+              }  else {
+                alert("注册成功");
               }
               this.registerruleForm = {};
             })
