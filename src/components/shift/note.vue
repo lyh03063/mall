@@ -47,7 +47,7 @@ export default {
           if(code == 0){
              this.$message({ message: "验证码发送成功", type: "success" });
           }else if(code == 2){
-             this.$message.error('手机已注册');
+             this.$message.error('手机已注册,返回登录页面');
              this.isOpen = false; 
                   setTimeout(() => {
                       this.$router.push({ path: "/login" });
