@@ -153,6 +153,12 @@ export default {
   computed:{
    
   },
+  watch:{
+    '$route'(to,from){
+      console.log("第33次请求结果",from.path);//从哪来
+      console.log("第33次请求结果",to.path);//到哪去
+    }
+},
   methods: {
     getProList() {
       //获取产品列表函数
