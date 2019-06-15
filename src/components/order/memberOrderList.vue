@@ -64,20 +64,32 @@
           </div>
           <!-- 订单按钮 -->
           <div class="order-button__footer">
-            <router-link to="/memberOrderDetail" icon="el-icon-notebook-2">
-              <el-button type="info" plain @click="getlist(shop)" size="mini">查看订单详情</el-button>
+            <router-link
+              class="order-buttonstyle"
+              to="/memberOrderDetail"
+              icon="el-icon-notebook-2"
+            >
+              <el-button type="primary" plain @click="getlist(shop)" size="mini" round>查看订单详情</el-button>
             </router-link>
 
-            <router-link to="/memberOrderpay" icon="el-icon-notebook-2" v-if="shop.status==1">
-              <el-button type="primary" plain @click="getlist(shop)" size="mini">去支付</el-button>
+            <router-link
+              class="order-buttonstyle"
+              to="/memberOrderpay"
+              icon="el-icon-notebook-2"
+              v-if="shop.status==1"
+            >
+              <el-button type="primary" plain @click="getlist(shop)" size="mini" round>去支付</el-button>
             </router-link>
 
             <!-- 弹框取消 -->
             <el-button
-              type="danger"
+              class="order-buttonstyle"
+              type="primary"
+              plain
               @click="cancelorder(shop.P1)"
               size="mini"
               v-if="shop.status==1"
+              round
             >取消</el-button>
           </div>
         </div>
@@ -100,7 +112,8 @@ export default {
       totalMoney: 0,
       totalCount: 0,
       orderlistdata: [], //指向vuex的对应的字段
-      queryName: ""
+      queryName: "",
+      imgId: []
     };
   },
   methods: {
@@ -143,8 +156,7 @@ export default {
             .then(response => {
               console.log("第一次请求结果", response.data);
               let { code, message } = response.data; //解构赋值
-              alert(message)
-              
+              alert(message);
             })
             .catch(function(error) {
               alert("异常:" + error);
@@ -178,20 +190,52 @@ export default {
           console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
           this.OrderList = list;
-
           this.page = page;
           this.allCount = page.allCount; //更改总数据量
           this.orderlistdata = response.data;
+
+          list.forEach(listEach => {
+            listEach.commodityList.forEach(commodityListEach => {
+               this.imgId.push(commodityListEach.P1)
+            });
+          });
+                //alert(this.imgId)
+          // this.queryimg();
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
+    },
+    queryimg(){
+      // alert(this.imgId)
+      axios({
+        //请求接口
+        method: "post",
+        // url: this.objURL.list,
+        url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
+        data: {
+          findJson: {
+            P1: this.imgId
+          }
+        } //传递参数
+      })
+        .then(response => {
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
+          this.imgList = list;
+
+          //alert(JSON.stringify(list))      
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+
     }
   },
   beforeCreate() {},
   mounted() {
     this.queryName = localStorage.loginnickName;
-    this.getorderList()
+    this.getorderList();
   }
 };
 </script>
