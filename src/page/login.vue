@@ -31,7 +31,8 @@
                 <a href="JavaScript:;">验证码登录</a>
               </div>
               <div style="float:right">
-                <router-link to="/register">免费注册</router-link>| <router-link to="/xiugaimm">忘记密码</router-link>
+                <router-link to="/register">免费注册</router-link>|
+                <router-link to="/xiugaimm">忘记密码</router-link>
               </div>
             </div>
           </el-col>
@@ -113,8 +114,7 @@ export default {
               // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
               list.forEach(item => {
                 this.userLog = item.userName;
-                 this.nickName = item.nickName;
-
+                this.nickName = item.nickName;
               });
               console.log("response.data", response.data);
 
@@ -166,7 +166,7 @@ export default {
             });
         }
       });
-    },
+    }
     // getForm() {
     //   this.$store.commit("getForm", this.userLog);
     // }
@@ -185,7 +185,6 @@ export default {
     // } else {
     //   this.$router.push({ path: "/home" });
     // }
-
   }
 };
 </script>
