@@ -4,11 +4,11 @@
       <!------------------------ 订单完成情况开始 ---------------------------->
       <div class="order-status-main">
         <!-- 订单交易失败开始 -->
-        <div>
+        <div v-if="row.status==1">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/31/85f176382a5babc1eeed69ab34eac3ab.png"
           >
-          <h3>v-if="row.status==1"等待买家付款</h3>
+          <h3>等待买家付款</h3>
           <p>亲，您的订单超时未付款，订单自动关闭</p>
         </div>
       </div>
@@ -17,9 +17,9 @@
       <!------------------------ 交易流程开始 ---------------------------->
 
       <!-- 订单交易失败开始 -->
-      <div class="order-flow order-color">
+      <div class="order-flow order-color" v-if="row.status==1">
         <el-steps :active="1" align-center>
-          <el-step title="买家未付款v-if=row.status==1"></el-step>
+          <el-step title="买家未付款"></el-step>
           <el-step title="交易失败"></el-step>
         </el-steps>
       </div>

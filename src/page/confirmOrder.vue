@@ -1,20 +1,19 @@
 <template>
-<div>
-  <div class="main-cfo">
-    <div style="background-color:white">
-      <div class="delivery-btn">
-        <el-button class="iconfont iconkuaidi">商家配送</el-button>
-      </div>
-      <router-link to="./memberAddress" >
-        <ul :cf="title" class="address" @click="$store.commit('selection');"><!--勾选显示 -->
-          <p>{{title.phone}}</p>
-          <i class="iconfont icondizhi1"></i>
-          <li>收货人：{{title.name}}</li>
-          <li class="FS14">收货地址：{{title.area}}{{title.extend}}</li>
-        </ul>
-      </router-link>
-      </div>
+  <div>
 
+    <div class="main-cfo">
+      <div style="background-color:white">
+        <router-link to="./memberAddress">
+          <ul :cf="title" class="address" @click="$store.commit('selection');">
+            <!--勾选显示 -->
+             <i class="el-icon-arrow-right"></i>
+            <p>{{title.phone}}</p>
+            <i class="iconfont icondizhi1"></i>
+            <li>收货人：{{title.name}}</li>
+            <li class="FS14">收货地址：{{title.area}}</li>
+          </ul>
+        </router-link>
+      </div>
       <div class="line"></div>
     </div>
     <space height="15"></space>
@@ -35,8 +34,8 @@
           <p>{{item.name}}</p>
           <p style="color:#999;font-size:12px">{{item.description}}</p>
           <div>
-            <span style="color:red">￥{{item.price}}</span>
-            <span style="float:right">X{{item.cartProductNumber}}</span>
+            <span style="color:#f44">￥{{item.price}}</span>
+            <span style="float:right">X{{item.byCount}}</span>
           </div>
         </div>
       </div>
@@ -48,11 +47,12 @@
           <p>配送方式</p>
         </div>
         <div class="delivery-mode">
+          <i class="el-icon-arrow-right"></i>
           <span>同城配送 免运费</span>
           <br>
           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
-          <span style="margin-right:10px">{{day}}</span>
-          <span>{{times}}</span>
+          <!-- <span style="margin-right:10px">{{timeList}}</span>
+          <span>{{timeList1}}</span> -->
         </div>
       </div>
       <div class="message">
@@ -63,6 +63,7 @@
           <textarea
             style="width:100%;float:right;border:0;font-size:16px"
             placeholder="建议留言前先于商家沟通确认"
+            v-model="Objparma.leaveMsg"
           ></textarea>
         </div>
       </div>
@@ -79,7 +80,7 @@
       </p>
       <span>
         合计:
-        <span style="color:red">￥{{cartTotal}}</span>
+        <span style="color:#f44">￥{{cartTotal}}</span>
       </span>
     </div>
     <!-------------------提交订单----------------->
@@ -93,87 +94,144 @@
         <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
-     <div>
-    <el-dialog title="選擇配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
-      <div style="text-align:center">
-        <el-button type="danger" style="background-color:red;width:95%" round>同城配送 免運費</el-button>
-      </div>
-      <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">預約送達時間</p>
+    <div>
+      <el-dialog title="选择配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
+        <div style="text-align:center">
+          <el-button type="danger" style="background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);;width:95%" round>同城配送 免运费</el-button>
+        </div>
+        <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">预约送达时间</p>
 
-      <el-date-picker
-        style="width:50%"
-        value-format="MM-dd"
-        :picker-options="pickerOptions1"
-        v-model="day"
-        type="date"
-        placeholder="选择日期"
-      ></el-date-picker>
+       <timePicker @gotiem="gotiem"></timePicker>
 
-      <el-time-select
-        style="width:50%"
-        is-range
-        v-model="times"
-        :picker-options="time"
-        placeholder="选择时间"
-      ></el-time-select>
-   
-      <div class="footer" style="margin-top:100px">
-        <span type="primary" @click="delivery=false">确 定</span>
-      </div>
-
-    </el-dialog>
+        <div class="footer">
+          <span type="primary" @click="delivery=false">确 定</span>
+        </div>
+      </el-dialog>
+    </div>
   </div>
-</div>
 </template>
 
 
 <script>
+import timePicker from "../components/cart/timePicker";
 export default {
-  methods: {
-    JumpDetail() {
-      this.$router.push({ path: "/memberOrderDetail" });
-    },
-    Jumpaddress() {
-      this.$router.push({ path: "/memberAddress" });
-    },
-   
+  components: {
+    timePicker
   },
+ 
   data: function() {
     return {
-      day: "",
-      times: "",
-      pickerOptions1: {
-        disabledDate(time) {
-          const curDate = new Date().getTime();
-          const day = 2 * 24 * 3600 * 1000;
-          const dateRegion = curDate + day;
-          return (
-            time.getTime() < Date.now() - 8.64e7 || time.getTime() > dateRegion
-          );
-        }
-      },
-
+      
+     deliveryTime: [],
+    
       time: {
         start: "08:30",
         step: "01:00",
         end: "17:30"
       },
 
-      isCartList: [],
-      delivery: false,
-
-      cartData: []
+      delivery: true,
+      cartData: [],
+      Objparma: {
+        status: "1",
+        money: null, //已经完成
+        userName: null, //已完成
+        leaveMsg: "", //已完成
+        extend: {
+          //配送时间
+          distribution: {}
+        },
+        commodityList: [
+          //已完成
+          {
+            byCount: "2",
+            freight: "5",
+            price: "100",
+            name: "西瓜",
+            P1: "1"
+          },
+          {
+            byCount: "1",
+            freight: "5",
+            price: "100",
+            name: "菠萝",
+            P1: "2"
+          }
+        ],
+        postAddress: {
+          //获取用户填写得地址
+          address: "",
+          phone: "",
+          name: ""
+        }
+      }
     };
   },
+  methods: {
+     gotiem(distribution) {
+  console.log("===================distribution", distribution);
+    },
+    //跳转订单列表
+    JumpDetail() {
+      if (this.title.phone && this.title.phone && this.title.area) {
+        this.Objparma.commodityList = this.cartData.map(item => {
+          let { byCount, freight, price, name, P1 } = item;
+          return { byCount, freight, price, name, P1 };
+        });
+        this.Objparma.money = this.cartTotal;
+        this.Objparma.postAddress.address = this.title.area;
+        this.Objparma.postAddress.phone = this.title.phone;
+        this.Objparma.postAddress.name = this.title.name;
+        this.Objparma.userName = localStorage.loginnickName;
+        this.Objparma.extend.distribution = this.distribution;
+        console.log("this.Objparma", this.Objparma);
+        this.getAddorder();
+        this.$router.push({ path: "/memberOrder" });
+      } else {
+         this.$message.error('请选择收货人，收货地址');
+      }
+    },
+
+    Jumpaddress() {
+      this.$router.push({ path: "/memberAddress" });
+    },
+
+    getAddorder() {
+      axios({
+        method: "post",
+        url: "http://120.76.160.41:3000/crossAdd?page=mabang-order",
+        data: {
+          data: this.Objparma
+        }
+      })
+        .then(response => {
+          this.$message({
+            message: "新增订单成功",
+            type: "success"
+          });
+          console.log("response.data", response.data);
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    }
+  },
+
   computed: {
     cartTotal() {
       //计算合计总数
+      
       let stock = 0; //初始值设置为0
+      
       this.cartData.forEach(item => {
-        stock += item.price * item.cartProductNumber; //
+        stock += item.price * item.byCount; //
+        
       });
-      return stock;
+      return stock.toFixed(2);
+    
+    
     },
+    
     title() {
       return this.$store.state.confirmOrderAddress;
     },
@@ -191,13 +249,6 @@ export default {
 
 <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
-.delivery-mode::before {
-  content: ">";
-  float: right;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 9px;
-}
 .iconfont {
   float: left;
   display: block;
@@ -219,7 +270,7 @@ export default {
   .el-button {
     margin-left: 5px;
     height: 50px;
-    background-color: red;
+    background: -webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);
     color: white;
   }
 }
@@ -230,10 +281,10 @@ export default {
   text-align: center;
   .el-button {
     width: 95%;
-    background: red;
+    background: #f44;
     color: white;
     margin-left: 2.5%;
-    border-color: red;
+    border-color: #f44;
   }
 }
 .address {
@@ -247,11 +298,12 @@ export default {
     float: right;
   }
 }
-.address:before {
-  content: ">";
+.el-icon-arrow-right{
+
   float: right;
-  margin-top: 13px;
-  margin-left: 10px;
+  margin-top: 15px;
+  margin-left: 5px;
+  overflow: hidden
 }
 .details {
   background-color: #f8f8f8;
@@ -346,9 +398,10 @@ export default {
   height: 40px;
   display: inline-block;
   text-align: center;
-  border: 1px solid red;
+  border: 1px solid#FFE153;
   line-height: 50px;
-  background-color: red;
+  background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);
+  color:white;
 }
 .el-dialog__header span {
   text-align: center;

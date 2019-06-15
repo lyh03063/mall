@@ -11,8 +11,8 @@
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
           <div>
-            <router-link :to="'/commodityDetail?id=' + item">
-              <div class="box-item"></div>
+            <router-link :to="'/commodityDetail' + item">
+              <div @click="goto(item)" class="box-item"></div>
             </router-link>
           </div>
         </el-carousel-item>
@@ -22,12 +22,12 @@
           <img class="box-img" :src="imgg.immg">
         </div>
       </div>-->
-    </div>s
+    </div>
     <div class="block">
       <div style="background: #F2F2F2;">
         <template v-for="(buyEach,index) in buy">
           <div class="box-1" :key="index" v-if="index<6">
-            <div class="img-box" >
+            <div class="img-box">
               <router-link :to="'/commodityDetail?id=' + buyEach.P1">
                 <img
                   class="box-commodity"
@@ -82,6 +82,9 @@ export default {
     };
   },
   methods: {
+    goto(i) {
+      alert(i);
+    },
     purchase(buyEach) {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
@@ -98,7 +101,6 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.buy = list;
-          console.log("数据打印", response.data);
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -109,12 +111,14 @@ export default {
     activeMenuIndex() {
       return this.$store.state.user;
     }
-  } ,beforeCreate() {
+  },
+
+  beforeCreate() {
     //------------如果未登录------------
+    // console.log("用戶手機", localStorage.loginUserName)
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
-    console.log("beforeCreate-this.msg", this.msg);
   },
   mounted() {
     //mounted：等待模板加载后，

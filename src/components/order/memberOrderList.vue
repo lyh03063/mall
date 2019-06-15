@@ -4,14 +4,15 @@
       <div class="order-list-item" :key="shop.P1" v-if="shop.status==cf">
         <!-- 订单头部店铺名称，交易情况 -->
         <div class="order-list-item__header" type="list-item-header">
-          店铺：米柚生活 :{{shop.userName}}{{shop}}
-          <!-- <span class="order-list-item__header__state">交易关闭</span> -->
+          店铺：米柚生活 :
+          <span class="order-list-item__header__state">订单用户:{{shop.userName}}</span>
         </div>
         <!-- 订单列表 -->
+
         <div class="order-list-item__order-list" type="order-list">
           <div class="order-cap-order-item">
             <!-- 订单列表中的头部订单编号 -->
-            <div class="order-cap-order-item__head">{{shop._id}}</div>
+            <div class="order-cap-order-item__head">订单编号:{{shop._id}}</div>
             <!-- 订单列表中的内容 -->
             <div
               class="order-cap-order-item__body"
@@ -29,8 +30,8 @@
                   </a>
                   <div class="order-card__content">
                     <div class="order-card__title">{{order.name}}</div>
+                    <div>{{order.description}}"description": "新疆库尔勒香梨，3个仅售9.9元！",</div>
 
-                    <!-- v-if="list.status==1? true:false" -->
                     <div class="order-card__bottom">
                       <div class="order-card__price" style="color:red">￥{{order.price}}</div>
                       <div class="order-card__num">X{{order.byCount}}</div>
@@ -55,6 +56,11 @@
               合计 ：
               <span style="color:red">{{getTotalMoney(shop.commodityList)}}</span>
             </div>
+
+            <div class="order-cap-order-item__total-price">
+              运费 ：
+              <span style="color:red">{{shop.freight}}</span>
+            </div>
           </div>
           <!-- 订单按钮 -->
           <div class="order-button__footer">
@@ -62,19 +68,12 @@
               <el-button type="info" plain @click="getlist(shop)" size="mini">查看订单详情</el-button>
             </router-link>
 
-            <router-link to="/memberOrderpay" icon="el-icon-notebook-2">
+            <router-link to="/memberOrderpay" icon="el-icon-notebook-2" v-if="shop.status==1">
               <el-button type="primary" plain @click="getlist(shop)" size="mini">去支付</el-button>
             </router-link>
 
             <!-- 弹框取消 -->
-            <el-button type="danger" plain size="mini" v-popover:popover5>取消</el-button>
-            <el-popover ref="popover5" placement="top" width="160" v-model="visible2">
-              <p>是否取消该订单？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                <el-button size="mini" type="text" @click="visible2 = false">关闭</el-button>
-              </div>
-            </el-popover>
+            <el-button type="danger" @click="cancelorder" size="mini" v-if="shop.status==1">取消</el-button>
           </div>
         </div>
       </div>
@@ -90,7 +89,6 @@ export default {
   data() {
     return {
       tabPosition: "top",
-      visible2: false, //取消订单弹窗
       allCount: null, //总记录数
       OrderList: {}, //订单列表
       page: {},
@@ -110,9 +108,30 @@ export default {
     },
     getlist(data) {
       //将列表信息传递到列表详情页面
-      this.$store.commit("orderlistdetail", data);
       // let aaa = JSON.stringify(data);
       // alert(aaa);
+
+      this.$store.commit("orderlistdetail", data);
+    },
+    //取消订单
+    cancelorder() {
+      this.$confirm("此操作将取消订单, 是否继续?", "提示", {
+        confirmButtonText: "确定取消",
+        cancelButtonText: "关闭",
+        type: "warning"
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "已取消订单!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "未取消订单"
+          });
+        });
     }
   },
   beforeCreate() {},

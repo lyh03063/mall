@@ -1,9 +1,3 @@
-<template>
-  <div class="main">
-    pswModify
-    wz123
-  </div>
-</template>
 
 <template>
   <div class="all-container">
