@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers';
 export default {
   props: ["cf", "isnote"],
   data() {
@@ -43,9 +44,16 @@ export default {
       })
         .then(response => {
           let { code, message, data } = response.data; //解构赋值
-          console.log("code", code);
-          console.log("message", message);
-          console.log("data", data);
+          if(code == 0){
+             this.$message({ message: "验证码发送成功", type: "success" });
+          }else if(code == 2){
+             this.$message.error('手机已注册,返回登录页面');
+             this.isOpen = false; 
+                  setTimeout(() => {
+                      this.$router.push({ path: "/login" });
+                  },3000)
+          }
+            ;
         })
         .catch(function(error) {
           alert("异常:" + error);

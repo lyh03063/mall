@@ -56,76 +56,81 @@
           </div>
           <div class="member-message WP90 BC_fff">
             <router-link to="/cart">
-            <div>
+              <div>
                 <div
                   class="el-icon-shopping-cart-full W20"
                   style="float: left; font-size:20px;margin-left:0px;"
                 ></div>
                 <div style="float: left;">购物车</div>
                 <div style="float:right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
             <router-link to="/memberCenter">
-            <div>
+              <div>
                 <div
                   class="el-icon-tickets W20"
                   style="float: left; font-size:20px;margin-left:0px;"
                 ></div>
                 <div style="float: left;">任务中心</div>
                 <div style="float:  right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
             <router-link to="/memberCenter">
-            <div>
+              <div>
                 <div class="el-icon-money W20" style="float: left; font-size:20px;margin-left:0px;"></div>
                 <div style="float: left;">返现</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
             <router-link to="/memberCenter">
-            <div>
+              <div>
                 <div
                   class="el-icon-present W20"
                   style="float: left; font-size:20px;margin-left:0px;"
                 ></div>
                 <div style="float: left;">赠品</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
             <router-link to="/memberCenter">
-            <div>
+              <div>
                 <div class="el-icon-goods W20" style="float: left; font-size:20px;margin-left:0px;"></div>
                 <div style="float: left;">心愿单</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
           </div>
           <div class="member-message WP90 BC_fff">
             <router-link to="/memberAddress">
-            <div>
+              <div>
                 <div class="el-icon-house W20" style="float: left; font-size:20px;margin-left:0px;"></div>
                 <div style="float: left;">收货地址</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
             <router-link to="/memberCenter">
-            <div>
+              <div>
                 <div
                   class="el-icon-s-custom W20"
                   style="float: left; font-size:20px;margin-left:0px;"
                 ></div>
                 <div style="float: left;">账号设置</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
             <router-link to="/memberSetting">
-            <div>
-                <div class="el-icon-user W20" style="float: left; font-size:20px;margin-left:0px;"></div>
+              <div>
+                <div class="" style="float: left; font-size:20px;margin-left:0px;"></div>
                 <div style="float: left;">个人信息</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
-            </div>
+              </div>
             </router-link>
+            <div>
+            <div class="  W20" style="float: left; font-size:20px;margin-left:0px;"></div>
+            <div @click="logout()" class="logout" style="text-align:center">退出登录</div>
           </div>
+          </div>
+          
         </div>
       </el-col>
       <el-col :xs="0" :sm="4" :md="4" :lg="6" :xl="6">
@@ -133,10 +138,9 @@
       </el-col>
     </el-row>
     <div style="margin:-20px;">
- <portal></portal>
+      <portal></portal>
     </div>
   </div>
-   
 </template>
 
 <script>
@@ -145,26 +149,28 @@ export default {
   components: { portal },
   data() {
     return {
-      
-      data:false,
-      list:[],
+      data: false,
+      list: []
     };
   },
-  computed:{
-   
-  },
+  computed: {},
   methods: {
+    logout() {
+      localStorage.isLogin="0";
+      localStorage.loginUserName=null;
+      this.$router.push({ path: "/login" })
+    },
     getProList() {
       //获取产品列表函数
-        
+
       axios({
         //请求接口
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-member",
         data: {
-           findJson: {
-                 userName: localStorage.loginUserName
-           }
+          findJson: {
+            userName: localStorage.loginUserName
+          }
         } //传递参数
       })
         .then(response => {
@@ -178,23 +184,31 @@ export default {
         .catch(function(error) {
           alert("异常:" + error);
         });
-    }, 
+    }
   },
   mounted() {
-    this.getProList(); 
+    this.getProList();
   },
   beforeCreate() {
     // localStorage.isLogin=0;
-    if(localStorage.isLogin == "0"){
-      this.$router.push({ path:"/login"})
+    if (localStorage.isLogin == "0") {
+      this.$router.push({ path: "/login" });
     }
-
   }
 };
 </script>
 
 
 <style lang="scss" >
+.logout {
+  margin-left: 10px;
+  padding-right: 10px;
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  border-color: #f8f8f8;
+  height: 40px;
+  line-height: 40px;
+}
 @import "../assets/css/util.scss"; //导入公共样式文件
 .member-center {
   height: 600px;

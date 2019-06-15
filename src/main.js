@@ -25,6 +25,7 @@ import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
+import xiugaimm from "./page/xiugaimm";
 
 
 
@@ -53,6 +54,7 @@ const router = new VueRouter({
     { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
+    { path: '/xiugaimm', component: xiugaimm },
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
 
@@ -178,6 +180,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex
     },
+
+
+
+
+
     openDialogAdd(state, listIndex) {//打开新增弹窗事件
       state.listState[listIndex].isShowDialogAdd = true;
     },

@@ -137,8 +137,8 @@ export default {
   background-color: #fff;
 }
 .commodity-title {
-  font-size: 12px;
-  font-weight: normal;
+  font-size: 14px;
+  font-weight: bold;
   color: #666;
   padding-bottom: 10px;
 }
