@@ -1,6 +1,6 @@
 <template>
   <div class="commodity-main">
-    <el-tabs tab-position="left" >
+    <el-tabs tab-position="left" @tab-click="switchClick">
       <!-- 商品分类列表 -->
       <el-tab-pane
         :label="commoditySort.name"
@@ -10,36 +10,34 @@
         <!-- 商品列表 -->
         <ul class="commodity-list">
           <div class="commodity-title">{{commoditySort.name}}</div>
-          <template v-for="commodity in commodityList">
-            <li
-              class="commodity-group"
-              :key="commodity.index"
-              :v-model="findJson.prop"
-              v-if="commodity.category==commoditySort.P1"
-            >
-              <router-link :to="'/commodityDetail?id=' + commodity.P1">
-                <img
-                  class="commodity-img"
-                  v-if="commodity.album&&commodity.album.length"
-                  :src="commodity.album[0].url"
-                  @click="$store.commit('changeActiveProduce',commodity)"
-                >
-              </router-link>
-              <div class="commodity-intro">
-                <p class="commodity-name">{{commodity.name}}</p>
-                <p class="commodity-description">{{commodity.description}}</p>
-                <div class="FL">
-                  <div class="commodity-price">
-                    ￥{{commodity.price}}
-                    <div
-                      class="el-icon-circle-plus-outline commodity-icon"
-                      @click="purchase(commodity)"
-                    ></div>
-                  </div>
+          <li
+            class="commodity-group"
+            v-for="commodity in commodityList"
+            :key="commodity.index"
+            :v-model="objCommodity.prop"
+          >
+            <router-link :to="'/commodityDetail?id=' + commodity.P1">
+              <img
+                class="commodity-img"
+                v-if="commodity.album&&commodity.album.length"
+                :src="commodity.album[0].url"
+                @click="$store.commit('changeActiveProduce',commodity)"
+              >
+            </router-link>
+            <div class="commodity-intro">
+              <p class="commodity-name">{{commodity.name}}</p>
+              <p class="commodity-description">{{commodity.description}}</p>
+              <div class="FL">
+                <div class="commodity-price">
+                  ￥{{commodity.price}}
+                  <div
+                    class="el-icon-circle-plus-outline commodity-icon"
+                    @click="purchase(commodity)"
+                  ></div>
                 </div>
               </div>
-            </li>
-          </template>
+            </div>
+          </li>
         </ul>
       </el-tab-pane>
     </el-tabs>
@@ -66,10 +64,17 @@ export default {
 
       commoditySortList: [], //商品分类列表数据
       commodityList: {}, //商品列表数据
-      findJson: {}
+      objCommodity: {
+        category: 1 //显示首次加载的页面
+        
+      }
     };
   },
   methods: {
+    switchClick(tab, event) {
+      this.objCommodity.category = tab.index * 1 + 1;
+      this.getCommodityList();
+    },
     //------跳转加入购物车--------
     purchase(commodity) {
       this.$store.commit("isCartComOpen");
@@ -85,7 +90,7 @@ export default {
       })
         .then(response => {
           let { list } = response.data; //解构赋值
-          this.commoditySortList = list;
+          this.commoditySortList = list.reverse(); //数组翻转
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -97,7 +102,9 @@ export default {
         //请求接口
         method: "post",
         url: this.objURL.list,
-        data: this.findJson //传递参数
+        data: {
+          findJson: { category: this.objCommodity.category }
+        } //传递参数
       })
         .then(response => {
           let { list } = response.data; //解构赋值
@@ -110,15 +117,15 @@ export default {
   },
   mounted() {
     //-------------------------等待模板加载后-------------------------
-    this.getCommoditySortList(); //第一次加载此函数，页面才不会空
-    this.getCommodityList();
+    this.getCommoditySortList(); //第一次加载此函数，页面不为空
+    this.getCommodityList(); //第一次加载此函数，页面不为空
   },
   computed: {
     isCartCom() {
       return this.$store.state.isCartCom;
     }
-  },
-  created() {}
+  }
+  // created() {}
 };
 </script>
 
