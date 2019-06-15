@@ -1,6 +1,6 @@
 <template>
   <div class="commodity-main">
-    <el-tabs tab-position="left">
+    <el-tabs tab-position="left" >
       <!-- 商品分类列表 -->
       <el-tab-pane
         :label="commoditySort.name"
@@ -137,8 +137,8 @@ export default {
   background-color: #fff;
 }
 .commodity-title {
-  font-size: 12px;
-  font-weight: normal;
+  font-size: 14px;
+  font-weight: bold;
   color: #666;
   padding-bottom: 10px;
 }

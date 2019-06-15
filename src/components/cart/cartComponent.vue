@@ -55,7 +55,7 @@ export default {
     addCartFun() {
       this.closeDialogFun();
 
-      this.cartTotal = this.doc.price * this.doc.byCount;
+      this.cartTotal =(this.doc.price * this.doc.byCount).toFixed(2);
 
       // 深度拷贝
       let str = JSON.stringify(this.doc); //转化为字符串
@@ -80,7 +80,7 @@ export default {
     return {
       cartTotal: 1
     };
-  },
+  }, 
   computed: {
     //计算属性
 
@@ -95,7 +95,15 @@ export default {
     isCartCom() {
       return this.$store.state.isCartCom;
     }
-  }
+  },
+  
+  beforeCreate() {
+    //------------如果未登录------------
+    // console.log("用戶手機", localStorage.loginUserName)
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    }
+  },
 };
 </script>
 

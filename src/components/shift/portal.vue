@@ -5,7 +5,7 @@
       <li v-for="linkk in linkk" :key="linkk.id">
         <router-link class="link" :to="linkk.router">
           <div :class="linkk.icon" style="font-size: 30px;color: #333">
-            <div  style="font-size: 15px;" >{{linkk.title}}</div>
+            <div style="font-size: 15px;">{{linkk.title}}</div>
           </div>
         </router-link>
       </li>
@@ -23,7 +23,7 @@ export default {
           router: "/",
           icon: "el-icon-house",
           title: "首页",
-          color:"red",
+          color: "red"
         },
         {
           id: "2",
@@ -46,8 +46,7 @@ export default {
       ]
     };
   },
-  methods:{
-  }
+  methods: {}
 };
 </script>
 
@@ -74,5 +73,10 @@ export default {
   text-align: center;
   line-height: 50px;
   opacity: 0.75;
+}
+
+.router-link-exact-active:link,
+.router-link-exact-active:visited {
+  background-color: #FF0000;
 }
 </style>
