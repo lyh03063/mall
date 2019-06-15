@@ -188,11 +188,7 @@ export default {
         this.getAddorder();
         this.$router.push({ path: "/memberOrder" });
       } else {
-<<<<<<< HEAD
-        this.$message.error("请选择收货人，收货地址");
-=======
          this.$message.error('请选择收货人，收货地址');
->>>>>>> 4fc78cbfc50f130ebd89d31c9671c9d3f4ced4ee
       }
     },
 
@@ -232,11 +228,8 @@ export default {
         
       });
       return stock.toFixed(2);
-<<<<<<< HEAD
-=======
     
     
->>>>>>> 4fc78cbfc50f130ebd89d31c9671c9d3f4ced4ee
     },
     
     title() {
