@@ -11,7 +11,7 @@
       <el-carousel trigger="click" height="135px">
         <el-carousel-item v-for="item in 3" :key="item">
           <div>
-            <router-link :to="'/commodityDetail' + item">
+            <router-link :to="'/commodityDetail?id=' + item">
               <div @click="goto(item)" class="box-item"></div>
             </router-link>
           </div>
@@ -83,9 +83,6 @@ export default {
     };
   },
   methods: {
-    goto(i) {
-      alert(i);
-    },
     purchase(buyEach) {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", buyEach);
