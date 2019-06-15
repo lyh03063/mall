@@ -200,7 +200,6 @@ export default {
     padding: 20px 20px 20px 5px;
     font-size: 28px;
     font-weight: 400;
-    
   }
   h2 {
     margin: 20px 20px 20px 5px;
