@@ -16,6 +16,8 @@
           <i class="el-icon-check"></i>
         </div>
       </div>
+      
+      
 
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
@@ -45,7 +47,8 @@ export default {
         list: "http://120.76.160.41:3000/crossList?page=mabang-address",
         delete: "000"
       },
-      tableData: []
+      tableData: [],
+      userAddress:[],
     };
   },
   methods: {
@@ -75,7 +78,12 @@ export default {
         method: "post",
         // url: this.objURL.list,
         url: this.objURL.list,
-        data: this.Objparma //传递参数
+        //data: this.Objparma //传递参数
+        data:{
+          findJson:{
+            userName:this.userAddress
+          }
+        }
       })
         .then(response => {
           console.log("第一次请求结果", response.data);
@@ -91,7 +99,10 @@ export default {
     }
   },
   mounted() {
+    this.userAddress = localStorage.loginnickName
+    //  alert(this.userAddress)
     this.getProList();
+     
   },
   computed: {
     //计算属性
@@ -99,16 +110,8 @@ export default {
     selection() {
       return this.$store.state.selection;
     }
-  }
-  //  beforeCreate() {
-  // //------------如果未登录------------
-  // if (localStorage.isLogin == 0) {
-  // this.$router.push({ path: "/login" }); //跳转到后台首页
-  // } else {
-  // this.$router.push({ path: "/home" });
-  // }
-  // console.log("beforeCreate-this.msg", this.msg);
-  // }
+  },
+
 };
 </script>
 

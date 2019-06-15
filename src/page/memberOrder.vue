@@ -8,8 +8,8 @@
           <div class="order-tab">
             <el-tabs :tab-position="tabPosition">
               <!-- 订单列表 -->
-              <el-tab-pane :label="item.name" v-for="item in Arrshoptab" :key="item.vaule">
-                <memberOrderList :cf="item.vaule"></memberOrderList>
+              <el-tab-pane :label="item.name" v-for="item in Arrshoptab" :key="item.value">
+                <memberOrderList :cf="item.value"></memberOrderList>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -39,6 +39,7 @@
         </div>
       </el-col>
       <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
+      <space height="10"></space>
     </el-row>
   </div>
 </template>
@@ -55,11 +56,11 @@ export default {
   data() {
     return {
       Arrshoptab: [
-        { name: "已下单", vaule: 1 },
-        { name: "已付款", vaule: 2 },
-        { name: "已发货", vaule: 3 },
-        { name: "已完成", vaule: 4 },
-        { name: "已取消", vaule: 5 }
+        { name: "已下单", value: 1 },
+        { name: "已付款", value: 2 },
+        { name: "已发货", value: 3 },
+        { name: "已完成", value: 4 },
+        { name: "已取消", value: 5 }
       ],
 
       tabPosition: "top",
