@@ -100,7 +100,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
 
   },
- 
+
   mutations: {//变更事件
     selection(state) {
       state.selection = true

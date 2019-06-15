@@ -16,25 +16,25 @@
       </el-form-item>
 
       <el-form-item label="地区" prop="area">
-        <el-cascader :options="options" v-model="addForm.area"></el-cascader>
+        <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
 
       <el-form-item label="详细地址" prop="extend">
         <el-input type="textarea" v-model="addForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
       </el-form-item>
       <button class="preserve" @click="addedAddress()">保存并使用</button>
-      
     </el-form>
-     <portal></portal>
+    <portal></portal>
   </div>
 </template>
 
 <script>
 import portal from "../shift/portal";
 export default {
-  components: {portal},
+  components: { portal },
   data() {
     return {
+      cityArray: [],
       region: "",
       options: option,
       objURL: {
@@ -48,7 +48,8 @@ export default {
         phone: "",
         area: [],
         extend: "",
-        userName: ""
+        userName: "",
+
       },
 
       //验证表单
@@ -62,13 +63,10 @@ export default {
           }
         ],
         phone: [
-          { required: true, message: "请输入收货人电话", trigger: "change" }
+          { required: true, message: "请输入收货人电话", trigger: "blur" }
           // { min: 11, message: "电话格式填写错误", trigger: "blur" }
         ],
-        area: [
-          { required: true, message: "请输入收货人地区", trigger: "change" },
-          { min: 11, message: "请输入正确11位电话号码", trigger: "blur" }
-        ],
+
         extend: [{ required: true, message: "请填写详细地址", trigger: "blur" }]
       }
     };
@@ -77,7 +75,7 @@ export default {
   methods: {
     //---------- 新增函数
     addedAddress() {
-      // this.addForm.area = this.addForm.area.join(" ");
+      this.addForm.area = this.cityArray.join(" ");
       console.log("this.addForm.area", this.addForm.area);
 
       axios({
@@ -102,6 +100,12 @@ export default {
   },
   created() {
     // this.addedForm();
+  },
+   mounted() {
+    this.addForm.userName = localStorage.loginnickName
+    //  alert(this.addForm.userName)
+    // this.getProList();
+     
   }
 };
 </script>
@@ -113,9 +117,8 @@ export default {
   width: 98%;
   height: 44px;
   margin-top: 20px;
-  background-color:#f44;
+  background-color: #f44;
   color: #fff;
   border: 0px;
-  
 }
 </style>
