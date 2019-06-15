@@ -108,13 +108,14 @@
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
-            <router-link to="/memberCenter">
+            <router-link :to="'/xiugaimm?userID='+list[0].P1">
               <div>
                 <div
                   class="el-icon-s-custom W20"
                   style="float: left; font-size:20px;margin-left:0px;"
                 ></div>
-                <div style="float: left;">账号设置</div>
+                <div style="float: left;">
+               修改密码</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>

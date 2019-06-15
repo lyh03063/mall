@@ -54,7 +54,7 @@ const router = new VueRouter({
     { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-    { path: '/xiugaimm', component: xiugaimm },
+    { path: '/xiugaimm', component: xiugaimm },//a
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
 

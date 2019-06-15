@@ -244,7 +244,9 @@ export default {
     cartTotal() {
       //计算合计总数
       let stock = 0; //初始值设置为0
-      this.cartData.forEach(item => {
+      this.cartData.
+    
+      (item => {
         stock += item.price * item.byCount; //
       });
       return stock;
