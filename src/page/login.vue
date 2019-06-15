@@ -185,7 +185,7 @@ export default {
     } else {
       this.$router.push({ path: "/home" });
     }
-    console.log("beforeCreate-this.msg", this.msg);
+
   }
 };
 </script>
@@ -200,6 +200,7 @@ export default {
     padding: 20px 20px 20px 5px;
     font-size: 28px;
     font-weight: 400;
+    
   }
   h2 {
     margin: 20px 20px 20px 5px;

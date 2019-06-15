@@ -83,14 +83,13 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     activeProduceId: "",//当前商品的id
     activeMenuIndex: "2",//当前激活的菜单index
     listState: {//存放列表的共享状态，
-      user: {} //会员列表当前用户的P1
-
     },
+
     AddressModify_item: {},
     confirmOrderAddress: {},
 
     doc: {//存放购物车插件的对象
-      cartProductNumber: null,
+      byCount: null,
       isCart: true
     },
     isCartCom: false,//控制购物车弹窗
@@ -99,13 +98,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     selection: false,
 
+
   },
 
-
-
-
   mutations: {//变更事件
-
     selection(state) {
       state.selection = true
     },
@@ -128,15 +124,10 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.AddressModify_item = param
       console.log("this.AddressModify_item", this.AddressModify_item);
     },
-
-
-  },
-  mutations: {//变更事件
-
     // getForm(state, param) {//单个会员列表对象
     //   console.log("123123", param);
     //   state.user = param
-    // },
+    // }, 
     // JumpDetail(state, param){
 
     // },
@@ -165,8 +156,6 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);
     },
-
-
 
 
 

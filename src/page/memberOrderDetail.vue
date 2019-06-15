@@ -40,7 +40,7 @@
         <!-- 订单取消 -->
         <div v-else>
           <img src="https://img.yzcdn.cn/v2/image/wap/trade/result/order_status/icon_topay2@2x.png">
-          <h3>v-if="row.status==5"订单取消</h3>
+          <h3>订单取消</h3>
           <p>亲，订单已被取消，需要重新下单</p>
         </div>
       </div>

@@ -118,7 +118,7 @@ export default {
         if (valid) {
           //如果校验结果为真
           this.registerruleForm.phone = this.registerruleForm.mobile;
-          alert(this.registerruleForm.phone);
+          // alert(this.registerruleForm.phone);
           axios({
             method: "post",
             url: this.objURL.register, //数据地址，数据来源于objURL.List中的地址
@@ -134,12 +134,12 @@ export default {
               console.log("data", code);
               console.log("response.data", message);
               if (code == 0) {
-                alert("请重新注册");
-              } else if (code == 1) {
-                alert("验证码错误,请重填");
-              } else if (code == 2) {
-                alert("验证码错误");
-              } else {
+              this.$message({ message: "", type: "warning" });
+              } else if (code == 1 || code == 2) {
+                this.$message({ message: "验证码错误,请重填", type: "warning" });
+                
+    
+              }  else {
                 alert("注册成功");
               }
               this.registerruleForm = {};
