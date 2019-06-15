@@ -19,8 +19,11 @@
               <div style="">
                 <div class>
                   <div style="padding-left:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);">
-                  <div style="height:350px;">
+                  <div style="height:350px; position: relative;">
                       <img :src="product.album[0].url" width="100%" height="100%" >
+                      <div class="img-logo">
+                          <img src="../img/img-logo.png" width="100%" height="100%">      
+                          </div>
                   </div>
                       <div
                         class="FWB"
@@ -203,7 +206,7 @@ export default {
           let { list } = response.data; //解构赋值
 
           this.product = list[0];
-          console.log("第四次请求结果", this.product);
+          // console.log("第四次请求结果", this.product);
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -246,5 +249,12 @@ this.$store.commit("changeActiveProduce", buyEach);
   bottom:0px;
   height: 60px;
   width: 100%;
+}
+.img-logo{
+width:15%;
+height:15%;
+position:absolute;
+top:4%;
+left:7%;
 }
 </style>

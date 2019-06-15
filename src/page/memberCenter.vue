@@ -8,11 +8,11 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{list[0].userName}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list[0].phine}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=1">
                 <div style="float:left">
                   <h3>我的订单</h3>
                 </div>
@@ -22,34 +22,28 @@
               </router-link>
             </div>
             <div style>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=1">
                 <div class="order-status">
                   <div class="el-icon-goods" style="font-size:30px;"></div>
                   <div style="font-size:13px;margin-top:8px;">待付款</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=2">
                 <div class="order-status">
                   <div class="el-icon-shopping-cart-1" style="font-size:30px;"></div>
-                  <div style="font-size:13px; margin-top:8px;">待发货</div>
+                  <div style="font-size:13px; margin-top:8px;">已付款</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=3">
                 <div class="order-status">
                   <div class="el-icon-truck" style="font-size:30px;"></div>
-                  <div style="font-size:13px; margin-top:8px;">待收货</div>
+                  <div style="font-size:13px; margin-top:8px;">已发货</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=4">
                 <div class="order-status">
                   <div class="el-icon-chat-line-round" style="font-size:30px;"></div>
                   <div style="font-size:13px; margin-top:8px;">待评价</div>
-                </div>
-              </router-link>
-              <router-link to="/memberOrder">
-                <div class="order-status">
-                  <div class="el-icon-coordinate" style="font-size:30px; margin-left:10px"></div>
-                  <div style="font-size:13px; margin-top:8px;">退款/售后</div>
                 </div>
               </router-link>
             </div>
@@ -175,7 +169,7 @@ export default {
       })
         .then(response => {
           //这有函数，不知道this指向谁
-          console.log("第一次请求结果", response.data);
+          // console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
           this.list = list;
           this.page = page;
@@ -258,9 +252,9 @@ export default {
   margin: 0;
   height: 80px;
   float: left;
-  width: 19%;
+  width: 24%;
   padding-top: 15px;
-  padding-left: 7%;
+  padding-left: 10%;
 }
 
 .myorder-title {
