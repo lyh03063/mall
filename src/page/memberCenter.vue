@@ -12,7 +12,7 @@
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=1">
                 <div style="float:left">
                   <h3>我的订单</h3>
                 </div>
@@ -22,31 +22,31 @@
               </router-link>
             </div>
             <div style>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=1">
                 <div class="order-status">
                   <div class="el-icon-goods" style="font-size:30px;"></div>
                   <div style="font-size:13px;margin-top:8px;">待付款</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=2">
                 <div class="order-status">
                   <div class="el-icon-shopping-cart-1" style="font-size:30px;"></div>
                   <div style="font-size:13px; margin-top:8px;">待发货</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=3">
                 <div class="order-status">
                   <div class="el-icon-truck" style="font-size:30px;"></div>
                   <div style="font-size:13px; margin-top:8px;">待收货</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=4">
                 <div class="order-status">
                   <div class="el-icon-chat-line-round" style="font-size:30px;"></div>
                   <div style="font-size:13px; margin-top:8px;">待评价</div>
                 </div>
               </router-link>
-              <router-link to="/memberOrder">
+              <router-link to="/memberOrder?orderactiveName=5">
                 <div class="order-status">
                   <div class="el-icon-coordinate" style="font-size:30px; margin-left:10px"></div>
                   <div style="font-size:13px; margin-top:8px;">退款/售后</div>
@@ -120,17 +120,16 @@
             </router-link>
             <router-link to="/memberSetting">
               <div>
-                <div class="" style="float: left; font-size:20px;margin-left:0px;"></div>
+                <div class style="float: left; font-size:20px;margin-left:0px;"></div>
                 <div style="float: left;">个人信息</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
             <div>
-            <div class="  W20" style="float: left; font-size:20px;margin-left:0px;"></div>
-            <div @click="logout()" class="logout" style="text-align:center">退出登录</div>
+              <div class="W20" style="float: left; font-size:20px;margin-left:0px;"></div>
+              <div @click="logout()" class="logout" style="text-align:center">退出登录</div>
+            </div>
           </div>
-          </div>
-          
         </div>
       </el-col>
       <el-col :xs="0" :sm="4" :md="4" :lg="6" :xl="6">
@@ -156,9 +155,9 @@ export default {
   computed: {},
   methods: {
     logout() {
-      localStorage.isLogin="0";
-      localStorage.loginUserName=null;
-      this.$router.push({ path: "/login" })
+      localStorage.isLogin = "0";
+      localStorage.loginUserName = null;
+      this.$router.push({ path: "/login" });
     },
     getProList() {
       //获取产品列表函数
