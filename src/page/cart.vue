@@ -9,7 +9,6 @@
           </div>
         </div>
 
-
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
@@ -139,7 +138,6 @@ export default {
 
       let strArr = JSON.stringify(this.NewcartData); //数组转字符串
       localStorage.cartData = strArr;
-
     },
     // // --------结算函数---------
     cartBalanceFun() {
@@ -173,7 +171,7 @@ export default {
         this.isCartList.forEach(item => {
           stock += item.price * item.byCount; //
         });
-        this.cartTotal = stock;
+        this.cartTotal = stock.toFixed(2);
       },
       deep: true //深度监听
     },
@@ -202,8 +200,15 @@ export default {
   created() {
     this.$store.commit("init");
     this.NewcartData = this.cartData;
-  }
+  },
 
+  beforeCreate() {
+    //------------如果未登录------------
+    // console.log("用戶手機", localStorage.loginUserName)
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    }
+  }
 };
 </script >
 <style lang="scss" scoped>
