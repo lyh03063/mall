@@ -19,7 +19,7 @@
               v-for="order in shop.commodityList"
               :key="order.id"
             >
-              {{order}}
+              
               <div class="order-card">
                 <div class="order-card__header">
                   <a class="order-card__thumb">
@@ -39,6 +39,7 @@
                   </div>
                 </div>
               </div>
+              {{order}}
             </div>
             <!-- 订单列表中的页脚 -->
           </div>
@@ -91,6 +92,7 @@
               v-if="shop.status==1"
               round
             >取消</el-button>
+            
           </div>
         </div>
       </div>
@@ -113,7 +115,8 @@ export default {
       totalCount: 0,
       orderlistdata: [], //指向vuex的对应的字段
       queryName: "",
-      imgId: []
+      imgId: [],
+      
     };
   },
   methods: {
@@ -199,15 +202,13 @@ export default {
                this.imgId.push(commodityListEach.P1)
             });
           });
-                //alert(this.imgId)
-          // this.queryimg();
+           this.queryimg();
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
     },
     queryimg(){
-      // alert(this.imgId)
       axios({
         //请求接口
         method: "post",
@@ -222,7 +223,23 @@ export default {
         .then(response => {
           console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
-          this.imgList = list;
+          
+          var i =0;
+            this.OrderList.forEach(OrderListEach => {
+             
+               OrderListEach.commodityList.forEach(commodityListEach => {
+
+                   // alert( JSON.stringify(list[i].album[0].url))
+                  //alert(list[i].P1)
+                  if (commodityListEach.P1 ==  list[i].P1) {
+                    commodityListEach.img = JSON.stringify(list[i].album[0].url)
+                     alert( JSON.stringify(commodityListEach.img))
+                  }
+                  
+               });
+              
+            });
+          
 
           //alert(JSON.stringify(list))      
         })
