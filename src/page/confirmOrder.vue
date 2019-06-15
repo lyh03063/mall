@@ -10,7 +10,7 @@
           <p>{{title.phone}}</p>
           <i class="iconfont icondizhi1"></i>
           <li>收货人：{{title.name}}</li>
-          <li class="FS14">收货地址：{{title.area}}</li>
+          <li class="FS14">收货地址：{{title.area}}{{title.extend}}</li>
         </ul>
       </router-link>
       </div>
