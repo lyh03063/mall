@@ -62,9 +62,9 @@
                         style="font-size:20px; color:red;margin-bottom:5px;clear: both;margin-top:-30px;"
                       >${{product.price}}</div>
                      
-                        <div style="padding-bottom:5px">
+                        <div style="padding-bottom:5px;">
                           <div style="float:left;color:gray;font-size:13px;width:70px;">运费:</div>
-                          <div style="float:left;">$30.00</div>
+                          <div style="float:left;">免运费</div>
                         </div>
                         <div style=" clear: both;padding-bottom:5px">
                           <div style="float:left;color:gray;font-size:13px;width:70px;">净含量:</div>
@@ -86,10 +86,10 @@
               <div> 
                 <router-link to="/home">
                 <div style="border-width: 0 0 2px 0;border-style: solid;border-color: rgb(248, 248, 248);">
-                  <div style="float:left">
-                  <img src="https://img.yzcdn.cn/upload_files/2015/01/27/Fo3CxW5S_IEZic2v6vt7qPXIM5Op.jpg" width="60px;"/>
+                  <div style="float:left;height:60px;overflow: hidden;">
+                  <img src="../img/logo.jpg" width="60px;" height="70px;"/>
                   </div>
-                  <div style="float:left;line-height:60px;">米柚生活</div>
+                  <div style="float:left;line-height:60px;">码帮商城</div>
                   <div style="float:right;line-height:60px;padding-right:10px;color:gray">></div>
                   <div style="clear:both"></div>
                 </div>
