@@ -31,7 +31,7 @@
                 <a href="JavaScript:;">验证码登录</a>
               </div>
               <div style="float:right">
-                <router-link to="/register">免费注册</router-link>| 忘记密码
+                <router-link to="/register">免费注册</router-link>| <router-link to="/xiugaimm">忘记密码</router-link>
               </div>
             </div>
           </el-col>
@@ -200,7 +200,6 @@ export default {
     padding: 20px 20px 20px 5px;
     font-size: 28px;
     font-weight: 400;
-    
   }
   h2 {
     margin: 20px 20px 20px 5px;

@@ -1,7 +1,7 @@
 <template>
   <div class="register-f-box">
     <div class="login-box">
-      <h1>免费注册</h1>
+      <h1>修改密码</h1>
       <el-form
         :model="registerruleForm"
         status-icon
