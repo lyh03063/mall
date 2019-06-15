@@ -134,13 +134,13 @@ export default {
               console.log("data", code);
               console.log("response.data", message);
               if (code == 0) {
-              this.$message({ message: "", type: "warning" });
-              } else if (code == 1 || code == 2) {
-                this.$message({ message: "验证码错误,请重填", type: "warning" });
-                
-    
-              }  else {
-                alert("注册成功");
+                this.$message({ message: "注册成功~", type: "success" });
+                this.$router.push({ path: "/login" });
+              }else if( code == 2 ){
+                 this.$message.error('注册失败,请重新注册');
+              } 
+              else{
+                this.$message({ message: "注册失败,请重新注册", type: "warning" });
               }
               this.registerruleForm = {};
             })
