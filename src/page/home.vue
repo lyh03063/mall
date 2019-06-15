@@ -56,7 +56,6 @@ export default {
   components: { portal, cartComponent },
   data() {
     return {
-      isCartCom: false,
       buy: [],
       imgg: [
         {
@@ -99,7 +98,6 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.buy = list;
-     
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -111,13 +109,13 @@ export default {
       return this.$store.state.user;
     }
   },
+
   beforeCreate() {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
-    } 
-  
+    }
   },
   mounted() {
     //mounted：等待模板加载后，
@@ -128,6 +126,9 @@ export default {
     //     //此处返回vuex的值到外部
     //     return this.$store.state.activeProduceId;
     //   }
+    isCartCom() {
+      return this.$store.state.isCartCom;
+    }
   }
 };
 </script>
