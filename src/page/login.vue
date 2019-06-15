@@ -182,10 +182,9 @@ export default {
     //------------如果未登录------------
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
-    } 
-    // else {
-    //   this.$router.push({ path: "/home" });
-    // }
+    } else {
+      this.$router.push({ path: "/home" });
+    }
 
   }
 };
@@ -201,7 +200,6 @@ export default {
     padding: 20px 20px 20px 5px;
     font-size: 28px;
     font-weight: 400;
-    
   }
   h2 {
     margin: 20px 20px 20px 5px;
