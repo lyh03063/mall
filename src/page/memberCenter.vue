@@ -46,15 +46,6 @@
                   <div style="font-size:13px; margin-top:8px;">待评价</div>
                 </div>
               </router-link>
-<<<<<<< HEAD
-=======
-              <router-link to="/memberOrder?orderactiveName=5">
-                <div class="order-status">
-                  <div class="el-icon-coordinate" style="font-size:30px; margin-left:10px"></div>
-                  <div style="font-size:13px; margin-top:8px;">退款/售后</div>
-                </div>
-              </router-link>
->>>>>>> 6e21488497559ebcd8cb09a415fe586f60bee4c9
             </div>
           </div>
           <div class="member-message WP90 BC_fff">
