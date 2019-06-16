@@ -10,13 +10,13 @@
       <div
         :class="{'shop-checkbox-box':true, isChecked:isCart==item.P1}"
         @click="shopCheckbox(item)"
-        v-if="selection"
+        v-if="$route.query.Address"
       >
         <div class="shop-checkbox">
           <i class="el-icon-check"></i>
         </div>
       </div>
-      
+
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="added" @click="submitForm()">新增地址</div>
-      <portal></portal>
+    <portal></portal>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ import listAdded from "../components/list-address/listAdded";
 import listAddModify from "../components/list-address/listAddModify";
 import portal from "../components/shift/portal";
 export default {
-  components: { listAdded, listAddModify,portal },
+  components: { listAdded, listAddModify, portal },
   data() {
     return {
       isCart: null,
@@ -46,7 +46,7 @@ export default {
         delete: "000"
       },
       tableData: [],
-      // userAddress:[],
+      userAddress: []
     };
   },
   methods: {
@@ -54,21 +54,41 @@ export default {
     shopCheckbox(item) {
       this.isCart = item.P1; //对当前节点的状态取反
       console.log("shopCheckbox", item.isCart);
-      this.$router.push({ path: "/confirmOrder" }); //跳转到listAddModify
-      this.$store.commit("confirmOrderAddressFun", item);
+
+      // 把地址存在本地
+      localStorage.postAddress = JSON.stringify(item);
+      if (this.$route.query.Address) {
+        this.$router.push({ path: "/" + this.$route.query.Address + "" }); //跳转到
+      }
+
+      // this.$store.commit("confirmOrderAddressFun", item);
     },
     form(item) {
-
       // let str = item.area.join("");
       // let arrArea = str.split("");
       // item.area = arrArea;
       //alert(JSON.stringify(item))
       this.$store.commit("memberAddressModify", item);
 
-      this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
+      // 如果有路由id，就会跳转到listAddModify的同时，并传递路由id
+      if (this.$route.query.Address) {
+        this.$router.push({
+          path: "/listAddModify?Address=" + this.$route.query.Address + ""
+        });
+      } else {
+        this.$router.push({ path: "/listAddModify" }); //跳转到listAddModify
+      }
     },
     submitForm() {
-      this.$router.push({ path: "/listAdded" }); //跳转到listAdded
+      // 如果有路由id，就会跳转到listAdded的同时，并传递路由id
+      if (this.$route.query.Address) {
+        //如果有配置路由id
+        this.$router.push({
+          path: "/listAdded?Address=" + this.$route.query.Address + ""
+        });
+      } else {
+        this.$router.push({ path: "/listAdded" }); //跳转到listAdded
+      }
     },
     getProList() {
       axios({
@@ -77,10 +97,9 @@ export default {
         // url: this.objURL.list,
         url: this.objURL.list,
         //data: this.Objparma //传递参数
-        data:{
-          findJson:{
-             userName: localStorage.loginUserName
-            // userName:this.userAddress
+        data: {
+          findJson: {
+            userName: this.userAddress
           }
         }
       })
@@ -98,19 +117,17 @@ export default {
     }
   },
   mounted() {
-    // this.userAddress = localStorage.loginUserName
-    //  alert(this.userAddress)
+    this.userAddress = localStorage.loginnickName;
+    // alert(this.userAddress);
     this.getProList();
-     
   },
   computed: {
     //计算属性
     //从vuex拿到数据
-    selection() {
-      return this.$store.state.selection;
-    }
   },
-
+  beforeCreate() {
+    console.log(" memberAddress主页面>>", this.$route.query.Address);
+  }
 };
 </script>
 
@@ -118,7 +135,7 @@ export default {
 @import "../assets/css/util.scss"; //导入公共样式文件
 .added {
   position: fixed;
-  bottom:50px;
+  bottom: 50px;
   left: 0%;
   color: #fff;
   background-color: #f44;
@@ -156,5 +173,4 @@ export default {
   font-weight: bold;
   color: #fff;
 }
-
 </style>

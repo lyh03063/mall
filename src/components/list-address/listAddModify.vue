@@ -36,7 +36,7 @@ export default {
   components: {},
   data() {
     return {
-      cityArray:[],
+      cityArray: [],
       options: option,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
@@ -58,7 +58,7 @@ export default {
           { required: true, message: "请填写收货人姓名", trigger: "blur" }
         ],
         phone: [
-          { required: true, message: "请输入收货人电话", trigger: "blur" },
+          { required: true, message: "请输入收货人电话", trigger: "blur" }
           // { min: 11, message: "请输入正确11位电话号码", trigger: "blur" }
         ],
         extend: [{ required: true, message: "请填写详细地址", trigger: "blur" }]
@@ -89,7 +89,15 @@ export default {
             duration: 1000,
             type: "success"
           });
-          this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+        
+          if (this.$route.query.Address) {
+                // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
+            this.$router.push({
+              path: "/memberAddress?Address=" + this.$route.query.Address + ""
+            }); 
+          } else {
+            this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+          }
         });
       });
     },
@@ -114,7 +122,15 @@ export default {
             duration: 1000,
             type: "success"
           });
-          this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+          // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
+          if (this.$route.query.Address) {
+            this.$router.push({
+              path: "/memberAddress?Address=" + this.$route.query.Address + ""
+            }); //跳转到memberAddress
+          } else {
+            // 如果没有，就直接跳转到memberAddress，不带id
+            this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+          }
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -126,9 +142,6 @@ export default {
       //  alert(JSON.stringify(this.AddressModify_item))
       return this.$store.state.AddressModify_item;
     }
-  },
-  mounted() {
-    // alert(JSON.stringify(this.modifyForm));
   }
 };
 </script>
@@ -140,7 +153,7 @@ export default {
   width: 98%;
   height: 44px;
   background-color: #f44;
-   color: #fff;
+  color: #fff;
   border: 0px;
 }
 .deleteButton {
