@@ -16,7 +16,6 @@
           <i class="el-icon-check"></i>
         </div>
       </div>
-
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
@@ -158,6 +157,8 @@ export default {
   // margin-top: 16px;
   // margin-right: 8px;
   position: relative;
+  top: -20%;
+  left: 0;
   border: #ddd 1px solid;
 }
 // ------选中状态的样式------
@@ -173,4 +174,5 @@ export default {
   font-weight: bold;
   color: #fff;
 }
+
 </style>

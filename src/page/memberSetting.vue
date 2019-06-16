@@ -171,7 +171,7 @@ export default {
       })
         .then(response => {
           //这有函数，不知道this指向谁
-          console.log("第一次请求结果", response.data);
+          // console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
           this.memberMessage = list;
         })
@@ -193,7 +193,7 @@ export default {
       } //传递参数
     })
       .then(response => {
-        console.log("第一次请求结果", this.memberMessage),
+        // console.log("第一次请求结果", this.memberMessage),
         // this.$message({
         //   message: "修改产品成功",
         //   duration: 1500,
