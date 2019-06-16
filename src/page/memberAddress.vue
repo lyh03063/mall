@@ -17,8 +17,6 @@
         </div>
       </div>
       
-      
-
       <div class="receipt-name">{{item.name}},{{item.phone}}</div>
       <div class="receipt-region FL OFH">{{item.area}}</div>
       <div class="receipt-region FL OFH">{{item.extend}}</div>
@@ -48,7 +46,7 @@ export default {
         delete: "000"
       },
       tableData: [],
-      userAddress:[],
+      // userAddress:[],
     };
   },
   methods: {
@@ -56,8 +54,12 @@ export default {
     shopCheckbox(item) {
       this.isCart = item.P1; //对当前节点的状态取反
       console.log("shopCheckbox", item.isCart);
+      
       this.$router.push({ path: "/confirmOrder" }); //跳转到listAddModify
       this.$store.commit("confirmOrderAddressFun", item);
+      
+      let strArr = JSON.stringify(this.confirmOrderAddress ); //数组转字符串
+       localStorage.postAddress = strArr;
     },
     form(item) {
 
@@ -81,7 +83,8 @@ export default {
         //data: this.Objparma //传递参数
         data:{
           findJson:{
-            userName:this.userAddress
+             userName: localStorage.loginUserName
+            // userName:this.userAddress
           }
         }
       })
@@ -99,8 +102,8 @@ export default {
     }
   },
   mounted() {
-    this.userAddress = localStorage.loginnickName
-      alert(this.userAddress)
+    // this.userAddress = localStorage.loginUserName
+    //  alert(this.userAddress)
     this.getProList();
      
   },
@@ -111,7 +114,15 @@ export default {
       return this.$store.state.selection;
     }
   },
-
+  // created(){
+  //     //在页面加载时读取localStorage里的状态信息
+  //   localStorage.getItem("userMsg") && this.$store.replaceState(JSON.parse(localStorage.getItem("userMsg")));
+    
+  //   //在页面刷新时将vuex里的信息保存到localStorage里
+  //   window.addEventListener("beforeunload",()=>{
+  //       localStorage.setItem("userMsg",JSON.stringify(this.$store.state))
+  //   })
+  // }
 };
 </script>
 
@@ -142,6 +153,8 @@ export default {
   // margin-top: 16px;
   // margin-right: 8px;
   position: relative;
+  top: -20%;
+  left: 0;
   border: #ddd 1px solid;
 }
 // ------选中状态的样式------
@@ -157,4 +170,5 @@ export default {
   font-weight: bold;
   color: #fff;
 }
+
 </style>

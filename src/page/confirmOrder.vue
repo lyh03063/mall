@@ -2,14 +2,16 @@
   <div>
     <div class="main-cfo">
       <div style="background-color:white">
-        <router-link to="./memberAddress">
-          <ul :cf="title" class="address" @click="$store.commit('selection');">
+        <router-link to="./memberAddress?Address=confirmOrder">
+        <!-- :cf="title" -->
+         <!-- @click="$store.commit('selection');" -->
+          <ul  class="address">
             <!--勾选显示 -->
             <i class="el-icon-arrow-right"></i>
-            <p>{{title.phone}}</p>
+            <p>{{postAddress.phone}}</p>
             <i class="iconfont icondizhi1"></i>
-            <li>收货人：{{title.name}}</li>
-            <li class="FS14">收货地址：{{title.area}}</li>
+            <li>收货人：{{postAddress.name}}</li>
+            <li class="FS14">收货地址：{{postAddress.area}}</li>
           </ul>
         </router-link>
       </div>
@@ -27,7 +29,7 @@
       <!-----------------商品詳情--------------------->
       <div class="details" v-for="(item,index) in confirmOrder" :key="index">
         <a>
-          <img :src="item.album[0].url">
+          <img :src="item.album[0].url" v-if="item.album">
         </a>
         <div class="title-details">
           <p>{{item.name}}</p>
@@ -128,6 +130,7 @@ export default {
     return {
       confirmOrder: [], //确认订单的数据列表
       delivery: false, //控制配送方式的弹窗
+      postAddress:{},
       Objparma: {
         status: "1", //订单状态
         money: null, //总价钱
@@ -165,29 +168,29 @@ export default {
 
     //------------------跳转订单列表
     JumpDetail() {
-      if (this.title.phone && this.title.phone && this.title.area) {
+      if (this.postAddress.phone && this.postAddress.name && this.postAddress.area) {
         this.Objparma.commodityList = this.confirmOrder.map(item => {
           let { byCount, freight, price, name, P1 } = item;
           return { byCount, freight, price, name, P1 };
         });
         this.Objparma.money = this.cartTotal;
-        this.Objparma.postAddress.address = this.title.area;
-        this.Objparma.postAddress.phone = this.title.phone;
-        this.Objparma.postAddress.name = this.title.name;
+        this.Objparma.postAddress.address = this.postAddress.area;
+        this.Objparma.postAddress.phone = this.postAddress.phone;
+        this.Objparma.postAddress.name = this.postAddress.name;
         this.Objparma.userName = localStorage.loginnickName;
 
         console.log("this.Objparma", this.Objparma);
         this.getAddorder(); //调用请求接口函数
-        this.$router.push({ path: "/memberOrder" });
+        this.$router.push({ path: "/memberOrder?orderactiveName=1" });
       } else {
         this.$message.error("请选择收货人，收货地址");
       }
     },
 
     //------------------点击收货地址的函数
-    Jumpaddress() {
-      this.$router.push({ path: "/memberAddress" });
-    },
+    // Jumpaddress() {
+    //   // this.$router.push({ path: "/memberAddress?memberOrder=1" });
+    // },
 
     //------------------新增订单axios请求接口函数
     getAddorder() {
@@ -234,9 +237,9 @@ export default {
     },
 
     //------------------ 收货地址
-    title() {
-      return this.$store.state.confirmOrderAddress;
-    }
+    // title() {
+    //   return this.$store.state.confirmOrderAddress;
+    // }
   },
   created() {
     //------------------ 如果本地有确认订单数据
@@ -246,7 +249,15 @@ export default {
       console.log("beforeCreate===", this.confirmOrder);
     } else {
       // 如果没有确认订单数据
-      // this.$router.push({ path: "/cart" }); //跳转到后台首页
+      this.$message({
+        message: "( ⊙ o ⊙ ) ！没有要提交的，去逛逛吧",
+        type: "warning",
+        center: true
+      });
+      this.$router.push({ path: "/home" }); //跳转到购物车
+    }
+    if (localStorage.postAddress) {
+      this.postAddress = JSON.parse(localStorage.postAddress);
     }
   },
 
@@ -257,6 +268,11 @@ export default {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
   }
+
+  // destroyed() {
+  //   console.log("this.$router.path==离开了", this.$router.path);
+  //   console.log(" this.$router==离开了", this.$router);
+  // }
 };
 </script>
 

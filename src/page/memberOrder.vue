@@ -6,9 +6,14 @@
         <div class="order-grid-content order-bg-purple-wihte">
           <!-- 列表头部切换开始 -->
           <div class="order-tab">
-            <el-tabs :tab-position="tabPosition">
+            <el-tabs :tab-position="tabPosition" v-model="activeName">
               <!-- 订单列表 -->
-              <el-tab-pane :label="item.name" v-for="item in Arrshoptab" :key="item.value">
+              <el-tab-pane
+                :label="item.name"
+                :name="item.newactive"
+                v-for="item in Arrshoptab"
+                :key="item.value"
+              >
                 <memberOrderList :cf="item.value"></memberOrderList>
               </el-tab-pane>
             </el-tabs>
@@ -55,12 +60,13 @@ export default {
   },
   data() {
     return {
+      activeName: this.$route.query.orderactiveName,
       Arrshoptab: [
-        { name: "已下单", value: 1 },
-        { name: "已付款", value: 2 },
-        { name: "已发货", value: 3 },
-        { name: "已完成", value: 4 },
-        { name: "已取消", value: 5 }
+        { name: "已下单", value: 1, newactive: "1" },
+        { name: "已付款", value: 2, newactive: "2" },
+        { name: "已发货", value: 3, newactive: "3" },
+        { name: "已完成", value: 4, newactive: "4" },
+        { name: "已取消", value: 5, newactive: "5" }
       ],
 
       tabPosition: "top",

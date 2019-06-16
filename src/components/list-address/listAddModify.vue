@@ -129,7 +129,7 @@ export default {
   },
   mounted() {
     // alert(JSON.stringify(this.modifyForm));
-  }
+  },
 };
 </script>
 

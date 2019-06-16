@@ -210,6 +210,7 @@ export default {
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
+     localStorage.confirmOrder = ""; //对订单数据进行清空
   }
 };
 </script >

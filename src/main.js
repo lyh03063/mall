@@ -97,15 +97,13 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于存放确认订单的总数据
-    selection: false,
+
 
 
   },
 
   mutations: {//变更事件
-    selection(state) {
-      state.selection = true
-    },
+
 
     ///--------hjp开始-------
     orderlistdetail(state, param) {//改变列表的初始状态值

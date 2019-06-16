@@ -75,12 +75,17 @@ export default {
     //-----------------立即购买函数----------------
     goCartFun() {
       this.closeDialogFun(); //关闭弹窗
-      this.$router.push({ path: "/confirmOrder" }); //跳转到确认订单
 
       // 把确认订单数据存在本地
       let confirmOrder = [];
-      let strArr = JSON.stringify(this.confirmOrder.push(this.doc)); //数组转字符串
+      confirmOrder.push(this.doc);
+      let strArr = JSON.stringify(confirmOrder); //数组转字符串
       localStorage.confirmOrder = strArr;
+      console.log("strArr", strArr);
+      console.log("confirmOrder", confirmOrder);
+      console.log("this.doc", this.doc);
+
+      this.$router.push({ path: "/confirmOrder" }); //跳转到确认订单
     }
   },
   data() {
@@ -109,6 +114,7 @@ export default {
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
+    localStorage.confirmOrder = ""; //对订单数据进行清空
   }
 };
 </script>
