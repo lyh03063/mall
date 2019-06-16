@@ -2,8 +2,8 @@
 <template>
   <div class="login-father-box">
     <div class="login-box">
-      <h1>用户登录</h1>
-      <h2>为了你的帐号安全，请用手机号登录</h2>
+      <h1>修改密码</h1>
+      
       <el-form
         :model="ruleForm"
         status-icon
@@ -14,7 +14,7 @@
       >
         <el-form-item prop="password">
           <div class>
-            <el-input v-model.number="ruleForm.password" placeholder="原密码">
+            <el-input show-password v-model.number="ruleForm.password" placeholder="原密码">
               <template slot="prepend">原密码</template>
             </el-input>
           </div>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { all } from 'q';
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -110,22 +111,25 @@ export default {
                 password:this.ruleForm.password
 
               },
-              modifyJson: this.ruleForm.newPassword
+              modifyJson: {
+                password:this.ruleForm.newPassword}
             } //传递参数
           }).then(response => {
-            console.log(aa)
+            
               let { result,nModified } = response.data;
               // var userList = JSON.stringify(list);
-              console.log("list", result);
+              // console.log("list", result);
               // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
-              if (nModified == 0) {
+              if (result.nModified == 1) {
+                
                 this.$message({ message: "修改成功", type: "success" });
               } else {
+             
                 this.$message({
                   message: "修改失败,请重新修改",
                   type: "warning"
                 });
-                this.$router.push({ path: "/xiugaimm" });
+           
               }
             })
             .catch(error => {
@@ -141,9 +145,9 @@ export default {
     // }
   },
 
-  created() {
+  created() {//ruleForm列表里的用户名等于储存当前登录的用户名
     this.ruleForm.userName = localStorage.loginUserName;
-    console.log("dfdf", this.ruleForm.userName);
+    // console.log("dfdf", this.ruleForm.userName);
   },
   // computed: {
   //   activeMenuIndex() {
