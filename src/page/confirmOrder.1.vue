@@ -190,7 +190,7 @@ export default {
       this.cartData.forEach(item => {
         stock += item.price * item.byCount; //
       });
-      return stock;
+      return stock.toFixed(2);
     }
   }
 };

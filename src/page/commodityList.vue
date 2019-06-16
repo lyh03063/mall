@@ -1,6 +1,6 @@
 <template>
   <div class="commodity-main">
-    <el-tabs tab-position="left">
+    <el-tabs tab-position="left" >
       <!-- 商品分类列表 -->
       <el-tab-pane
         :label="commoditySort.name"

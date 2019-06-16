@@ -20,7 +20,7 @@ export default {
       linkk: [
         {
           id: "1",
-          router: "/",
+          router: "/home",
           icon: "el-icon-house",
           title: "首页",
           color: "red"
@@ -75,8 +75,7 @@ export default {
   opacity: 0.75;
 }
 
-.router-link-exact-active:link,
-.router-link-exact-active:visited {
-  background-color: #FF0000;
+.router-link-exact-active:link{
+  background-color: #CFA238;
 }
 </style>

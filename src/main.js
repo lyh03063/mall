@@ -180,6 +180,11 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     changeActiveMenu(state, activeMenuIndex) {//改变聚焦菜单
       state.activeMenuIndex = activeMenuIndex
     },
+
+
+
+
+
     openDialogAdd(state, listIndex) {//打开新增弹窗事件
       state.listState[listIndex].isShowDialogAdd = true;
     },

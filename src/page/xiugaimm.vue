@@ -1,114 +1,132 @@
+
 <template>
-  <div class="register-f-box">
+  <div class="login-father-box">
     <div class="login-box">
-      <h1>修改密码</h1>
+      <h1>用户登录</h1>
+      <h2>为了你的帐号安全，请用手机号登录</h2>
       <el-form
-        :model="modifyPassworForm"
+        :model="ruleForm"
         status-icon
         :rules="rules"
-        ref="modifyPassworForm"
+        ref="ruleForm"
         label-width="0"
-        class="demo-modifyPassworForm"
+        class="demo-ruleForm"
       >
-        <el-form-item prop="mobile" style="margin-bottom: 0;">
-          <el-input v-model.number="modifyPassworForm.mobile">
-            <template slot="prepend">原密码</template>
-          </el-input>
+        <el-form-item prop="password">
+          <div class>
+            <el-input v-model.number="ruleForm.password" placeholder="原密码">
+              <template slot="prepend">原密码</template>
+            </el-input>
+          </div>
+        </el-form-item>
+        <el-form-item prop="newPassword">
+          <el-input
+            show-password
+            v-model="ruleForm.newPassword"
+            placeholder="请输入密码"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="checkPass">
+          <el-input
+            show-password
+            v-model="ruleForm.checkPass"
+            placeholder="请再输入一次密码"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            class="WP100"
-            @click="modifyPasswordSubmitForm('modifyPassworForm')"
-          >确认修改</el-button>
+          <el-button type="primary" class="WP100" @click="submitForm('ruleForm')">确认修改</el-button>
         </el-form-item>
       </el-form>
     </div>
+
     <footer>
-      注册即代表同意
-      《用户使用协议》
+      登录即代表同意
+      <a href="JavaScript:;">《用户使用协议》</a>
     </footer>
   </div>
 </template>
+
 <script>
-import accredit from "../components/shift/note.vue";
 export default {
-  components: { accredit },
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"));
+        callback(new Error("请输入新密码"));
       } else {
-        if (this.modifyPassworForm.checkPass !== "") {
-          this.$refs.modifyPassworForm.validateField("checkPass");
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.ruleForm.validateField("checkPass");
         }
         callback();
       }
     };
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.modifyPassworForm.password) {
+        callback(new Error("请确认新密码填写是否正确"));
+      } else if (value !== this.ruleForm.newPassword) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
       }
     };
     return {
-      isnote: false,
       tableData: [],
       objURL: {
-        referList: "http://120.76.160.41:3000/crossList?page=mabang-member",
-        modify: "http://120.76.160.41:3000/crossModify?page=mabang-member"
+        list: "http://120.76.160.41:3000/crossList?page=mabang-member",
+        modifyPassword:"http://120.76.160.41:3000/crossModify?page=mabang-member"
       },
-      modifyPassworForm: {
+      ruleForm: {
+        //表单数据.
+        userName: "",
         password: "",
-        checkPass: "",
-        phone: ""
+        newPassword:"",
+        // checkPass:""
       },
       rules: {
-        password: [{ validator: validatePass, trigger: "blur" }],
+        //校验规则，需要定在el-form的rules属性上
+        // validateuserName校验器是一个回调函数
+        // trigger: "blur" 规则的触发方式，失焦事件
+        newPassword: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
       },
-      modifypassword: "",
-      aa:null,
+      userLog: {}
     };
   },
   methods: {
-    mobileFun() {},
-    registerSubmitForm(formName) {
+    submitForm(formName) {
       this.$refs[formName].validate(valid => {
+        console.log("userName", this.ruleForm.userName);
+        console.log("password", this.ruleForm.password);
         //表单组件执行validate校验方法
         if (valid) {
           //如果校验结果为真
-          this.localStorage.loginUserName = activeUser;
-          console.log("activeUser", this.localStorage.loginUserNam);
-          // alert(this.modifyPassworForm.phone);
           axios({
             method: "post",
-            url: this.objURL.referList, //数据地址，数据来源于objURL.List中的地址
+            url: this.objURL.modifyPassword, //数据地址，数据来源于objURL.List中的地址
             data: {
-              mobile: activeUser,
-              password: this.modifyPassworForm.password,
-              mobileVCode: this.modifyPassworForm.mobileVCode,
-              phone: this.modifyPassworForm.phone
+              findJson: {
+                userName: this.ruleForm.userName,
+                password:this.ruleForm.password
+
+              },
+              modifyJson: this.ruleForm.newPassword
             } //传递参数
-          })
-            .then(response => {
-              let { code, message } = response.data; //返回数据里,如果没有赋值的对象的话,则返回为未定义code和message在里面有则可以调用
-              console.log("data", code);
-              console.log("response.data", message);
-              if (code == 0) {
-                this.$message({ message: "", type: "warning" });
-              } else if (code == 1 || code == 2) {
+          }).then(response => {
+            console.log(aa)
+              let { result,nModified } = response.data;
+              // var userList = JSON.stringify(list);
+              console.log("list", result);
+              // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
+              if (nModified == 0) {
+                this.$message({ message: "修改成功", type: "success" });
+              } else {
                 this.$message({
-                  message: "验证码错误,请重填",
+                  message: "修改失败,请重新修改",
                   type: "warning"
                 });
-              } else {
-                alert("注册成功");
+                this.$router.push({ path: "/xiugaimm" });
               }
-              this.modifyPassworForm = {};
             })
             .catch(error => {
               console.log(error);
@@ -117,38 +135,54 @@ export default {
         }
       });
     }
+
+    // getForm() {
+    //   this.$store.commit("getForm", this.userLog);
+    // }
   },
+
   created() {
-    console.log("dfdf", );
-    this.aa=localStorage.loginUserName
+    this.ruleForm.userName = localStorage.loginUserName;
+    console.log("dfdf", this.ruleForm.userName);
+  },
+  // computed: {
+  //   activeMenuIndex() {
+  //     return this.$store.state.user;
+  //   },
+
+  // },
+  beforeCreate() {
+    //------------如果未登录------------
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    }
+    // } else {
+    //   this.$router.push({ path: "/home" });
+    // }
   }
-  // beforeCreate() {
-  //   //------------如果未登录------------
-  //   if (localStorage.isLogin == 1) {
-  //     this.$router.push({ path: "/login" }); //跳转到后台首页
-  //   } else {
-  //     this.$router.push({ path: "/home" });
-  //   }
-  //   console.log("beforeCreate-this.msg", this.msg);
-  // }
 };
 </script>
 
-<style lang="scss">
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" >
 .login-box {
   width: 100%;
   padding: 40px;
+
   h1 {
-    padding: 20px 20px 30px 5px;
+    padding: 20px 20px 20px 5px;
     font-size: 28px;
     font-weight: 400;
   }
+  h2 {
+    margin: 20px 20px 20px 5px;
+    padding-left: 5px;
+    color: #999999;
+    font-size: 16px;
+    font-weight: 400;
+  }
 }
-.login-form {
-  width: 330px;
-  margin: 0 auto;
-}
-.register-f-box {
+.login-father-box {
   footer {
     font-weight: 700;
     font-size: 12px;
@@ -156,5 +190,9 @@ export default {
     text-align: center;
   }
 }
-@import "../assets/css/util.scss"; //导入公共样式文件
+
+.login-form {
+  width: 100%;
+  margin: 20px;
+}
 </style>
