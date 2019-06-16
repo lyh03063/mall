@@ -143,8 +143,10 @@ export default {
     cartBalanceFun() {
       //当选中之后的列表不为0时
       if (this.isCartList.lenght != 0) {
-        this.$store.commit("cartBalanceFun", this.isCartList);
+        // this.$store.commit("cartBalanceFun", this.isCartList);
         this.$router.push({ path: "/confirmOrder" });
+        let strArr = JSON.stringify(this.isCartList); //数组转字符串
+        localStorage.confirmOrder = strArr;
       }
     },
     //----------点击选中函数-------

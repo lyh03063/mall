@@ -9,6 +9,7 @@
         class="dialog-fade-in"
         :before-close="closeDialogFun"
       >
+        <!------------------商品信息-------------------->
         <header class="header-box">
           <span class="header-img">
             <img :src="doc.album[0].url" v-if="doc.album">
@@ -18,7 +19,7 @@
             <div class="header-price">￥{{doc.price}}</div>
           </div>
         </header>
-
+        <!------------------规格-------------------->
         <main class="main">
           <div v-for="item in  doc.prop" :key="item.value">
             <span>{{item.title}}:</span>
@@ -27,6 +28,7 @@
             </span>
           </div>
         </main>
+        <!------------------购买数量：-------------------->
         <footer>
           <span class="footer-name">购买数量：</span>
           <span class="footer-input">
@@ -43,67 +45,71 @@
 </template>
 <script>
 export default {
-  data: function() {
-    return {
-      // isCartCom: true
-    };
-  },
   methods: {
+    //------------------关闭购物车弹窗函数----------------
     closeDialogFun() {
       this.$store.commit("isCartComClose");
     },
+    //------------------加入购物车函数----------------
     addCartFun() {
       this.closeDialogFun();
 
-      this.cartTotal =(this.doc.price * this.doc.byCount).toFixed(2);
+      this.cartTotal = (this.doc.price * this.doc.byCount).toFixed(2); //计算商品的总价格
+      this.doc.byCount = 1; //购买数量为1
 
-      // 深度拷贝
-      let str = JSON.stringify(this.doc); //转化为字符串
-      let rowNew = JSON.parse(str); //转化为对象
-      this.cartData.unshift(rowNew); //
-      let strArr2 = JSON.stringify(this.cartData); //数组转字符串
-      localStorage.cartData = strArr2;
+      //把数据拼接在购物车数据列表
+      let cartData = [];
+      if (window.localStorage.cartData) {
+        cartData = JSON.parse(localStorage.cartData);
+      }
+      cartData.unshift(this.doc);
+      // 购物车列表进行本地储存
+      let strArr = JSON.stringify(cartData); //数组转字符串
+      localStorage.cartData = strArr;
 
       this.$message({
         message: "加入购物车成功",
         type: "success"
       });
     },
-
+    //-----------------立即购买函数----------------
     goCartFun() {
-      this.closeDialogFun();
-      this.$router.push({ path: "/confirmOrder" });
-      this.$store.commit("goCartFun", this.doc);
+      this.closeDialogFun(); //关闭弹窗
+      this.$router.push({ path: "/confirmOrder" }); //跳转到确认订单
+
+      // 把确认订单数据存在本地
+      let confirmOrder = [];
+      let strArr = JSON.stringify(this.confirmOrder.push(this.doc)); //数组转字符串
+      localStorage.confirmOrder = strArr;
     }
   },
   data() {
     return {
       cartTotal: 1
     };
-  }, 
+  },
   computed: {
     //计算属性
 
     //从vuex拿到的数据
     doc() {
-      //总的数据列表
+      //当前页面渲染的数据列表
       return this.$store.state.doc;
     },
-    cartData() {
-      return this.$store.state.cartData;
-    },
+
     isCartCom() {
+      //控制购物车插件弹窗是否显示
       return this.$store.state.isCartCom;
     }
   },
-  
+
   beforeCreate() {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
-  },
+  }
 };
 </script>
 
