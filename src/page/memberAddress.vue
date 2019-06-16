@@ -124,6 +124,11 @@ export default {
     //计算属性
     //从vuex拿到数据
   },
+  created() {
+if (localStorage.postAddress) {
+this.isCart = JSON.parse(localStorage.postAddress).P1;
+}
+},
   beforeCreate() {
     console.log(" memberAddress主页面>>", this.$route.query.Address);
   }

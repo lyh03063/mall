@@ -15,6 +15,8 @@
         <el-input v-model="addForm.phone" placeholder="收货人手机号"></el-input>
       </el-form-item>
 
+ 
+
       <el-form-item label="地区" prop="area">
         <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
