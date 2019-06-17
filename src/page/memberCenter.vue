@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{list[0].phine}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list[0].userName}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
@@ -171,7 +171,7 @@ export default {
       })
         .then(response => {
           //这有函数，不知道this指向谁
-          // console.log("第一次请求结果", response.data);
+          console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
           this.list = list;
           this.page = page;
