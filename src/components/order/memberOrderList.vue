@@ -22,13 +22,11 @@
               <div class="order-card">
                 <div class="order-card__header">
                   <a class="order-card__thumb">
-                    <img id="order.id" 
-                    :src="order.freight"
-                    class="order-card__img">
+                    <img id="order.id" :src="order.freight" class="order-card__img">
                   </a>
                   <div class="order-card__content">
                     <div class="order-card__title">{{order.name}}</div>
-                    <div>{{order.description}}"description": "新疆库尔勒香梨，3个仅售9.9元！",</div>
+                    <div class="order-card__description">{{order.description}}</div>
 
                     <div class="order-card__bottom">
                       <div class="order-card__price" style="color:red">￥{{order.price}}</div>
@@ -156,6 +154,7 @@ export default {
               console.log("第一次请求结果", response.data);
               let { code, message } = response.data; //解构赋值
               alert(message);
+              this.getorderList();
             })
             .catch(function(error) {
               alert("异常:" + error);
@@ -225,9 +224,7 @@ export default {
             OrderListEach.commodityList.forEach(commodityListEach => {
               for (let a = 0; a < list.length; a++) {
                 if (commodityListEach.P1 == list[i].P1) {
-                  commodityListEach.freight = list[i].album[0].url
-                    
-                 
+                  commodityListEach.freight = list[i].album[0].url;
                 }
                 i++;
               }
