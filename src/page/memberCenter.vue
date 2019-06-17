@@ -115,10 +115,10 @@
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
-            <router-link to="/memberSetting W20">
+            <router-link to="/memberSetting">
               <div>
-                <div class="el-icon-user" style="float: left; font-size:20px;margin-left:0px;"></div>
-                <div style="float: left;;margin-left:0px;">个人信息</div>
+                <div class="el-icon-user W20" style="float: left; font-size:20px;margin-left:0px;"></div>
+                <div style="float: left;">个人信息</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
