@@ -55,7 +55,7 @@ export default {
       this.closeDialogFun();
 
       this.cartTotal = (this.doc.price * this.doc.byCount).toFixed(2); //计算商品的总价格
-      this.doc.byCount = 1; //购买数量为1
+      
 
       //把数据拼接在购物车数据列表
       let cartData = [];
@@ -71,6 +71,7 @@ export default {
         message: "加入购物车成功",
         type: "success"
       });
+      this.doc.byCount = 1; //购买数量为1
     },
     //-----------------立即购买函数----------------
     goCartFun() {

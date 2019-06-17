@@ -105,8 +105,11 @@ export default {
       });
     },
     modifyAddress() {
+      
       this.modifyForm.area = this.cityArray.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
+        console.log("this.modifyForm.P1",this.modifyForm.P1);
+          console.log(" this.modifyForm", this.modifyForm);
       axios({
         //请求修改接口
         method: "post",
@@ -120,6 +123,7 @@ export default {
         } //传递参数
       })
         .then(response => {
+             
           this.$message({
             message: "修改成功",
             duration: 1000,
@@ -127,12 +131,15 @@ export default {
           });
           // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
           if (this.$route.query.Address) {
+           
             this.$router.push({
               path: "/memberAddress?Address=" + this.$route.query.Address + ""
             }); //跳转到memberAddress
           } else {
             // 如果没有，就直接跳转到memberAddress，不带id
+              
             this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+        
           }
         })
         .catch(function(error) {
