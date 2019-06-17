@@ -46,8 +46,6 @@
                   <div style="font-size:13px; margin-top:8px;">待评价</div>
                 </div>
               </router-link>
-
-
             </div>
           </div>
           <div class="member-message WP90 BC_fff">

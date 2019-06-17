@@ -111,7 +111,7 @@ export default {
     console.log("保存并使用", this.$route.query.Address);
   },
   mounted() {
-    this.addForm.userName = localStorage.loginnickName;
+    this.addForm.userName = localStorage.loginUserName
     //  alert(this.addForm.userName)
     // this.getProList();
   }

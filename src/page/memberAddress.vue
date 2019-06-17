@@ -98,7 +98,7 @@ export default {
         //data: this.Objparma //传递参数
         data: {
           findJson: {
-            userName: this.userAddress
+            userName:  localStorage.loginUserName
           }
         }
       })
@@ -116,7 +116,7 @@ export default {
     }
   },
   mounted() {
-    this.userAddress = localStorage.loginnickName;
+    // this.userAddress = localStorage.loginnickName;
     // alert(this.userAddress);
     this.getProList();
   },
