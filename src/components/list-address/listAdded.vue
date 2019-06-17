@@ -15,8 +15,6 @@
         <el-input v-model="addForm.phone" placeholder="收货人手机号"></el-input>
       </el-form-item>
 
- 
-
       <el-form-item label="地区" prop="area">
         <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
@@ -92,11 +90,11 @@ export default {
             duration: 1500,
             type: "success"
           });
-            // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
+          // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
           if (this.$route.query.Address) {
             this.$router.push({
               path: "/memberAddress?Address=" + this.$route.query.Address + ""
-            }); 
+            });
           } else {
             this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
           }
@@ -111,7 +109,7 @@ export default {
     console.log("保存并使用", this.$route.query.Address);
   },
   mounted() {
-    this.addForm.userName = localStorage.loginUserName
+    this.addForm.userName = localStorage.loginUserName;
     //  alert(this.addForm.userName)
     // this.getProList();
   }
