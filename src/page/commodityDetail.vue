@@ -17,9 +17,9 @@
           <div style>
             <div class>
               <div
-                style="padding-left:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);"
+                style="padding:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);"
               >
-                <div style="height:350px;">
+                <div style="height:50%;">
                   <img :src="product.album[0].url" width="100%">
                 </div>
                 <div class="FWB" style=" padding-bottom:10px;line-height:26px;">
@@ -57,9 +57,6 @@
                     </el-popover>
                   </div>
                 </div>
-                <!-- <div
-                  style="font-size:20px; color:red;margin-bottom:5px;clear: both;margin-top:-30px;"
-                >${{product.price}}</div> -->
 
                 <table class="table-rule CL" border="0" cellspacing="0">
                   <tr>
@@ -86,7 +83,9 @@
                     </td>
                   </tr>
                 </table>
-
+                <!-- <div
+                  style="font-size:20px; color:red;margin-bottom:5px;clear: both;margin-top:-30px;"
+                >${{product.price}}</div>-->
                 <!-- <div style="padding-bottom:5px">
                   <div style="float:left;color:gray;font-size:13px;width:70px;">运费:</div>
                   <div style="float:left;">￥{{product.freight}}</div>
@@ -289,6 +288,6 @@ table.table-rule {
 
 table.table-rule td,
 table.table-rule th {
-  padding:2px 10px 2px 0;
+  padding: 2px 10px 2px 0;
 }
 </style>
