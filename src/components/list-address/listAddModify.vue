@@ -15,6 +15,7 @@
         <el-input v-model="modifyForm.phone" placeholder="收货人手机号"></el-input>
       </el-form-item>
 
+
       <el-form-item label="地区" prop="area">
         <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
@@ -32,12 +33,14 @@
 
 
 <script>
+import { provinceAndCityData,CodeToText,TextToCode } from 'element-china-area-data'
 export default {
   components: {},
+
   data() {
     return {
       cityArray: [],
-      options: option,
+     options:option,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "http://120.76.160.41:3000/crossModify?page=mabang-address",
@@ -143,11 +146,12 @@ export default {
           alert("异常:" + error);
         });
     }
-  },
+  }, 
   computed: {
     modifyForm() {
       //  alert(JSON.stringify(this.AddressModify_item))
       return this.$store.state.AddressModify_item;
+      
     }
   }
 };

@@ -127,6 +127,11 @@ export default {
       this.isCart = 1;
     }
   },
+  created() {
+if (localStorage.postAddress) {
+this.isCart = JSON.parse(localStorage.postAddress).P1;
+}
+},
   beforeCreate() {
     console.log(" memberAddress主页面>>", this.$route.query.Address);
 
