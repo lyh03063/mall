@@ -729,7 +729,7 @@ table.table-normal td, table.table-normal th {
    color: #f00;
  }
  .C_f30{
-   color: #f00;
+   color: #f30;
  }
  .C_f60{
    color: #f60;
@@ -737,6 +737,9 @@ table.table-normal td, table.table-normal th {
  .C_999{
    color: #999;
  }
+ .C_666{
+  color: #666;
+}
  .C_f44{
   color: #f44;
 }
