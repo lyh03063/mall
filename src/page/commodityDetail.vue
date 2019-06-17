@@ -1,42 +1,77 @@
 <template>
   <div class="main" style="margin:0px;padding:0px; background-color:rgb(242,242,242)">
-    <el-row>
-      <el-col :xs="0" :sm="6" :md="8" :lg="8" :xl="8">
-        <div class="H100"></div>
-      </el-col>
-      <el-col
-        :xs="24"
-        :sm="12"
-        :md="8"
-        :lg="8"
-        :xl="8"
-        v-if="product!=''"
-        style="background-color:rgb(255,255,255)"
-      >
-        <div class>
-          <div style>
-            <div class>
-              <div
-                style="padding:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);"
-              >
-                <div style="height:50%;">
-                  <img :src="product.album[0].url" width="100%">
-                </div>
-                <div class="FWB" style=" padding-bottom:10px;line-height:26px;">
-                  <div style="font-size:16px;float:left">{{product.description}}</div>
-                  <div style="float:right">
-                    <el-popover placement="top" width="350" v-model="isShowCollect" trigger="click">
-                      <div class="W350">
-                        <div
-                          style="float:left ;border-width: 0 2px 0 0;border-style: solid; border-color: rgb(248, 248, 248);padding-top:20px; height:100% ;margin-right:10px;"
-                        >
-                          <div class="W100 FWB" style="text-align:center;">收藏到微信or发给朋友</div>
-                          <div style="float:left; margin-top:20px;">
-                            <img
-                              src="https://h5.youzan.com/v2/common/url/create?type=homepage&kdt_id=859457"
-                              width="100px"
-                            >
+    
+  
+        <el-row>
+          <el-col :xs="0" :sm="6" :md="8" :lg="8" :xl="8">
+            <div class="H100"></div>
+          </el-col>
+          <el-col
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="8"
+            :xl="8"
+            v-if="product!=''"
+            style="background-color:rgb(255,255,255)"
+          >
+            <div class >
+              <div style="">
+                <div class>
+                  <div style="padding-left:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);">
+                  <div style="height:350px; position: relative;">
+                      <img :src="product.album[0].url" width="100%" height="100%" >
+                      <div class="img-logo">
+                          <img src="../img/img-logo.png" width="100%" height="100%">      
                           </div>
+                  </div>
+                      <div
+                        class="FWB"
+                        style=" padding-bottom:10px;line-height:26px;"
+                      >
+                        <div style="font-size:16px;float:left">{{product.description}}
+                        </div>
+                        <div style="float:right">
+                          <el-popover placement="top" width="350" v-model="isShowCollect" trigger="click" >
+                          <div class="W350">
+                            <div style="float:left ;border-width: 0 2px 0 0;border-style: solid; border-color: rgb(248, 248, 248);padding-top:20px; height:100% ;margin-right:10px;">
+                              <div class="W100 FWB" style="text-align:center;">收藏到微信or发给朋友</div>
+                              <div style="float:left; margin-top:20px;">
+                                <img
+                                  src="https://h5.youzan.com/v2/common/url/create?type=homepage&kdt_id=859457"
+                                  width="100px"
+                                >
+                              </div>
+                            </div>
+                            <div style="float:left;padding-top:20px;">
+                              1.打开微信，扫一扫左侧二维码
+                              <br>2.点击右上角图表
+                              <br>
+                              <img src="https://b.yzcdn.cn/v2/shop/images/share_1.png">
+                              <br>3.发送给朋友、分享朋友圈、收藏
+                              <br>
+                              <img src="https://b.yzcdn.cn/v2/shop/images/share_2.png">
+                            </div>
+                          </div>
+                          <div class="el-icon-share"
+                            style="float:left; margin-top:10px;margin-left:20px;width:100px;background-color:rgb(248,248,248);
+                        height:20px;line-height:20px;padding-left:20px;color:gray;cursor:pointer"
+                            slot="reference"
+                          >收藏/分享</div>
+                        </el-popover>
+                        </div>
+                      </div>
+                      <div
+                        style="font-size:20px; color:red;margin-bottom:5px;clear: both;margin-top:-30px;"
+                      >${{product.price}}</div>
+                     
+                        <div style="padding-bottom:5px;">
+                          <div style="float:left;color:gray;font-size:13px;width:70px;">运费:</div>
+                          <div style="float:left;">免运费</div>
+                        </div>
+                        <div style=" clear: both;padding-bottom:5px">
+                          <div style="float:left;color:gray;font-size:13px;width:70px;">净含量:</div>
+                          <div style="float:left;">6个装</div>
                         </div>
                         <div style="float:left;padding-top:20px;">
                           1.打开微信，扫一扫左侧二维码
@@ -57,38 +92,16 @@
                     </el-popover>
                   </div>
                 </div>
-
-                <table class="table-rule CL" border="0" cellspacing="0">
-                  <tr>
-                    <td class="C_f00 FWB FS20">￥{{product.price}}</td>
-                  </tr>
-                  <tr>
-                    <td class="C_666">运费:</td>
-                    <td class="C_f00 FWB">￥{{product.freight}}</td>
-                  </tr>
-                  <tr>
-                    <td class="C_666">净含量:</td>
-                    <td>6个装</td>
-                  </tr>
-                  <tr>
-                    <td class="C_666">系列:</td>
-                    <td>{{product.name}}</td>
-                  </tr>
-                  <tr>
-                    <td class="C_666">支付:</td>
-                    <td>
-                      <img src="../img/微信.png" width="18px" class="MR10">
-                      <img src="../img/支付宝.png" width="18px" class="MR10">
-                      <img src="../img/银行卡.png" width="18px" class="MR10">
-                    </td>
-                  </tr>
-                </table>
-                <!-- <div
-                  style="font-size:20px; color:red;margin-bottom:5px;clear: both;margin-top:-30px;"
-                >${{product.price}}</div>-->
-                <!-- <div style="padding-bottom:5px">
-                  <div style="float:left;color:gray;font-size:13px;width:70px;">运费:</div>
-                  <div style="float:left;">￥{{product.freight}}</div>
+              </div>
+              <div> 
+                <router-link to="/home">
+                <div style="border-width: 0 0 2px 0;border-style: solid;border-color: rgb(248, 248, 248);">
+                  <div style="float:left;height:60px;overflow: hidden;">
+                  <img src="../img/logo.jpg" width="60px;" height="70px;"/>
+                  </div>
+                  <div style="float:left;line-height:60px;">码帮商城</div>
+                  <div style="float:right;line-height:60px;padding-right:10px;color:gray">></div>
+                  <div style="clear:both"></div>
                 </div>
                 <div style=" clear: both;padding-bottom:5px">
                   <div style="float:left;color:gray;font-size:13px;width:70px;">净含量:</div>
@@ -239,7 +252,7 @@ export default {
           let { list } = response.data; //解构赋值
 
           this.product = list[0];
-          console.log("第四次请求结果", this.product);
+          // console.log("第四次请求结果", this.product);
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -282,12 +295,11 @@ export default {
   height: 60px;
   width: 100%;
 }
-table.table-rule {
-  border-collapse: collapse;
-}
-
-table.table-rule td,
-table.table-rule th {
-  padding: 2px 10px 2px 0;
+.img-logo{
+width:15%;
+height:15%;
+position:absolute;
+top:4%;
+left:7%;
 }
 </style>

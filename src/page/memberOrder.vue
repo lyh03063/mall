@@ -27,19 +27,14 @@
 
       <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
       <el-col :span="24">
-        <div class="order-grid-content">
-          <div class="order-footer">
-            <div class="order-footer__links">
-              <a href="javascript:;" class="order-hairline">店铺主页</a>
-              <a href="javascript:;" class="order-hairline">个人中心</a>
-              <a href="javascript:;" class="order-hairline">关注我们</a>
-              <a href="javascript:;" class="order-hairline">线下门店</a>
-              <a href="javascript:;" class="order-hairline">店铺信息</a>
-              <!---->
-            </div>
-            <div class="order-footer__copyright">
-              <a href="javascript:;" class>有赞提供技术支持</a>
-            </div>
+        <div class="order-footer">
+          <div class="order-footer__links">
+            <a href="javascript:;" class="order-hairline">店铺主页</a>
+            <a href="javascript:;" class="order-hairline">个人中心</a>
+            <a href="javascript:;" class="order-hairline">关注我们</a>
+            <a href="javascript:;" class="order-hairline">线下门店</a>
+            <a href="javascript:;" class="order-hairline">店铺信息</a>
+            <!---->
           </div>
         </div>
       </el-col>

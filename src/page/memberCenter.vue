@@ -31,25 +31,19 @@
               <router-link to="/memberOrder?orderactiveName=2">
                 <div class="order-status">
                   <div class="el-icon-shopping-cart-1" style="font-size:30px;"></div>
-                  <div style="font-size:13px; margin-top:8px;">待发货</div>
+                  <div style="font-size:13px; margin-top:8px;">已付款</div>
                 </div>
               </router-link>
               <router-link to="/memberOrder?orderactiveName=3">
                 <div class="order-status">
                   <div class="el-icon-truck" style="font-size:30px;"></div>
-                  <div style="font-size:13px; margin-top:8px;">待收货</div>
+                  <div style="font-size:13px; margin-top:8px;">已发货</div>
                 </div>
               </router-link>
               <router-link to="/memberOrder?orderactiveName=4">
                 <div class="order-status">
                   <div class="el-icon-chat-line-round" style="font-size:30px;"></div>
                   <div style="font-size:13px; margin-top:8px;">待评价</div>
-                </div>
-              </router-link>
-              <router-link to="/memberOrder?orderactiveName=5">
-                <div class="order-status">
-                  <div class="el-icon-coordinate" style="font-size:30px; margin-left:10px"></div>
-                  <div style="font-size:13px; margin-top:8px;">退款/售后</div>
                 </div>
               </router-link>
             </div>
@@ -108,19 +102,20 @@
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
-            <router-link to="/memberCenter">
+            <router-link :to="'/xiugaimm?userID='+list[0].P1">
               <div>
                 <div
                   class="el-icon-s-custom W20"
                   style="float: left; font-size:20px;margin-left:0px;"
                 ></div>
-                <div style="float: left;">账号设置</div>
+                <div style="float: left;">
+               修改密码</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
             <router-link to="/memberSetting">
               <div>
-                <div class style="float: left; font-size:20px;margin-left:0px;"></div>
+                <div class="el-icon-user W20" style="float: left; font-size:20px;margin-left:0px;"></div>
                 <div style="float: left;">个人信息</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
@@ -257,9 +252,9 @@ export default {
   margin: 0;
   height: 80px;
   float: left;
-  width: 19%;
+  width: 24%;
   padding-top: 15px;
-  padding-left: 7%;
+  padding-left: 10%;
 }
 
 .myorder-title {
