@@ -33,7 +33,7 @@
 
 
 <script>
-import { provinceAndCityData,CodeToText,TextToCode } from 'element-china-area-data'
+
 export default {
   components: {},
 
