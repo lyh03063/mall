@@ -98,15 +98,12 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     cartData: [],//用于存放购物车的总数据
     confirmOrder: [],//用于存放确认订单的总数据
 
-    selection: false,
 
 
   },
 
   mutations: {//变更事件
-    selection(state) {
-      state.selection = true
-    },
+
 
     ///--------hjp开始-------
     orderlistdetail(state, param) {//改变列表的初始状态值
@@ -148,12 +145,12 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     },
 
     //-------购物车去确认之后转移到确认订单的数据
-    cartBalanceFun(state, param) {
-      state.confirmOrder = param
-      console.log("cartBalanceFun--param", param);
-    },
+    // cartBalanceFun(state, param) {
+    //   state.confirmOrder = param
+    //   console.log("cartBalanceFun--param", param);
+    // },
 
-    //---------购物车插件---立即购买
+    // //---------购物车插件---立即购买
     goCartFun(state, param) {
       state.confirmOrder.push(param)
       console.log("goCartFun--param", state.confirmOrder);

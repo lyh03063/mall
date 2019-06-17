@@ -1,6 +1,6 @@
 <template>
   <div class="order-main">
-    <div>
+    <div v-for="row in OrderList" :key="row.P1">
       <!------------------------ 订单完成情况开始 ---------------------------->
       <div class="order-status-main">
         <!-- 订单交易失败开始 -->
@@ -48,50 +48,19 @@
 
       <!------------------------ 交易流程开始 ---------------------------->
 
-      <!-- 订单交易失败开始 -->
-      <div class="order-flow order-color" v-if="row.status==1">
-        <el-steps :active="1" align-center>
-          <el-step title="买家未付款"></el-step>
-          <el-step title="交易失败"></el-step>
-        </el-steps>
-      </div>
-
-      <!-- 等待买家付款 -->
-      <div class="order-flow order-color" v-else-if="row.status==2">
-        <el-steps :active="1" align-center>
+      <!-- 订单交易状态开始 -->
+      <div class="order-flow order-color">
+        <el-steps align-center>
+          <el-step title="订单取消" :status="activesuccess"></el-step>
+          <el-step title="买家未付款" :status="activesuccess"></el-step>
           <el-step title="买家已付款"></el-step>
           <el-step title="商家已发货"></el-step>
           <el-step title="交易完成"></el-step>
-        </el-steps>
-      </div>
-
-      <!-- 订单交易成功开始 -->
-      <div class="order-flow order-color" v-else-if="row.status==3">
-        <el-steps :active="2" align-center>
-          <el-step title="买家已付款"></el-step>
-          <el-step title="商家已发货"></el-step>
-          <el-step title="交易完成"></el-step>
-        </el-steps>
-      </div>
-
-      <!-- 订单交易成功开始 -->
-      <div class="order-flow order-color" v-else-if="row.status==4">
-        <el-steps :active="3" align-center>
-          <el-step title="买家已付款"></el-step>
-          <el-step title="商家已发货"></el-step>
-          <el-step title="交易完成"></el-step>
-        </el-steps>
-      </div>
-
-      <!-- 订单取消 -->
-      <div class="order-flow order-color" v-else>
-        <el-steps :active="1" align-center>
-          <el-step title="已生成订单"></el-step>
-          <el-step title="订单取消"></el-step>
         </el-steps>
       </div>
 
       <!------------------------ 交易流程结束 ---------------------------->
+
       <!------------------------ 收货人信息开始 ---------------------------->
       <div class="order-shipping-address">
         <div class="order-cap-logistics">
@@ -147,7 +116,7 @@
             <div class="order-cap-order-item__footer">
               <div class="order-cap-order-item__total-price">
                 商品小计 ：
-                <span>{{totalMoney}}</span>
+                <span>{{getTotalMoney(row.commodityList)}}</span>
               </div>
             </div>
           </div>
@@ -188,11 +157,14 @@
           <div class="order-cell__value order-cell__value--alone">
             <div class="order-goods-pay__cell">
               <p class="order-goods-pay__cell-title">商品金额</p>
-              <p class="order-goods-pay__cell-value">{{totalMoney}}</p>
+              <p class="order-goods-pay__cell-value">{{getTotalMoney(row.commodityList)}}</p>
             </div>
             <div class="order-goods-pay__cell">
               <p class="order-goods-pay__cell-title">运费</p>
-              <p class="order-goods-pay__cell-value">{{newtotalfreight}}</p>
+              <p
+                class="order-goods-pay__cell-value"
+                v-if="row.commodityList.freight=!0?'免运费':row.commodityList.freight"
+              >{{row.commodityList.freight}}</p>
             </div>
           </div>
         </div>
@@ -201,21 +173,10 @@
           <div class="order-cell__value order-cell__value--alone">
             <div class="order-goods-pay__real-price__paid">
               实付款：
-              <span>¥ {{newtotalMoney}}</span>
+              <span>¥ {{getActualmoney(row.commodityList)}}</span>
             </div>
           </div>
         </div>
-        <div class="order-sale-service-action order-cell">
-          <div class="order-cell__value order-cell__value--alone order-contact-main">
-            <a href="javascript:;" class="order-contact-main-in">
-              <span>拨打电话</span>
-            </a>
-            <a href="javascript:;" class="order-contact-main-in">
-              <span>在线客服</span>
-            </a>
-          </div>
-        </div>
-        <!---->
       </div>
 
       <!------------------------ 金额及联系方式结束 ---------------------------->
@@ -259,51 +220,41 @@
 
           <a href="javascript:;" class="order-base-info__question">对此订单有疑问？</a>
 
-          <div>{{row}}</div>
+          <div>{{row.commodityList.freight}}</div>
         </div>
       </div>
 
       <!------------------------ 订单时间结束 ---------------------------->
-
-      <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
-      <el-col :span="24">
-        <div class="order-grid-content">
-          <div class="order-footer">
-            <div class="order-footer__links">
-              <a href="javascript:;" class="order-hairline">店铺主页</a>
-              <a href="javascript:;" class="order-hairline">个人中心</a>
-              <a href="javascript:;" class="order-hairline">关注我们</a>
-              <a href="javascript:;" class="order-hairline">线下门店</a>
-              <a href="javascript:;" class="order-hairline">店铺信息</a>
-              <!---->
-            </div>
-            <div class="order-footer__copyright">
-              <a href="javascript:;" class>有赞提供技术支持</a>
-            </div>
-          </div>
-        </div>
-      </el-col>
-      <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
     </div>
+    <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
+    <el-col :span="24">
+      <div class="order-footer">
+        <div class="order-footer__links">
+          <a href="javascript:;" class="order-hairline">店铺主页</a>
+          <a href="javascript:;" class="order-hairline">个人中心</a>
+          <a href="javascript:;" class="order-hairline">关注我们</a>
+          <a href="javascript:;" class="order-hairline">线下门店</a>
+          <a href="javascript:;" class="order-hairline">店铺信息</a>
+          <!---->
+        </div>
+      </div>
+    </el-col>
+    <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
   </div>
 </template>
   
   
-  <script>
+<script>
 export default {
   data() {
     return {
-      allCount: null, //总记录数
-      OrderList: {},
-      page: {},
-      totalMoney: 0, //总价格
-      totalCount: 0, //总共条数
-      newtotalfreight: 0, //运费
-      newtotalMoney: 0, //运费加总金额
-      shopid: 0
+      activesuccess: "success", //流程成功样式
+      activepay: 2, //订单流程状态
+      OrderList: {}, //订单列表
+      ordernumber: 0, //订单号
+      totalCount: 0 //总共条数
     };
   },
-
   filters: {
     //过滤器
     //时间戳转日期
@@ -315,33 +266,60 @@ export default {
         .replace(/\.[\d]{3}Z/, "");
     }
   },
-  computed: {
-    //获取列表数据
-    row() {
-      console.log("列表信息", this.$store.state.newdetail);
-      // let aaa = JSON.stringify(this.$store.state.newdetail);
-      // alert(aaa);
-      return this.$store.state.newdetail;
-    }
-  },
-  mounted() {
-    this.shopid = this.row._id;
-    for (let index = 0; index < this.row.commodityList.length; index++) {
-      this.totalMoney +=
-        this.row.commodityList[index].price *
-        this.row.commodityList[index].byCount;
-      this.newtotalfreight += parseInt(this.row.commodityList[index].freight);
-    }
-    this.newtotalMoney = this.totalMoney + this.newtotalfreight;
-
-    this.totalCount += this.row.commodityList.length;
-  },
-
   methods: {
+    //计算总价格
+    getTotalMoney(commodityList) {
+      let TotalMoney = 0;
+      commodityList.forEach(commodityEach => {
+        //循环：{商品数组}
+        TotalMoney += commodityEach.byCount * commodityEach.price;
+      });
+      return TotalMoney;
+    },
+
+    //计算总运费+总价格
+    getActualmoney(commodityList) {
+      let Actualmoney = 0;
+      commodityList.forEach(commodityEach => {
+        //循环：{商品数组}
+        Actualmoney +=
+          commodityEach.byCount * commodityEach.price + commodityEach.freight;
+      });
+      return Actualmoney;
+    },
+
+    //请求订单数据
+    requestorder() {
+      axios({
+        //请求接口
+        method: "post",
+        // url: this.objURL.list,
+        url: "http://120.76.160.41:3000/crossList?page=mabang-order",
+        data: {
+          findJson: {
+            userName: this.queryName
+          },
+          modifyJson: {
+            status: 5
+          }
+        } //传递参数
+      })
+        .then(response => {
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
+          this.OrderList = list;
+          this.page = page;
+          this.allCount = page.allCount; //更改总数据量
+          this.orderlistdata = response.data;
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    },
     // 复制订单编号
     copy() {
       // data 获取的数据
-      var data = this.shopid;
+      var data = this.ordernumber;
       var oInput = document.createElement("input");
       oInput.value = data;
       document.body.appendChild(oInput);
@@ -351,7 +329,12 @@ export default {
       oInput.style.display = "none";
       alert("您已经复制成功");
     }
-  }
+  },
+  created() {
+    this.queryName = localStorage.loginnickName;
+    this.requestorder();
+  },
+  mounted() {}
 };
 </script>
   

@@ -15,6 +15,7 @@
         <el-input v-model="modifyForm.phone" placeholder="收货人手机号"></el-input>
       </el-form-item>
 
+
       <el-form-item label="地区" prop="area">
         <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
@@ -32,12 +33,14 @@
 
 
 <script>
+
 export default {
   components: {},
+
   data() {
     return {
-      cityArray:[],
-      options: option,
+      cityArray: [],
+     options:option,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "http://120.76.160.41:3000/crossModify?page=mabang-address",
@@ -58,7 +61,7 @@ export default {
           { required: true, message: "请填写收货人姓名", trigger: "blur" }
         ],
         phone: [
-          { required: true, message: "请输入收货人电话", trigger: "blur" },
+          { required: true, message: "请输入收货人电话", trigger: "blur" }
           // { min: 11, message: "请输入正确11位电话号码", trigger: "blur" }
         ],
         extend: [{ required: true, message: "请填写详细地址", trigger: "blur" }]
@@ -89,13 +92,24 @@ export default {
             duration: 1000,
             type: "success"
           });
-          this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+        
+          if (this.$route.query.Address) {
+                // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
+            this.$router.push({
+              path: "/memberAddress?Address=" + this.$route.query.Address + ""
+            }); 
+          } else {
+            this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+          }
         });
       });
     },
     modifyAddress() {
+      
       this.modifyForm.area = this.cityArray.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
+        console.log("this.modifyForm.P1",this.modifyForm.P1);
+          console.log(" this.modifyForm", this.modifyForm);
       axios({
         //请求修改接口
         method: "post",
@@ -109,26 +123,36 @@ export default {
         } //传递参数
       })
         .then(response => {
+             
           this.$message({
             message: "修改成功",
             duration: 1000,
             type: "success"
           });
-          this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+          // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
+          if (this.$route.query.Address) {
+           
+            this.$router.push({
+              path: "/memberAddress?Address=" + this.$route.query.Address + ""
+            }); //跳转到memberAddress
+          } else {
+            // 如果没有，就直接跳转到memberAddress，不带id
+              
+            this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+        
+          }
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
     }
-  },
+  }, 
   computed: {
     modifyForm() {
       //  alert(JSON.stringify(this.AddressModify_item))
       return this.$store.state.AddressModify_item;
+      
     }
-  },
-  mounted() {
-    // alert(JSON.stringify(this.modifyForm));
   }
 };
 </script>
@@ -140,7 +164,7 @@ export default {
   width: 98%;
   height: 44px;
   background-color: #f44;
-   color: #fff;
+  color: #fff;
   border: 0px;
 }
 .deleteButton {
