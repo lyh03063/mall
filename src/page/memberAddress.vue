@@ -37,7 +37,7 @@ export default {
   components: { listAdded, listAddModify, portal },
   data() {
     return {
-      isCart: null,
+      isCart: 1,
       objURL: {
         add: "http://120.76.160.41:3000/crossAdd?page=mabang-address",
         modify: "000",
@@ -120,12 +120,17 @@ export default {
     // alert(this.userAddress);
     this.getProList();
   },
-  computed: {
-    //计算属性
-    //从vuex拿到数据
+  created() {
+    if (localStorage.postAddress) {
+      this.isCart = JSON.parse(localStorage.postAddress).P1;
+    } else {
+      this.isCart = 1;
+    }
   },
   beforeCreate() {
     console.log(" memberAddress主页面>>", this.$route.query.Address);
+
+   
   }
 };
 </script>
@@ -174,5 +179,4 @@ export default {
   font-weight: bold;
   color: #fff;
 }
-
 </style>

@@ -12,7 +12,9 @@
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
-        <div class="shop-name">码帮商城</div>
+        <div class="shop-name">
+          <router-link to="./home">码帮商城</router-link>
+        </div>
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
@@ -210,7 +212,7 @@ export default {
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
-     localStorage.confirmOrder = ""; //对订单数据进行清空
+    localStorage.confirmOrder = ""; //对订单数据进行清空
   }
 };
 </script >
