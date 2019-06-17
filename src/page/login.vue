@@ -31,8 +31,7 @@
                 <a href="JavaScript:;">验证码登录</a>
               </div>
               <div style="float:right">
-                <router-link to="/register">免费注册</router-link>|
-                <router-link to="/xiugaimm">忘记密码</router-link>
+                <router-link to="/register">免费注册</router-link>|<a href="JavaScript" >忘记密码 </a>
               </div>
             </div>
           </el-col>
@@ -179,9 +178,14 @@ export default {
 
   // },
   beforeCreate() {
-    //------------如果未登录------------
-    // if (localStorage.isLogin == 0) {
-    //   this.$router.push({ path: "/login" }); //跳转到后台首页
+    //------------如果已经登录------------
+    if (localStorage.isLogin == 1) {
+       this.$message({
+                  message: "您已登录,请勿重新登录",
+                  type: "warning"
+                });
+      this.$router.push({ path: "/home" }); //跳转到后台首页
+    }
     // } else {
     //   this.$router.push({ path: "/home" });
     // }

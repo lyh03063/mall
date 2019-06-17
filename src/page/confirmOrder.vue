@@ -1,16 +1,17 @@
 <template>
   <div>
-
     <div class="main-cfo">
       <div style="background-color:white">
-        <router-link to="./memberAddress">
-          <ul :cf="title" class="address" @click="$store.commit('selection');">
+        <router-link to="./memberAddress?Address=confirmOrder">
+        <!-- :cf="title" -->
+         <!-- @click="$store.commit('selection');" -->
+          <ul  class="address">
             <!--勾选显示 -->
-             <i class="el-icon-arrow-right"></i>
-            <p>{{title.phone}}</p>
+            <i class="el-icon-arrow-right"></i>
+            <p>{{postAddress.phone}}</p>
             <i class="iconfont icondizhi1"></i>
-            <li>收货人：{{title.name}}</li>
-            <li class="FS14">收货地址：{{title.area}}</li>
+            <li>收货人：{{postAddress.name}}</li>
+            <li class="FS14">收货地址：{{postAddress.area}}</li>
           </ul>
         </router-link>
       </div>
@@ -26,9 +27,9 @@
         </router-link>
       </div>
       <!-----------------商品詳情--------------------->
-      <div class="details" v-for="(item,index) in cartData" :key="index">
+      <div class="details" v-for="(item,index) in confirmOrder" :key="index">
         <a>
-          <img :src="item.album[0].url">
+          <img :src="item.album[0].url" v-if="item.album">
         </a>
         <div class="title-details">
           <p>{{item.name}}</p>
@@ -49,10 +50,12 @@
         <div class="delivery-mode">
           <i class="el-icon-arrow-right"></i>
           <span>同城配送 免运费</span>
+
           <br>
+          <span>{{ this.Objparma.extend.distribution.day}}{{ this.Objparma.extend.distribution.time }}</span>
           <!-- <span style="color:#999">請選擇期望送達時間</span> -->
           <!-- <span style="margin-right:10px">{{timeList}}</span>
-          <span>{{timeList1}}</span> -->
+          <span>{{timeList1}}</span>-->
         </div>
       </div>
       <div class="message">
@@ -97,11 +100,15 @@
     <div>
       <el-dialog title="选择配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
         <div style="text-align:center">
-          <el-button type="danger" style="background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);;width:95%" round>同城配送 免运费</el-button>
+          <el-button
+            type="danger"
+            style="background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);;width:95%"
+            round
+          >同城配送 免运费</el-button>
         </div>
         <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">预约送达时间</p>
 
-       <timePicker @gotiem="gotiem"></timePicker>
+        <timePicker @gotiem="gotiem"></timePicker>
 
         <div class="footer">
           <span type="primary" @click="delivery=false">确 定</span>
@@ -118,44 +125,29 @@ export default {
   components: {
     timePicker
   },
- 
+
   data: function() {
     return {
-      
-     deliveryTime: [],
-    
-      time: {
-        start: "08:30",
-        step: "01:00",
-        end: "17:30"
-      },
-
-      delivery: true,
-      cartData: [],
+      confirmOrder: [], //确认订单的数据列表
+      delivery: false, //控制配送方式的弹窗
+      postAddress:{},
       Objparma: {
-        status: "1",
-        money: null, //已经完成
-        userName: null, //已完成
-        leaveMsg: "", //已完成
+        status: "1", //订单状态
+        money: null, //总价钱
+        userName: null, //用户名
+        leaveMsg: "", //留言
         extend: {
-          //配送时间
+          //配送时间段
           distribution: {}
         },
         commodityList: [
-          //已完成
+          //商品数组
           {
-            byCount: "2",
-            freight: "5",
-            price: "100",
-            name: "西瓜",
-            P1: "1"
-          },
-          {
-            byCount: "1",
-            freight: "5",
-            price: "100",
-            name: "菠萝",
-            P1: "2"
+            byCount: "",
+            freight: "",
+            price: "",
+            name: "",
+            P1: ""
           }
         ],
         postAddress: {
@@ -168,34 +160,39 @@ export default {
     };
   },
   methods: {
-     gotiem(distribution) {
-  console.log("===================distribution", distribution);
+    //------------------配送时间函数----------------
+    gotiem(distribution) {
+      this.Objparma.extend.distribution = distribution;
+      console.log("===================distribution", distribution);
     },
-    //跳转订单列表
+
+    //------------------跳转订单列表
     JumpDetail() {
-      if (this.title.phone && this.title.phone && this.title.area) {
-        this.Objparma.commodityList = this.cartData.map(item => {
+      if (this.postAddress.phone && this.postAddress.name && this.postAddress.area) {
+        this.Objparma.commodityList = this.confirmOrder.map(item => {
           let { byCount, freight, price, name, P1 } = item;
           return { byCount, freight, price, name, P1 };
         });
         this.Objparma.money = this.cartTotal;
-        this.Objparma.postAddress.address = this.title.area;
-        this.Objparma.postAddress.phone = this.title.phone;
-        this.Objparma.postAddress.name = this.title.name;
+        this.Objparma.postAddress.address = this.postAddress.area;
+        this.Objparma.postAddress.phone = this.postAddress.phone;
+        this.Objparma.postAddress.name = this.postAddress.name;
         this.Objparma.userName = localStorage.loginnickName;
-        this.Objparma.extend.distribution = this.distribution;
+
         console.log("this.Objparma", this.Objparma);
-        this.getAddorder();
-        this.$router.push({ path: "/memberOrder" });
+        this.getAddorder(); //调用请求接口函数
+        this.$router.push({ path: "/memberOrder?orderactiveName=1" });
       } else {
-         this.$message.error('请选择收货人，收货地址');
+        this.$message.error("请选择收货人，收货地址");
       }
     },
 
-    Jumpaddress() {
-      this.$router.push({ path: "/memberAddress" });
-    },
+    //------------------点击收货地址的函数
+    // Jumpaddress() {
+    //   // this.$router.push({ path: "/memberAddress?memberOrder=1" });
+    // },
 
+    //------------------新增订单axios请求接口函数
     getAddorder() {
       axios({
         method: "post",
@@ -209,7 +206,18 @@ export default {
             message: "新增订单成功",
             type: "success"
           });
-          console.log("response.data", response.data);
+
+          // 对购物车的数据进行重新筛选
+          let cartData = [];
+          if (window.localStorage.cartData) {
+            cartData = JSON.parse(localStorage.cartData);
+            let add = cartData.filter(
+              item => !this.confirmOrder.some(ele => ele.P1 === item.P1)
+            );
+            localStorage.cartData = JSON.stringify(add);
+          }
+
+          localStorage.confirmOrder = ""; //对本地数据进行清空
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -218,29 +226,39 @@ export default {
   },
 
   computed: {
+    //------------------计算总价钱
     cartTotal() {
       //计算合计总数
-      
       let stock = 0; //初始值设置为0
-      
-      this.cartData.forEach(item => {
+      this.confirmOrder.forEach(item => {
         stock += item.price * item.byCount; //
-        
       });
       return stock.toFixed(2);
-    
-    
     },
-    
-    title() {
-      return this.$store.state.confirmOrderAddress;
-    },
-    confirmOrder() {
-      return this.$store.state.confirmOrder;
-    }
+
+    //------------------ 收货地址
+    // title() {
+    //   return this.$store.state.confirmOrderAddress;
+    // }
   },
   created() {
-    this.cartData = this.confirmOrder;
+    //------------------ 如果本地有确认订单数据
+    if (localStorage.confirmOrder) {
+      let arr1 = JSON.parse(localStorage.confirmOrder); //对象转换成字符串
+      this.confirmOrder = arr1;
+      console.log("beforeCreate===", this.confirmOrder);
+    } else {
+      // 如果没有确认订单数据
+      this.$message({
+        message: "( ⊙ o ⊙ ) ！没有要提交的，去逛逛吧",
+        type: "warning",
+        center: true
+      });
+      this.$router.push({ path: "/home" }); //跳转到购物车
+    }
+    if (localStorage.postAddress) {
+      this.postAddress = JSON.parse(localStorage.postAddress);
+    }
   },
 
   beforeCreate() {
@@ -250,6 +268,11 @@ export default {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
   }
+
+  // destroyed() {
+  //   console.log("this.$router.path==离开了", this.$router.path);
+  //   console.log(" this.$router==离开了", this.$router);
+  // }
 };
 </script>
 
@@ -278,7 +301,7 @@ export default {
   .el-button {
     margin-left: 5px;
     height: 50px;
-    background: -webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);
+    background: -webkit-linear-gradient(left, #ff9000 0%, #ff5000 98%);
     color: white;
   }
 }
@@ -306,12 +329,11 @@ export default {
     float: right;
   }
 }
-.el-icon-arrow-right{
-
+.el-icon-arrow-right {
   float: right;
   margin-top: 15px;
   margin-left: 5px;
-  overflow: hidden
+  overflow: hidden;
 }
 .details {
   background-color: #f8f8f8;
@@ -408,8 +430,8 @@ export default {
   text-align: center;
   border: 1px solid#FFE153;
   line-height: 50px;
-  background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);
-  color:white;
+  background: -webkit-linear-gradient(left, #ff9000 0%, #ff5000 98%);
+  color: white;
 }
 .el-dialog__header span {
   text-align: center;

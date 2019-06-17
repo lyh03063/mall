@@ -154,7 +154,7 @@ export default {
   font-weight: bold;
   font-size: 40px;
   background-color: #ffffff;
-  color: #64d9f6;
+  color: black;
   background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1560425120&di=627560e18211e7caad5d3bde52b51781&src=http://img.nongji360.com/n/image/2015/08/11/151247223025.jpg");
   background-size: 380px 200px;
   background-repeat: no-repeat;
