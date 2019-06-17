@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{list[0].phine}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list[0].userName}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
@@ -115,10 +115,10 @@
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
-            <router-link to="/memberSetting">
+            <router-link to="/memberSetting W20">
               <div>
-                <div class style="float: left; font-size:20px;margin-left:0px;"></div>
-                <div style="float: left;">个人信息</div>
+                <div class="el-icon-user" style="float: left; font-size:20px;margin-left:0px;"></div>
+                <div style="float: left;;margin-left:0px;">个人信息</div>
                 <div style="float: right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
@@ -171,7 +171,7 @@ export default {
       })
         .then(response => {
           //这有函数，不知道this指向谁
-          // console.log("第一次请求结果", response.data);
+          console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
           this.list = list;
           this.page = page;
