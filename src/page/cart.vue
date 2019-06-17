@@ -9,11 +9,12 @@
           </div>
         </div>
 
-
         <!-- 商城图标 -->
         <div class="icon-shop"></div>
 
-        <div class="shop-name">码帮商城</div>
+        <div class="shop-name">
+          <router-link to="./home">码帮商城</router-link>
+        </div>
 
         <div class="shop-edit" @click="editfun">
           <div v-if="!isedit">编辑</div>
@@ -139,14 +140,15 @@ export default {
 
       let strArr = JSON.stringify(this.NewcartData); //数组转字符串
       localStorage.cartData = strArr;
-
     },
     // // --------结算函数---------
     cartBalanceFun() {
       //当选中之后的列表不为0时
       if (this.isCartList.lenght != 0) {
-        this.$store.commit("cartBalanceFun", this.isCartList);
+        // this.$store.commit("cartBalanceFun", this.isCartList);
         this.$router.push({ path: "/confirmOrder" });
+        let strArr = JSON.stringify(this.isCartList); //数组转字符串
+        localStorage.confirmOrder = strArr;
       }
     },
     //----------点击选中函数-------
@@ -202,8 +204,16 @@ export default {
   created() {
     this.$store.commit("init");
     this.NewcartData = this.cartData;
-  }
+  },
 
+  beforeCreate() {
+    //------------如果未登录------------
+    // console.log("用戶手機", localStorage.loginUserName)
+    if (localStorage.isLogin == 0) {
+      this.$router.push({ path: "/login" }); //跳转到后台首页
+    }
+    localStorage.confirmOrder = ""; //对订单数据进行清空
+  }
 };
 </script >
 <style lang="scss" scoped>

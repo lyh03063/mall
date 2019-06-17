@@ -72,12 +72,16 @@ export default {
     ];
     var hour = date.getHours();
     let timeList = [];
-    for (var i = 0; i < 8; i++) {
-      timeList.push({
-        name: hour + i + ":00--" + (hour + 1 + i) + ":00",
-        prop: hour
-      });
+
+    for (var i = 0; i <(18-hour); i++) {
+      if (hour < 18) {
+        timeList.push({
+          name: hour + i + ":00--" + (hour + 1 + i) + ":00",
+          prop: hour
+        });
+      }
     }
+
     let timeList1 = [];
     for (var i = 0; i < 10; i++) {
       timeList1.push({
