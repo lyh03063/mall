@@ -50,6 +50,7 @@
       <div class="order-flow order-color">
         <el-steps align-center finish-status="success">
           <el-step
+            v-show="Order.status != 5"
             :title="item.name"
             :status="item.activesuccess"
             v-for="item in stepTitle"
@@ -250,11 +251,10 @@ export default {
       totalAllMoney: 0,
       totalFreight: 0,
       stepTitle: [
-        { name: "已下单", active: 1 },
-        { name: "已付款", active: 2 },
-        { name: "已发货", active: 3 },
-        { name: "已完成", active: 4 },
-        { name: "已取消", active: 5 }
+        { name: "已下单" },
+        { name: "已付款" },
+        { name: "已发货" },
+        { name: "已完成" }
       ]
     };
   },
@@ -293,7 +293,7 @@ export default {
           let { list } = response.data; //解构赋值
           this.Order = list[0];
 
-          //
+          //根据订单状态，修改样式状态
           if (this.Order.status == 1) {
             this.stepTitle[0].activesuccess = "success";
           } else if (this.Order.status == 2) {
@@ -304,13 +304,9 @@ export default {
             for (let i = 0; i < 3; i++) {
               this.stepTitle[i].activesuccess = "success";
             }
-          } else if (this.Order.status == 4) {
+          } else {
             for (let i = 0; i < 4; i++) {
               this.stepTitle[i].activesuccess = "success";
-            }
-          } else {
-            for (let i = 0; i < 5; i++) {
-              this.stepTitle[i].activesuccess = "error";
             }
           }
 

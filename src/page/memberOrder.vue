@@ -17,6 +17,17 @@
                 <memberOrderList :cf="item.value"></memberOrderList>
               </el-tab-pane>
             </el-tabs>
+
+            <!-- 订单列表为空 -->
+            <div class="order-tip" style="padding-top: 60px;">
+              <div>
+                <h4>居然还没有订单</h4>
+                <p>好东西，手慢无</p>
+              </div>
+              <a class="order-button">
+                <span class>去逛逛</span>
+              </a>
+            </div>
           </div>
           <!-- 列表头部切换结束 -->
         </div>
@@ -63,10 +74,9 @@ export default {
         { name: "已完成", value: 4, newactive: "4" },
         { name: "已取消", value: 5, newactive: "5" }
       ],
-
+      totalData: {}, //订单列表
       tabPosition: "top",
-      visible2: false, //取消订单弹窗
-      OrderList: {} //订单列表
+      visible2: false //取消订单弹窗
     };
   }
 };

@@ -1,6 +1,5 @@
  <template>
   <div class id="app">
-    <span style="color:red">{{userName}}</span>
     <template v-for="order in totalData">
       <div class="order-list-item" :key="order.P1" v-if="order.status==cf">
         <!-- 订单头部店铺名称，交易情况 -->
@@ -36,11 +35,14 @@
             <!-- 订单列表中的页脚 -->
           </div>
         </div>
+
         <!-- 查看全部商品数量 -->
         <!-- <div
           class="order-cap-order-item__more"
           v-if="shop.commodityList.length>=1? true:false"
         >查看全部{{shop.commodityList.length}}件商品</div>-->
+
+        
 
         <!-- 订单页脚 -->
         <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
@@ -64,15 +66,15 @@
             >
               <el-button type="primary" plain size="mini" round>查看订单详情</el-button>
             </router-link>
-
-            <router-link
+            <el-button
               class="order-buttonstyle"
-              to="/memberOrder?orderactiveName=2"
-              icon="el-icon-notebook-2"
+              type="primary"
+              plain
+              @click="Paymented(order.P1,2)"
+              size="mini"
               v-if="order.status==1"
-            >
-              <el-button type="primary" plain size="mini" round>去支付</el-button>
-            </router-link>
+              round
+            >去支付</el-button>
 
             <!-- 弹框取消 -->
             <el-button
@@ -86,6 +88,7 @@
             >取消</el-button>
           </div>
         </div>
+   
       </div>
     </template>
   </div>
@@ -116,6 +119,50 @@ export default {
       });
       return money;
     },
+    //修改成已支付
+    Paymented(P1, status) {
+      this.$confirm("此操作将支付订单, 是否继续?", "提示", {
+        confirmButtonText: "确定支付",
+        cancelButtonText: "关闭",
+        type: "warning"
+      })
+        .then(() => {
+          axios({
+            //请求接口
+            method: "post",
+            // url: this.objURL.list,
+            url: "http://120.76.160.41:3000/crossModify?page=mabang-order",
+            data: {
+              findJson: {
+                P1: P1
+              },
+              modifyJson: {
+                status: status
+              }
+            } //传递参数
+          })
+            .then(response => {
+              console.log("第一次请求结果", response.data);
+              let { code, message } = response.data; //解构赋值
+              this.gettotalData();
+            })
+            .catch(function(error) {
+              alert("异常:" + error);
+            });
+
+          this.$message({
+            type: "success",
+            message: "已支付订单!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "未支付订单"
+          });
+        });
+    },
+
     //取消订单
     cancelOrder(P1, status) {
       this.$confirm("此操作将取消订单, 是否继续?", "提示", {
@@ -159,6 +206,9 @@ export default {
           });
         });
     },
+    //获取所有商品数据
+    getcommoditydata() {},
+    //获取所有数据
     gettotalData() {
       axios({
         //请求接口
@@ -190,6 +240,7 @@ export default {
           alert("异常:" + error);
         });
     },
+    //获取图片
     queryimg() {
       axios({
         //请求接口
@@ -225,10 +276,6 @@ export default {
     }
   },
   beforeCreate() {},
-  //  activated() {
-  //   this.queryName = localStorage.loginnickName;
-  //   this.gettotalData();
-  // },
   mounted() {
     this.userName = localStorage.loginUserName;
     this.gettotalData();
