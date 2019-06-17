@@ -3,7 +3,7 @@
   <div class="login-father-box">
     <div class="login-box">
       <h1>修改密码</h1>
-      
+
       <el-form
         :model="ruleForm"
         status-icon
@@ -42,14 +42,12 @@
     </div>
 
     <footer>
-      登录即代表同意
-      <a href="JavaScript:;">《用户使用协议》</a>
+      修改密码 
     </footer>
   </div>
 </template>
 
 <script>
-import { all } from 'q';
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -75,13 +73,14 @@ export default {
       tableData: [],
       objURL: {
         list: "http://120.76.160.41:3000/crossList?page=mabang-member",
-        modifyPassword:"http://120.76.160.41:3000/crossModify?page=mabang-member"
+        modifyPassword:
+          "http://120.76.160.41:3000/crossModify?page=mabang-member"
       },
       ruleForm: {
         //表单数据.
         userName: "",
         password: "",
-        newPassword:"",
+        newPassword: ""
         // checkPass:""
       },
       rules: {
@@ -104,32 +103,28 @@ export default {
           //如果校验结果为真
           axios({
             method: "post",
-            url: this.objURL.modifyPassword, //数据地址，数据来源于objURL.List中的地址
+            url: this.objURL.list, //数据地址，数据来源于objURL.List中的地址
             data: {
               findJson: {
                 userName: this.ruleForm.userName,
-                password:this.ruleForm.password
-
-              },
-              modifyJson: {
-                password:this.ruleForm.newPassword}
+                password: this.ruleForm.password
+              }
             } //传递参数
-          }).then(response => {
-            
-              let { result,nModified } = response.data;
+          })
+            .then(response => {
+              let { list } = response.data;
               // var userList = JSON.stringify(list);
               // console.log("list", result);
               // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
-              if (result.nModified == 1) {
-                
-                this.$message({ message: "修改成功", type: "success" });
+              if (list.length > 0) {
+                console.log("16");
+                this.modifyPassword();
               } else {
-             
                 this.$message({
-                  message: "修改失败,请重新修改",
+                  message: "原密码错误,请重新输入",
                   type: "warning"
                 });
-           
+                this.ruleForm = { userName: this.ruleForm.userName,password: "", newPassword: "" };
               }
             })
             .catch(error => {
@@ -138,6 +133,40 @@ export default {
             });
         }
       });
+    },
+    modifyPassword() {
+      //如果校验结果为真
+      axios({
+        method: "post",
+        url: this.objURL.modifyPassword, //数据地址，数据来源于objURL.List中的地址
+        data: {
+          findJson: {
+            userName: this.ruleForm.userName,
+            password: this.ruleForm.password
+          },
+          modifyJson: {
+            password: this.ruleForm.newPassword
+          }
+        } //传递参数
+      })
+        .then(response => {
+          let { result, nModified } = response.data;
+          // var userList = JSON.stringify(list);
+          // console.log("list", result);
+          // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
+          if (result.nModified == 1) {
+            this.$message({ message: "修改成功", type: "success" });
+          } else {
+            this.$message({
+              message: "修改失败,请重新修改",
+              type: "warning"
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          alert("错误产生" + error);
+        });
     }
 
     // getForm() {
@@ -145,7 +174,8 @@ export default {
     // }
   },
 
-  created() {//ruleForm列表里的用户名等于储存当前登录的用户名
+  created() {
+    //ruleForm列表里的用户名等于储存当前登录的用户名
     this.ruleForm.userName = localStorage.loginUserName;
     // console.log("dfdf", this.ruleForm.userName);
   },
