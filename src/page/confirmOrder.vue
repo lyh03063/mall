@@ -5,7 +5,6 @@
       <div style="background-color:white">
         <router-link to="./memberAddress">
           <ul :cf="title" class="address" @click="$store.commit('selection');">
-            <!--勾选显示 -->
              <i class="el-icon-arrow-right"></i>
             <p>{{title.phone}}</p>
             <i class="iconfont icondizhi1"></i>
@@ -18,6 +17,7 @@
     </div>
     <space height="15"></space>
 
+ <!-----------------商品詳情--------------------->
     <div class="BC_fff">
       <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
@@ -25,7 +25,6 @@
           <span class="shoppingmall">码帮商城</span>
         </router-link>
       </div>
-      <!-----------------商品詳情--------------------->
       <div class="details" v-for="(item,index) in cartData" :key="index">
         <a>
           <img :src="item.album[0].url">
@@ -94,7 +93,7 @@
         <el-button @click="JumpDetail" type="danger">提交订单</el-button>
       </div>
     </div>
-    <div>
+    <!--------------配送时间弹窗------------->
       <el-dialog title="选择配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
         <div style="text-align:center">
           <el-button type="danger" style="background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);;width:95%" round>同城配送 免运费</el-button>
@@ -107,12 +106,15 @@
           <span type="primary" @click="delivery=false">确 定</span>
         </div>
       </el-dialog>
-    </div>
+    
   </div>
 </template>
 
 
+
 <script>
+
+
 import timePicker from "../components/cart/timePicker";
 export default {
   components: {
@@ -121,16 +123,9 @@ export default {
  
   data: function() {
     return {
-      
      deliveryTime: [],
     
-      time: {
-        start: "08:30",
-        step: "01:00",
-        end: "17:30"
-      },
-
-      delivery: true,
+      delivery: false,
       cartData: [],
       Objparma: {
         status: "1",
@@ -142,21 +137,14 @@ export default {
           distribution: {}
         },
         commodityList: [
-          //已完成
+          //获取订单产品数据
           {
-            byCount: "2",
-            freight: "5",
-            price: "100",
-            name: "西瓜",
-            P1: "1"
+            byCount: "",
+            freight: "",
+            price: "",
+            name: "",
+            P1: ""
           },
-          {
-            byCount: "1",
-            freight: "5",
-            price: "100",
-            name: "菠萝",
-            P1: "2"
-          }
         ],
         postAddress: {
           //获取用户填写得地址
@@ -169,7 +157,7 @@ export default {
   },
   methods: {
      gotiem(distribution) {
-  console.log("===================distribution", distribution);
+  // console.log("===================distribution", distribution);
     },
     //跳转订单列表
     JumpDetail() {
@@ -196,7 +184,7 @@ export default {
       this.$router.push({ path: "/memberAddress" });
     },
 
-    getAddorder() {
+    getAddorder() {//获取地址
       axios({
         method: "post",
         url: "http://120.76.160.41:3000/crossAdd?page=mabang-order",
@@ -220,22 +208,17 @@ export default {
   computed: {
     cartTotal() {
       //计算合计总数
-      
       let stock = 0; //初始值设置为0
-      
       this.cartData.forEach(item => {
         stock += item.price * item.byCount; //
-        
       });
       return stock.toFixed(2);
-    
-    
     },
     
-    title() {
+    title() {//获取地址
       return this.$store.state.confirmOrderAddress;
     },
-    confirmOrder() {
+    confirmOrder() {//获取产品表单产品
       return this.$store.state.confirmOrder;
     }
   },

@@ -100,7 +100,7 @@ export default {
   },
   mounted() {
     this.userAddress = localStorage.loginnickName
-      alert(this.userAddress)
+      // alert(this.userAddress)
     this.getProList();
      
   },

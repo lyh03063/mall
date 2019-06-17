@@ -5,10 +5,9 @@
         <el-tab-pane :label="item.name" v-for="(item,index) in day" :key="index">
           <div>
             <template>
-
               <template v-for="(time,key) in timeList">
                 <div
-                class="Thetime"
+                  class="Thetime"
                   v-if="index==0"
                   :class="{isOpen:key==isOpen}"
                   :key="key"
@@ -18,7 +17,7 @@
 
               <template v-for="(time,key) in timeList1">
                 <div
-                class="Thetime"
+                  class="Thetime"
                   v-if="index==1"
                   :class="{isOpen:key==isOpen}"
                   :key="key"
@@ -98,12 +97,10 @@ export default {
   color: red;
   /* padding:10px 0 */
 }
-.Thetime{
+.Thetime {
   padding: 8px 0;
   /* position: fixed; */
   /* bottom:50px; */
   /* top: 50% */
 }
-
-
 </style>

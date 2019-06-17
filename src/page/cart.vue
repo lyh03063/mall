@@ -173,7 +173,7 @@ export default {
         this.isCartList.forEach(item => {
           stock += item.price * item.byCount; //
         });
-        this.cartTotal = stock;
+        this.cartTotal = stock.toFixed(2);
       },
       deep: true //深度监听
     },
