@@ -67,7 +67,7 @@
 
             <router-link
               class="order-buttonstyle"
-              to="/memberOrderpay"
+              to="/memberOrder?orderactiveName=2"
               icon="el-icon-notebook-2"
               v-if="order.status==1"
             >

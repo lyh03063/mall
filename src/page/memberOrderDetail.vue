@@ -47,22 +47,16 @@
       <!------------------------ 订单完成情况结束 ---------------------------->
 
       <!------------------------ 交易流程开始 ---------------------------->
-
-      <!-- 订单交易状态开始 -->
       <div class="order-flow order-color">
-        <el-steps align-center :active="3">
-          <el-step title="订单取消" :status="activesuccess"></el-step>
-          <el-step title="订单取消"></el-step>
-          <el-step title="订单取消"></el-step>
-          <el-step title="订单取消"></el-step>
-          <!-- <el-step title="订单取消" :status="activesuccess"></el-step>
-          <el-step title="买家未付款" :status="activesuccess"></el-step>
-          <el-step title="买家已付款" :status="activesuccess"></el-step>
-          <el-step title="商家已发货" :status="activesuccess"></el-step>
-          <el-step title="交易完成" :status="activesuccess"></el-step>-->
+        <el-steps align-center finish-status="success">
+          <el-step
+            :title="item.name"
+            :status="item.activesuccess"
+            v-for="item in stepTitle"
+            :key="item.name"
+          ></el-step>
         </el-steps>
       </div>
-
       <!------------------------ 交易流程结束 ---------------------------->
 
       <!------------------------ 收货人信息开始 ---------------------------->
@@ -246,7 +240,6 @@
 export default {
   data() {
     return {
-      activesuccess: "success", //流程成功样式
       activepay: 2, //订单流程状态
       Order: {
         postAddress: {}
@@ -255,7 +248,14 @@ export default {
       imgId: [],
       totalMoney: 0,
       totalAllMoney: 0,
-      totalFreight: 0
+      totalFreight: 0,
+      stepTitle: [
+        { name: "已下单", active: 1 },
+        { name: "已付款", active: 2 },
+        { name: "已发货", active: 3 },
+        { name: "已完成", active: 4 },
+        { name: "已取消", active: 5 }
+      ]
     };
   },
   filters: {
@@ -270,6 +270,11 @@ export default {
     }
   },
   methods: {
+    //根据流程状态，添加成功样式
+    addstyle() {
+      // for (var i = 0; i < this.stepTitle.length; i++) {
+      // }
+    },
     //请求订单数据
     requestorder() {
       axios({
@@ -287,6 +292,27 @@ export default {
           console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
           this.Order = list[0];
+
+          //
+          if (this.Order.status == 1) {
+            this.stepTitle[0].activesuccess = "success";
+          } else if (this.Order.status == 2) {
+            for (let i = 0; i < 2; i++) {
+              this.stepTitle[i].activesuccess = "success";
+            }
+          } else if (this.Order.status == 3) {
+            for (let i = 0; i < 3; i++) {
+              this.stepTitle[i].activesuccess = "success";
+            }
+          } else if (this.Order.status == 4) {
+            for (let i = 0; i < 4; i++) {
+              this.stepTitle[i].activesuccess = "success";
+            }
+          } else {
+            for (let i = 0; i < 5; i++) {
+              this.stepTitle[i].activesuccess = "error";
+            }
+          }
 
           this.Order.commodityList.forEach(commodityListEach => {
             //商品总金额
@@ -358,6 +384,7 @@ export default {
   created() {
     this.queryName = localStorage.loginUserName;
     this.requestorder();
+    this.addstyle();
   },
   mounted() {}
 };
