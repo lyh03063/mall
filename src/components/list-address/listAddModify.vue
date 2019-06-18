@@ -70,6 +70,18 @@ export default {
   },
 
   methods: {
+     created() {
+    if (localStorage.postAddress) {
+      this.isCart = JSON.parse(localStorage.postAddress).P1;
+    } else {
+      this.isCart = 1;
+    }
+  },
+  created() {
+if (localStorage.postAddress) {
+this.isCart = JSON.parse(localStorage.postAddress).P1;
+}
+},
     deleteForm() {
       this.$confirm("是否继续删除收货信息？", "提示", {
         confirmButtonText: "确定",
@@ -105,7 +117,11 @@ export default {
       });
     },
     modifyAddress() {
-      
+               // 把地址存在本地
+      localStorage.postAddress = JSON.stringify(item);
+      if (this.$route.query.Address) {
+        this.$router.push({ path: "/" + this.$route.query.Address + "" }); //跳转到
+      }
       this.modifyForm.area = this.cityArray.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
         console.log("this.modifyForm.P1",this.modifyForm.P1);
@@ -140,10 +156,12 @@ export default {
                console.log(this.addForm,this.addForm )
             this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
           }
+          
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
+
     }
   }, 
   computed: {
