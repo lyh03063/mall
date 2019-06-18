@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       data: false,
-      list: [{P1:"1111"}],
+      list: [{P1:""}],
       memberOptions:[
         {img:"el-icon-shopping-cart-full W20",value:"购物车",url:"/cart"},
         {img:"el-icon-tickets W20",value:"任务中心",url:"/memberCenter"},
@@ -131,12 +131,13 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.isLogin == "1") {
     this.getMember();
-    
+    }
   },
   beforeCreate() {
 
-    if (localStorage.isLogin == "0") {
+    if (localStorage.isLogin != "1") {
       this.$router.push({ path:"/login"})
     this.$message({
               message: "您还没有登录，请先登录",

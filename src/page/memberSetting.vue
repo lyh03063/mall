@@ -225,7 +225,7 @@ export default {
     
   },
   beforeCreate() {
-    if(localStorage.isLogin == "0"){
+    if(localStorage.isLogin != "1"){
       this.$router.push({ path:"/login"})
     }
   }
