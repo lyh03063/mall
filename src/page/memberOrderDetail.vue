@@ -95,15 +95,16 @@
                   <a class="order-card__thumb">
                     <img :src="commodity.freight" class="order-card__img">
                   </a>
-                  <div class="order-card__content">
+                  <div>
                     <div class="order-card__title">{{commodity.name}}</div>
-                    <div class="order-card__desc order-ellipsis">{{Order.leaveMsg}}</div>
-                    <div></div>
+                    <div
+                      class="order-card__description"
+                    >商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述</div>
+                  </div>
 
-                    <div class="order-card__bottom">
-                      <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
-                      <div class="order-card__num">X{{commodity.byCount}}</div>
-                    </div>
+                  <div class="order-card__bottom">
+                    <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
+                    <div class="order-card__num">X{{commodity.byCount}}</div>
                   </div>
                 </div>
               </div>
@@ -210,16 +211,13 @@
             完成时间：
             <span>{{Order.UpdateTime | formatDate}}</span>
           </p>
-
-          <a href="javascript:;" class="order-base-info__question">对此订单有疑问？</a>
-
-          <!-- <div>{{Order.commodityList.freight}}</div> -->
         </div>
       </div>
 
       <!------------------------ 订单时间结束 ---------------------------->
     </div>
     <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
+    <space height="10"></space>
     <el-col :span="24">
       <div class="order-footer">
         <div class="order-footer__links">
@@ -233,6 +231,20 @@
       </div>
     </el-col>
     <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
+
+    <!------------------------  底部固定栏开始 ---------------------------->
+    <div class="order-submit-bar" v-if="Order.status==1">
+      <div class="order-submit-bar__bar">
+        <div class="order-submit-pay">
+          <div class="order-pay-divcolor" @click="Paymented()">去支付</div>
+          <div>
+            <span class="prder-pay">合计:</span>
+            <span class="order-pay-color">¥{{totalAllMoney}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------  底部固定栏结束 ---------------------------->
   </div>
 </template>
   
@@ -274,6 +286,10 @@ export default {
     addstyle() {
       // for (var i = 0; i < this.stepTitle.length; i++) {
       // }
+    },
+    //支付成功
+    Paymented() {
+      alert("支付成功");
     },
     //请求订单数据
     requestorder() {
