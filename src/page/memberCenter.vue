@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{list[0].userName}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list.userName}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
@@ -115,29 +115,43 @@ export default {
       let response = await axios({
         //请求接口
         method: "post",
-        url: "http://120.76.160.41:3000/crossList?page=mabang-member",
+        url: "http://120.76.160.41:3000/crossDetail?page=mabang-member",
         data: {
-          findJson: {
-            userName: localStorage.loginUserName
-          }
-        } //传递参数
+         id: localStorage.loginUserName,
+        idKey: "userName"
+      }
       }).catch(function(error) {
           alert("异常:" + error);
         });
         console.log("第二次请求结果", response.data); 
-          let { list, page } = response.data; //解构赋值
-          this.list = list;
-         console.log("第二次请求结果", this.list); 
+          let  list = response.data; //解构赋值
+          this.list = list.Doc;
+         console.log("第三次请求结果", this.list); 
     },
+    async memberlogin(){
+        let data = await this.$confirm('您还没有登录，请先登录',{
+          confirmButtonText: "前往登录",
+          cancelButtonText: "返回首页",
+        }).catch(() => {});
+          console.log("第三次请求结果", data);
+          if(data=="confirm"){
+            this.$router.push({ path:"/login"})
+          }else{
+            this.$router.push({ path:"/home"})
+          } 
+      }
+   
   },
   mounted() {
+    if (localStorage.isLogin != "1"){
+        this.memberlogin();
+     }
     if (localStorage.isLogin == "1") {
     this.getMember();
     }
   },
   beforeCreate() {
-    // localStorage.isLogin=0;
- util.cheackLogin(this)
+    
   }
 };
 </script>

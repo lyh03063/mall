@@ -189,11 +189,11 @@ export default {
       let response = await axios({
         //请求接口
         method: "post",
-        url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
+        url: "http://120.76.160.41:3000/crossDetail?page=mabang-commodity",
         data: {
-            findJson: {
-                 P1: this.$route.query.id,
-           }
+
+                 id: this.$route.query.id,
+
         },
       }).catch(function(error) {
           alert("异常:" + error);
@@ -201,9 +201,9 @@ export default {
         
           console.log("第一次请求结果", response.data);
           
-          let { list } = response.data; //解构赋值
+          let  list  = response.data.Doc; //解构赋值
 
-          this.product = list[0];
+          this.product = list;
         
     },
     purchase(buyEach) {
