@@ -49,81 +49,17 @@
             </div>
           </div>
           <div class="member-message WP90 BC_fff">
-            <router-link to="/cart">
-              <div>
+            <router-link :to="option.url" v-for="option in memberOptions" :key="option.value" >
+              <div @click="triggerEvent(option.click)">
                 <div
-                  class="el-icon-shopping-cart-full W20"
+                  :class="option.img"
                   style="float: left; font-size:20px;margin-left:0px;"
+                  
                 ></div>
-                <div style="float: left;">购物车</div>
+                <div style="float: left;">{{option.value}}</div>
                 <div style="float:right; color: rgb(138, 138, 138);">></div>
               </div>
             </router-link>
-            <router-link to="/memberCenter">
-              <div>
-                <div
-                  class="el-icon-tickets W20"
-                  style="float: left; font-size:20px;margin-left:0px;"
-                ></div>
-                <div style="float: left;">任务中心</div>
-                <div style="float:  right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-            <router-link to="/memberCenter">
-              <div>
-                <div class="el-icon-money W20" style="float: left; font-size:20px;margin-left:0px;"></div>
-                <div style="float: left;">返现</div>
-                <div style="float: right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-            <router-link to="/memberCenter">
-              <div>
-                <div
-                  class="el-icon-present W20"
-                  style="float: left; font-size:20px;margin-left:0px;"
-                ></div>
-                <div style="float: left;">赠品</div>
-                <div style="float: right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-            <router-link to="/memberCenter">
-              <div>
-                <div class="el-icon-goods W20" style="float: left; font-size:20px;margin-left:0px;"></div>
-                <div style="float: left;">心愿单</div>
-                <div style="float: right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-          </div>
-          <div class="member-message WP90 BC_fff">
-            <router-link to="/memberAddress">
-              <div>
-                <div class="el-icon-house W20" style="float: left; font-size:20px;margin-left:0px;"></div>
-                <div style="float: left;">收货地址</div>
-                <div style="float: right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-            <router-link :to="'/xiugaimm?userID='+list[0].P1">
-              <div>
-                <div
-                  class="el-icon-s-custom W20"
-                  style="float: left; font-size:20px;margin-left:0px;"
-                ></div>
-                <div style="float: left;">
-               修改密码</div>
-                <div style="float: right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-            <router-link to="/memberSetting">
-              <div>
-                <div class="el-icon-user W20" style="float: left; font-size:20px;margin-left:0px;"></div>
-                <div style="float: left;">个人信息</div>
-                <div style="float: right; color: rgb(138, 138, 138);">></div>
-              </div>
-            </router-link>
-            <div>
-              <div class="W20" style="float: left; font-size:20px;margin-left:0px;"></div>
-              <div @click="logout()" class="logout" style="text-align:center">退出登录</div>
-            </div>
           </div>
         </div>
       </el-col>
@@ -144,11 +80,30 @@ export default {
   data() {
     return {
       data: false,
-      list: []
+      list: [{P1:"1111"}],
+      memberOptions:[
+        {img:"el-icon-shopping-cart-full W20",value:"购物车",url:"/cart"},
+        {img:"el-icon-tickets W20",value:"任务中心",url:"/memberCenter"},
+        {img:"el-icon-money W20",value:"返现",url:"/memberCenter"},
+        {img:"el-icon-present W20",value:"赠品",url:"/memberCenter"},
+        {img:"el-icon-goods W20",value:"心愿单",url:"/memberCenter"},
+        {img:"el-icon-house W20",value:"收货地址",url:"/memberAddress"},
+        {img:"el-icon-s-custom W20",value:"修改密码",url:''},
+        {img:"el-icon-user W20",value:"个人信息",url:"/memberSetting"},
+        {img:"el-icon-user W20",value:"退出登录",url:"#",click:true},
+        ],
+     
+      
     };
   },
   computed: {},
   methods: {
+    triggerEvent(trigger){
+      //  console.log("第11次请求结果", trigger);
+      if(trigger){
+        this.logout();
+      }
+    },
     logout() {
       localStorage.isLogin = "0";
       localStorage.loginUserName = null;
@@ -169,11 +124,13 @@ export default {
       })
         .then(response => {
           //这有函数，不知道this指向谁
-          console.log("第一次请求结果", response.data);
+          // console.log("第一次请求结果", response.data);
+         
           let { list, page } = response.data; //解构赋值
           this.list = list;
-          this.page = page;
-          this.allCount = page.allCount;
+          // this.memberOptions[6].url ='/xiugaimm?userID='+this.list[0].P1,
+         console.log("第一次请求结果", this.memberOptions);
+          
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -182,6 +139,7 @@ export default {
   },
   mounted() {
     this.getProList();
+    
   },
   beforeCreate() {
     // localStorage.isLogin=0;

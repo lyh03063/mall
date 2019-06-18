@@ -32,7 +32,7 @@
             show-password
             v-model="ruleForm.checkPass"
             placeholder="请再输入一次密码"
-            autocomplete="off"
+            autocomplete="off"   @keydown.enter.native="submitForm('ruleForm')"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     submitForm(formName) {
+   
       this.$refs[formName].validate(valid => {
         console.log("userName", this.ruleForm.userName);
         console.log("password", this.ruleForm.password);
