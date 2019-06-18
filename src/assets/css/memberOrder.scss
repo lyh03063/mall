@@ -48,7 +48,22 @@
 
 
 /*----------------- 头部样式开始 ---------------- */
+.order-tip {
+    font-size : 14px;
+    text-align: center;
+}
 
+.order-button__text {
+    border: 1pxsolid #FF4444;
+}
+
+.order-button {
+    height      : 40px;
+    line-height : 38px;
+    min-width   : 100px;
+    color       : #f60;
+    border-color: #f60;
+}
 
 //订单列表
 .order-list-item__order-list {
