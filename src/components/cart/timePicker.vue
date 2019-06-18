@@ -107,5 +107,4 @@ export default {
   /* bottom:50px; */
   /* top: 50% */
 }
-
 </style>

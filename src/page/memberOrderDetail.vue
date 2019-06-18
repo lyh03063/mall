@@ -47,18 +47,17 @@
       <!------------------------ 订单完成情况结束 ---------------------------->
 
       <!------------------------ 交易流程开始 ---------------------------->
-
-      <!-- 订单交易状态开始 -->
       <div class="order-flow order-color">
-        <el-steps align-center>
-          <el-step title="订单取消" :status="activesuccess"></el-step>
-          <el-step title="买家未付款" :status="activesuccess"></el-step>
-          <el-step title="买家已付款"></el-step>
-          <el-step title="商家已发货"></el-step>
-          <el-step title="交易完成"></el-step>
+        <el-steps align-center finish-status="success">
+          <el-step
+            v-show="Order.status != 5"
+            :title="item.name"
+            :status="item.activesuccess"
+            v-for="item in stepTitle"
+            :key="item.name"
+          ></el-step>
         </el-steps>
       </div>
-
       <!------------------------ 交易流程结束 ---------------------------->
 
       <!------------------------ 收货人信息开始 ---------------------------->
@@ -248,11 +247,21 @@
 export default {
   data() {
     return {
-      activesuccess: "success", //流程成功样式
       activepay: 2, //订单流程状态
-      OrderList: {}, //订单列表
-      ordernumber: 0, //订单号
-      totalCount: 0 //总共条数
+      Order: {
+        postAddress: {}
+      },
+      totalCount: 0, //总共条数
+      imgId: [],
+      totalMoney: 0,
+      totalAllMoney: 0,
+      totalFreight: 0,
+      stepTitle: [
+        { name: "已下单" },
+        { name: "已付款" },
+        { name: "已发货" },
+        { name: "已完成" }
+      ]
     };
   },
   filters: {
@@ -267,27 +276,11 @@ export default {
     }
   },
   methods: {
-    //计算总价格
-    getTotalMoney(commodityList) {
-      let TotalMoney = 0;
-      commodityList.forEach(commodityEach => {
-        //循环：{商品数组}
-        TotalMoney += commodityEach.byCount * commodityEach.price;
-      });
-      return TotalMoney;
+    //根据流程状态，添加成功样式
+    addstyle() {
+      // for (var i = 0; i < this.stepTitle.length; i++) {
+      // }
     },
-
-    //计算总运费+总价格
-    getActualmoney(commodityList) {
-      let Actualmoney = 0;
-      commodityList.forEach(commodityEach => {
-        //循环：{商品数组}
-        Actualmoney +=
-          commodityEach.byCount * commodityEach.price + commodityEach.freight;
-      });
-      return Actualmoney;
-    },
-
     //请求订单数据
     requestorder() {
       axios({
@@ -297,10 +290,62 @@ export default {
         url: "http://120.76.160.41:3000/crossList?page=mabang-order",
         data: {
           findJson: {
-            userName: this.queryName
-          },
-          modifyJson: {
-            status: 5
+            P1: this.$route.query.P1
+          }
+        } //传递参数
+      })
+        .then(response => {
+          console.log("第一次请求结果", response.data);
+          let { list } = response.data; //解构赋值
+          this.Order = list[0];
+
+          //根据订单状态，修改样式状态
+          if (this.Order.status == 1) {
+            this.stepTitle[0].activesuccess = "success";
+          } else if (this.Order.status == 2) {
+            for (let i = 0; i < 2; i++) {
+              this.stepTitle[i].activesuccess = "success";
+            }
+          } else if (this.Order.status == 3) {
+            for (let i = 0; i < 3; i++) {
+              this.stepTitle[i].activesuccess = "success";
+            }
+          } else {
+            for (let i = 0; i < 4; i++) {
+              this.stepTitle[i].activesuccess = "success";
+            }
+          }
+
+          this.Order.commodityList.forEach(commodityListEach => {
+            //商品总金额
+            this.totalMoney +=
+              commodityListEach.price * commodityListEach.byCount;
+            //总运费
+            this.totalFreight += commodityListEach.freight;
+            //需要的商品图片ID
+            this.imgId.push(commodityListEach.P1);
+          });
+          //商品总金额+总运费
+          this.totalAllMoney = this.totalMoney + this.totalFreight;
+          if (this.totalFreight == 0) {
+            this.totalFreight = "免运费";
+          }
+          //调用商品列表接口查询对应的商品图片
+          this.queryimg();
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    },
+    queryimg() {
+      axios({
+        //请求接口
+        method: "post",
+        // url: this.objURL.list,
+        url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
+        data: {
+          findJson: {
+            P1: this.imgId
           }
         } //传递参数
       })
@@ -333,6 +378,7 @@ export default {
   created() {
     this.queryName = localStorage.loginnickName;
     this.requestorder();
+    this.addstyle();
   },
   mounted() {}
 };

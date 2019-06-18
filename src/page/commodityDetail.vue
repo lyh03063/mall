@@ -78,8 +78,8 @@
                           <div style="float:left;">新西兰佳沛黄金奇异果</div>
                         </div>
                         <div style="clear: both;color:gray;">支付:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="../img/微信.png" width="18px">
-                        <img src="../img/支付宝.png" width="18px">
+                        <img src="../img/微信.png" width="18px" style="margin-right:5px;">
+                        <img src="../img/支付宝.png" width="18px" style="margin-right:5px;">
                         <img src="../img/银行卡.png" width="18px">
                       </div>
                         <!-- <div class="WP100 H20"></div> -->
@@ -175,7 +175,6 @@ import cartComponent from "../components/cart/cartComponent.vue";
 export default {
    components: {cartComponent},
   data() {
-   
     return {
       product:[],
       // isCartCom: false,
@@ -192,12 +191,10 @@ export default {
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
         data: {
-          
             findJson: {
                  P1: this.$route.query.id,
            }
         },
-        
       })
         .then(response => {
           //这有函数，不知道this指向谁
