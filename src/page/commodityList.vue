@@ -82,6 +82,7 @@ export default {
     purchase(commodity) {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", commodity);
+      // console.log("commodity",commodity)
     },
     //--------------获取商品分类列表接口函数--------------
     getCommoditySortList() {
