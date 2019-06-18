@@ -112,14 +112,6 @@ export default {
       return this.$store.state.user;
     }
   },
-
-  beforeCreate() {
-    //------------如果未登录------------
-    // console.log("用戶手機", localStorage.loginUserName)
-    if (localStorage.isLogin == 0) {
-      this.$router.push({ path: "/home" }); //跳转到后台首页
-    }
-  },
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空

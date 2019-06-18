@@ -209,9 +209,7 @@ export default {
   beforeCreate() {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
-    if (localStorage.isLogin == 0) {
-      this.$router.push({ path: "/login" }); //跳转到后台首页
-    }
+    util.cheackLogin(this)
     localStorage.confirmOrder = ""; //对订单数据进行清空
 
   }
