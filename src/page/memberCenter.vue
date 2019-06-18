@@ -107,7 +107,7 @@ export default {
     logout() {
       localStorage.isLogin = "0";
       localStorage.loginUserName = null;
-      this.$router.push({ path: "/home" });
+      this.$router.push({ path: "/login" });
     },
     getProList() {
       //获取产品列表函数
