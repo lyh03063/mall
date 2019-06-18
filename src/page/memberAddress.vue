@@ -63,12 +63,7 @@ export default {
       // this.$store.commit("confirmOrderAddressFun", item);
     },
     form(item) {
-      // let str = item.area.join("");
-      // let arrArea = str.split("");
-      // item.area = arrArea;
-      //alert(JSON.stringify(item))
       this.$store.commit("memberAddressModify", item);
-
       // 如果有路由id，就会跳转到listAddModify的同时，并传递路由id
       if (this.$route.query.Address) {
         this.$router.push({

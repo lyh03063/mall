@@ -1,10 +1,10 @@
 <template>
-  <div class="main">
+  <div class="M15">
     <el-form
       :model="modifyForm"
       :rules="rules"
       ref="ruleForm"
-      label-width="50px"
+      label-width="80px"
       class="demo-ruleForm"
       size="small"
     >
@@ -181,7 +181,8 @@ this.isCart = JSON.parse(localStorage.postAddress).P1;
   color: #fff;
   border: 0px;
   text-align: center;
-  line-height:44px
+  line-height:44px;
+  cursor: pointer;
 }
 .deleteButton {
  color: #000;

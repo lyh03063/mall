@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="M15" >
     <el-form
       :model="addForm"
       :rules="rules"
@@ -16,7 +16,6 @@
       </el-form-item>
 
  
-
       <el-form-item label="地区" prop="area">
         <el-cascader :options="options" v-model="cityArray"></el-cascader>
       </el-form-item>
@@ -78,7 +77,6 @@ export default {
     addedAddress() {
       this.addForm.area = this.cityArray.join(" ");
       console.log("this.addForm.area", this.addForm.area);
-
       axios({
         //请求新增接口
         method: "post",
@@ -132,6 +130,7 @@ export default {
   color: #fff;
   border: 0px;
   text-align: center;
-  line-height:44px
+  line-height:44px;
+  cursor: pointer;
 }
 </style>
