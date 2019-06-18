@@ -128,15 +128,30 @@ export default {
           this.list = list.Doc;
          console.log("第三次请求结果", this.list); 
     },
+    async memberlogin(){
+        let data = await this.$confirm('您还没有登录，请先登录',{
+          confirmButtonText: "前往登录",
+          cancelButtonText: "返回首页",
+        }).catch(() => {});
+          console.log("第三次请求结果", data);
+          if(data=="confirm"){
+            this.$router.push({ path:"/login"})
+          }else{
+            this.$router.push({ path:"/home"})
+          } 
+      }
+   
   },
   mounted() {
+    if (localStorage.isLogin != "1"){
+        this.memberlogin();
+     }
     if (localStorage.isLogin == "1") {
     this.getMember();
     }
   },
   beforeCreate() {
-    // localStorage.isLogin=0;
- util.cheackLogin(this)
+    
   }
 };
 </script>
