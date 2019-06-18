@@ -107,7 +107,7 @@ export default {
     logout() {
       localStorage.isLogin = "0";
       localStorage.loginUserName = null;
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: "/home" });
     },
     async getMember() {
       //获取产品列表函数
@@ -129,10 +129,6 @@ export default {
           this.list = list;
          console.log("第二次请求结果", this.list); 
     },
-    async login(){
-      let data = await this.$confirm('您还没有登录,请先登录').catch(()=>{});
-      console.log("第二次请求结果", this.data); 
-    }
   },
   mounted() {
     this.getMember();

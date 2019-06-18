@@ -94,7 +94,6 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.commoditySortList = list.reverse(); //数组翻转
-          this.pageSize = 10;
         })
         .catch(function(error) {
           alert("异常:" + error);

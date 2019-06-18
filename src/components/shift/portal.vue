@@ -4,7 +4,7 @@
     <ul class="box">
       <li v-for="linkk in linkk" :key="linkk.id">
         <router-link class="link" :to="linkk.router">
-          <div :class="linkk.icon" style="font-size: 30px;color: #333">
+          <div :class="linkk.icon" style="font-size: 30px;">
             <div style="font-size: 15px;">{{linkk.title}}</div>
           </div>
         </router-link>
@@ -75,7 +75,7 @@ export default {
   opacity: 0.75;
 }
 
-.router-link-exact-active:link{
-  background-color: #CFA238;
+.router-link-exact-active div{
+  color:orangered;
 }
 </style>
