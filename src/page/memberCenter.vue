@@ -128,7 +128,7 @@ export default {
          
           let { list, page } = response.data; //解构赋值
           this.list = list;
-          // this.memberOptions[6].url ='/xiugaimm?userID='+this.list[0].P1,
+          this.memberOptions[6].url ='/xiugaimm?userID='+this.list[0].P1,
          console.log("第一次请求结果", this.memberOptions);
           
         })
