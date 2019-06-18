@@ -69,7 +69,7 @@
         <el-cascader v-model="cityArray" :options="options"></el-cascader>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isShowTooltip=false">取 消</el-button>
+        <el-button @click="messageInput[5].tooltip.isShowTooltip=false">取 消</el-button>
         <el-button
           type="primary"
           @click="messageInput[5].value=closeCity(cityArray)"
