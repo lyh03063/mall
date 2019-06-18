@@ -143,9 +143,7 @@ export default {
   },
   beforeCreate() {
     // localStorage.isLogin=0;
-    if (localStorage.isLogin == "0") {
-      this.$router.push({ path: "/home" });
-    }
+ util.cheackLogin(this)
   }
 };
 </script>
