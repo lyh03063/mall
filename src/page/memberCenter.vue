@@ -88,7 +88,7 @@ export default {
         {img:"el-icon-present W20",value:"赠品",url:"/memberCenter"},
         {img:"el-icon-goods W20",value:"心愿单",url:"/memberCenter"},
         {img:"el-icon-house W20",value:"收货地址",url:"/memberAddress"},
-        {img:"el-icon-s-custom W20",value:"修改密码",url:'/xiugaimm'},
+        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword'},
         {img:"el-icon-user W20",value:"个人信息",url:"/memberSetting"},
         {img:"el-icon-user W20",value:"退出登录",url:"#",click:true},
         ],
