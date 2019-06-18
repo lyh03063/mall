@@ -33,11 +33,11 @@
     </el-dialog>
     <!-- 性别弹框 -->
     <el-dialog title="请选择您的性别" :visible.sync="messageInput[3].tooltip.isShowTooltip" width="100%" top="150px" @close="modifyMessage">
-      <el-radio v-model="memberMessage[0].sex" label="1">男</el-radio>
-      <el-radio v-model="memberMessage[0].sex" label="0">女</el-radio>
-      <el-radio v-model="memberMessage[0].sex" label="2">保密</el-radio>
+      <el-radio v-model="memberMessage.sex" label="1">男</el-radio>
+      <el-radio v-model="memberMessage.sex" label="0">女</el-radio>
+      <el-radio v-model="memberMessage.sex" label="2">保密</el-radio>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="messageInput[3].value=closeGender(memberMessage[0].sex)">确 定</el-button>
+        <el-button type="primary" @click="messageInput[3].value=closeGender(memberMessage.sex)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 生日弹框 -->
@@ -121,33 +121,33 @@ export default {
       let response = await axios({
         //请求接口
         method: "post",
-        url: "http://120.76.160.41:3000/crossList?page=mabang-member",
+        url: "http://120.76.160.41:3000/crossDetail?page=mabang-member",
         data: {
-           findJson: {
-                 userName: localStorage.loginUserName
-           }
+           id: localStorage.loginUserName,
+            idKey: "userName"
         }
       }).catch(function(error) {
           alert("异常:" + error);
         });
         
           console.log("第一次请求结果", response.data);
-          let { list } = response.data; //解构赋值
-          this.memberMessage = list;
-          this.messageInput[1].value = this.memberMessage[0].nickName;
-          this.messageInput[2].value = this.memberMessage[0].userName;
-          if(this.memberMessage[0].sex=="男"){
-            this.messageInput[3].value = this.memberMessage[0].sex;
-          }else if(this.memberMessage[0].sex=="女"){
-            this.messageInput[3].value = this.memberMessage[0].sex;
+          let  list  = response.data; //解构赋值
+          this.memberMessage = list.Doc;
+          console.log("第二次请求结果", this.memberMessage);
+          this.messageInput[1].value = this.memberMessage.nickName;
+          this.messageInput[2].value = this.memberMessage.userName;
+          if(this.memberMessage.sex=="男"){
+            this.messageInput[3].value = this.memberMessage.sex;
+          }else if(this.memberMessage.sex=="女"){
+            this.messageInput[3].value = this.memberMessage.sex;
           }else{
-            this.memberMessage[0].sex = "保密";
-            this.messageInput[3].value = this.memberMessage[0].sex;
+            this.memberMessage.sex = "保密";
+            this.messageInput[3].value = this.memberMessage.sex;
           }       
-          this.messageInput[4].value = this.memberMessage[0].birthday;
-          this.messageInput[5].value = this.memberMessage[0].area;
-          this.messageInput[6].value = this.memberMessage[0].wechat;
-          console.log("第一次请求结果", this.memberMessage,this.messageInput);
+          this.messageInput[4].value = this.memberMessage.birthday;
+          this.messageInput[5].value = this.memberMessage.area;
+          this.messageInput[6].value = this.memberMessage.wechat;
+          console.log("第二次请求结果", this.memberMessage,this.memberMessage);
         
     },
     async modifyMessage(){
@@ -157,10 +157,10 @@ export default {
       url: "http://120.76.160.41:3000/crossModify?page=mabang-member",
       data: {
         findJson: {
-          P1: this.memberMessage[0].P1
+          P1: this.memberMessage.P1
         },
         
-        modifyJson: this.memberMessage[0]
+        modifyJson: this.memberMessage
       } //传递参数
     }).catch(function(error) {
         alert("异常:" + error);
@@ -172,30 +172,30 @@ export default {
     closeCity(cityArray) {
       this.messageInput[5].tooltip.isShowTooltip = false;
       let string = cityArray.join(" ");
-      this.memberMessage[0].area = string
+      this.memberMessage.area = string
       return string;
     },
     closeBirthday(birthday){
       this.messageInput[4].tooltip.isShowTooltip = false;
       let string = birthday.join(" ");
-      this.memberMessage[0].birthday = string;
+      this.memberMessage.birthday = string;
       return string;
     },
     closeName(name){
       this.messageInput[1].tooltip.isShowTooltip=false
-      this.memberMessage[0].nickName = name;
+      this.memberMessage.nickName = name;
           return name;
     },
     closeGender(sex){
      this.messageInput[3].tooltip.isShowTooltip =false;
       if(sex == "0"){
-        this.memberMessage[0].sex = "女";
+        this.memberMessage.sex = "女";
         return "女"
       }else if(sex == "1"){
-        this.memberMessage[0].sex = "男"
+        this.memberMessage.sex = "男"
         return "男"
       }else{
-        this.memberMessage[0].sex = "保密"
+        this.memberMessage.sex = "保密"
         return "保密"
       }
     },
@@ -210,7 +210,7 @@ export default {
     },
     closeWechat(isShowTooltip,weChat){
       this.messageInput[6].tooltip.isShowTooltip=false
-      this.memberMessage[0].wechat = weChat;
+      this.memberMessage.wechat = weChat;
       return weChat;
     }
   },
