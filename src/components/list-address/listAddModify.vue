@@ -117,11 +117,8 @@ this.isCart = JSON.parse(localStorage.postAddress).P1;
       });
     },
     modifyAddress() {
-               // 把地址存在本地
-      localStorage.postAddress = JSON.stringify(item);
-      if (this.$route.query.Address) {
-        this.$router.push({ path: "/" + this.$route.query.Address + "" }); //跳转到
-      }
+      
+      
       this.modifyForm.area = this.cityArray.join(" ");
       console.log("this.modifyForm.area", this.modifyForm.area);
         console.log("this.modifyForm.P1",this.modifyForm.P1);
@@ -147,13 +144,13 @@ this.isCart = JSON.parse(localStorage.postAddress).P1;
           });
           // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
           if (this.$route.query.Address) {
-            console.log(this.addForm,this.addForm )
+         
             this.$router.push({
               path: "/memberAddress?Address=" + this.$route.query.Address + ""
             }); //跳转到memberAddress
           } else {
             // 如果没有，就直接跳转到memberAddress，不带id
-               console.log(this.addForm,this.addForm )
+               
             this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
           }
           
