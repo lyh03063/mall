@@ -175,7 +175,6 @@ import cartComponent from "../components/cart/cartComponent.vue";
 export default {
    components: {cartComponent},
   data() {
-   
     return {
       product:[],
       // isCartCom: false,
@@ -192,12 +191,10 @@ export default {
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
         data: {
-          
             findJson: {
                  P1: this.$route.query.id,
            }
         },
-        
       })
         .then(response => {
           //这有函数，不知道this指向谁
