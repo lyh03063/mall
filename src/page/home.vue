@@ -117,7 +117,7 @@ export default {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
     if (localStorage.isLogin == 0) {
-      this.$router.push({ path: "/login" }); //跳转到后台首页
+      this.$router.push({ path: "/home" }); //跳转到后台首页
     }
   },
   mounted() {

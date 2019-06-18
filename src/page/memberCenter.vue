@@ -107,7 +107,7 @@ export default {
     logout() {
       localStorage.isLogin = "0";
       localStorage.loginUserName = null;
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: "/home" });
     },
     getProList() {
       //获取产品列表函数
@@ -128,7 +128,7 @@ export default {
          
           let { list, page } = response.data; //解构赋值
           this.list = list;
-          this.memberOptions[6].url ='/xiugaimm?userID='+this.list[0].P1,
+          this.memberOptions[6].url ='/changPassword',
          console.log("第一次请求结果", this.memberOptions);
           
         })
@@ -144,7 +144,7 @@ export default {
   beforeCreate() {
     // localStorage.isLogin=0;
     if (localStorage.isLogin == "0") {
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: "/home" });
     }
   }
 };
