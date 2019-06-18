@@ -82,6 +82,7 @@ export default {
     purchase(commodity) {
       this.$store.commit("isCartComOpen");
       this.$store.commit("changeActiveProduce", commodity);
+      // console.log("commodity",commodity)
     },
     //--------------获取商品分类列表接口函数--------------
     getCommoditySortList() {
@@ -94,7 +95,6 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.commoditySortList = list.reverse(); //数组翻转
-          this.pageSize = 10;
         })
         .catch(function(error) {
           alert("异常:" + error);

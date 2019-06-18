@@ -7,5 +7,13 @@ let fun1 = function (obj) {//深拷贝一个Json对象的函数
 
 
 export default {
-    deepCopy: fun1
+
+    deepCopy: fun1,
+    cheackLogin: function (vm) {
+
+        if (localStorage.isLogin != 1) {
+            vm.$router.push({ path: "/login" });
+        }
+    }
+
 }

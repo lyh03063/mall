@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       data: false,
-      list: [{P1:"1111"}],
+      list: [{P1:""}],
       memberOptions:[
         {img:"el-icon-shopping-cart-full W20",value:"购物车",url:"/cart"},
         {img:"el-icon-tickets W20",value:"任务中心",url:"/memberCenter"},
@@ -88,7 +88,7 @@ export default {
         {img:"el-icon-present W20",value:"赠品",url:"/memberCenter"},
         {img:"el-icon-goods W20",value:"心愿单",url:"/memberCenter"},
         {img:"el-icon-house W20",value:"收货地址",url:"/memberAddress"},
-        {img:"el-icon-s-custom W20",value:"修改密码",url:''},
+        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword'},
         {img:"el-icon-user W20",value:"个人信息",url:"/memberSetting"},
         {img:"el-icon-user W20",value:"退出登录",url:"#",click:true},
         ],
@@ -109,10 +109,10 @@ export default {
       localStorage.loginUserName = null;
       this.$router.push({ path: "/login" });
     },
-    getProList() {
+    async getMember() {
       //获取产品列表函数
 
-      axios({
+      let response = await axios({
         //请求接口
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-member",
@@ -121,31 +121,23 @@ export default {
             userName: localStorage.loginUserName
           }
         } //传递参数
-      })
-        .then(response => {
-          //这有函数，不知道this指向谁
-          // console.log("第一次请求结果", response.data);
-         
-          let { list, page } = response.data; //解构赋值
-          this.list = list;
-          // this.memberOptions[6].url ='/xiugaimm?userID='+this.list[0].P1,
-         console.log("第一次请求结果", this.memberOptions);
-          
-        })
-        .catch(function(error) {
+      }).catch(function(error) {
           alert("异常:" + error);
         });
-    }
+        console.log("第二次请求结果", response.data); 
+          let { list, page } = response.data; //解构赋值
+          this.list = list;
+         console.log("第二次请求结果", this.list); 
+    },
   },
   mounted() {
-    this.getProList();
-    
+    if (localStorage.isLogin == "1") {
+    this.getMember();
+    }
   },
   beforeCreate() {
     // localStorage.isLogin=0;
-    if (localStorage.isLogin == "0") {
-      this.$router.push({ path: "/login" });
-    }
+ util.cheackLogin(this)
   }
 };
 </script>

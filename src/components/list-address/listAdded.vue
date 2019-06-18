@@ -60,13 +60,14 @@ export default {
             message: "请填写收货人姓名",
             trigger: "blur",
             placeholder: "收货人姓名"
-          }
+          },
+          
         ],
         phone: [
-          { required: true, message: "请输入收货人电话", trigger: "blur" }
-          // { min: 11, message: "电话格式填写错误", trigger: "blur" }
+          { required: true, message: "请输入收货人电话", trigger: "blur" },
+          { min: 11, message: "电话格式填写错误", trigger: "blur" }
         ],
-
+   area: [{ required: true, message: "请选择地区", trigger: "blur" }],
         extend: [{ required: true, message: "请填写详细地址", trigger: "blur" }]
       }
     };

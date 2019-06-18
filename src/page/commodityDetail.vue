@@ -18,7 +18,7 @@
             <div class >
               <div style="">
                 <div class>
-                  <div style="padding-left:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);">
+                  <div style="padding:10px;border-width: 0 0 15px 0;border-style: solid; border-color: rgb(248, 248, 248);">
                   <div style="height:350px; position: relative;">
                       <img :src="product.album[0].url" width="100%" height="100%" >
                       <div class="img-logo">
@@ -184,9 +184,9 @@ export default {
     };
   },
   methods: {
-    getProList() {
+    async getProList() {
       //获取产品列表函数
-      axios({
+      let response = await axios({
         //请求接口
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-commodity",
@@ -195,19 +195,16 @@ export default {
                  P1: this.$route.query.id,
            }
         },
-      })
-        .then(response => {
-          //这有函数，不知道this指向谁
+      }).catch(function(error) {
+          alert("异常:" + error);
+        });
+        
           console.log("第一次请求结果", response.data);
           
           let { list } = response.data; //解构赋值
 
           this.product = list[0];
-          // console.log("第四次请求结果", this.product);
-        })
-        .catch(function(error) {
-          alert("异常:" + error);
-        });
+        
     },
     purchase(buyEach) {
 this.$store.commit("isCartComOpen");

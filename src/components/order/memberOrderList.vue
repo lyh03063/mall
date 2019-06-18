@@ -20,9 +20,12 @@
                   <a class="order-card__thumb">
                     <img id="order.id" :src="commodity.freight" class="order-card__img">
                   </a>
+
                   <div class="order-card__content">
                     <div class="order-card__title">{{commodity.name}}</div>
-                    <div class="order-card__description">{{commodity.description}}</div>
+                    <div
+                      class="order-card__description"
+                    >商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述</div>
 
                     <div class="order-card__bottom">
                       <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
@@ -41,8 +44,6 @@
           class="order-cap-order-item__more"
           v-if="shop.commodityList.length>=1? true:false"
         >查看全部{{shop.commodityList.length}}件商品</div>-->
-
-        
 
         <!-- 订单页脚 -->
         <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
@@ -64,31 +65,29 @@
               :to="'/memberOrderDetail?P1='+order.P1"
               icon="el-icon-notebook-2"
             >
-              <el-button type="primary" plain size="mini" round>查看订单详情</el-button>
+              <el-button size="mini" plain>查看订单详情</el-button>
             </router-link>
-            <el-button
-              class="order-buttonstyle"
-              type="primary"
-              plain
-              @click="Paymented(order.P1,2)"
-              size="mini"
-              v-if="order.status==1"
-              round
-            >去支付</el-button>
 
             <!-- 弹框取消 -->
             <el-button
               class="order-buttonstyle"
-              type="primary"
-              plain
               @click="cancelOrder(order.P1,5)"
               size="mini"
+              plain
               v-if="order.status==1"
-              round
             >取消</el-button>
+
+            <!-- 弹框付款 -->
+            <el-button
+              class="order-buttonstyle"
+              @click="Paymented(order.P1,2)"
+              size="mini"
+              v-if="order.status==1"
+              plain
+              type="danger"
+            >付款</el-button>
           </div>
         </div>
-   
       </div>
     </template>
   </div>
