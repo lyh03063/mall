@@ -28,8 +28,9 @@ import listAddModify from "./components/list-address/listAddModify";
 import xiugaimm from "./page/xiugaimm";
 import setting from "./page/memberSetting";
 
-import util from "./assets/js/util";
-window.util = util;
+
+
+
 
 
 
