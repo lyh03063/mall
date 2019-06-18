@@ -25,12 +25,11 @@ import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
-import xiugaimm from "./page/xiugaimm";
+import changPassword from "./page/changPassword";
 import setting from "./page/memberSetting";
 
-
-
-
+import util from "./assets/js/util";
+window.util = util;
 
 
 
@@ -55,7 +54,7 @@ const router = new VueRouter({
     { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-    { path: '/xiugaimm', component: xiugaimm },//a
+    { path: '/changPassword', component: changPassword },//a
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
 

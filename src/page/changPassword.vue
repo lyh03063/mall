@@ -32,7 +32,8 @@
             show-password
             v-model="ruleForm.checkPass"
             placeholder="请再输入一次密码"
-            autocomplete="off"   @keydown.enter.native="submitForm('ruleForm')"
+            autocomplete="off"
+            @keydown.enter.native="submitForm('ruleForm')"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -41,9 +42,7 @@
       </el-form>
     </div>
 
-    <footer>
-      修改密码 
-    </footer>
+    <footer>修改密码</footer>
   </div>
 </template>
 
@@ -95,7 +94,6 @@ export default {
   },
   methods: {
     submitForm(formName) {
-   
       this.$refs[formName].validate(valid => {
         console.log("userName", this.ruleForm.userName);
         console.log("password", this.ruleForm.password);
@@ -125,7 +123,11 @@ export default {
                   message: "原密码错误,请重新输入",
                   type: "warning"
                 });
-                this.ruleForm = { userName: this.ruleForm.userName,password: "", newPassword: "" };
+                this.ruleForm = {
+                  userName: this.ruleForm.userName,
+                  password: "",
+                  newPassword: ""
+                };
               }
             })
             .catch(error => {
@@ -156,7 +158,17 @@ export default {
           // console.log("list", result);
           // 要从数据List里面拿出一个对象数据的话,需要用到EACH循环出来给予赋值 左边是碗,右边是水桶里的水
           if (result.nModified == 1) {
-            this.$message({ message: "修改成功", type: "success" });
+            this.$message({
+              message: "修改成功,请重新登录",
+              type: "success",
+              duration: 1600
+            });
+            setTimeout(() => {
+              localStorage.isLogin = "0";
+            localStorage.loginUserName = null;
+              this.$router.push({ path: "/login" });
+            }, 2000);
+            
           } else {
             this.$message({
               message: "修改失败,请重新修改",
@@ -188,9 +200,7 @@ export default {
   // },
   beforeCreate() {
     //------------如果未登录------------
-    if (localStorage.isLogin == 0) {
-      this.$router.push({ path: "/login" }); //跳转到后台首页
-    }
+   util.cheackLogin(this)
     // } else {
     //   this.$router.push({ path: "/home" });
     // }

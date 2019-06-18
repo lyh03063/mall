@@ -1,5 +1,5 @@
 <template>
-  <div class="login-father-box">
+  <div class="login-father-box" v-show="ak47">
     <div class="login-box">
       <h1>用户登录</h1>
       <h2>为了你的帐号安全，请用手机号登录</h2>
@@ -28,10 +28,11 @@
           <el-col :span="24">
             <div style="margin-top:15px;">
               <div style="float:left">
-                <a href="JavaScript:;">验证码登录</a>
+                <!-- <a href="JavaScript:;">验证码登录</a> -->
               </div>
               <div style="float:right">
-                <router-link to="/register">免费注册</router-link>|<a href="JavaScript" >忘记密码 </a>
+                <router-link to="/register">免费注册</router-link>|
+                <a href="JavaScript">忘记密码</a>
               </div>
             </div>
           </el-col>
@@ -75,6 +76,7 @@ export default {
     };
 
     return {
+       ak47:true,
       tableData: [],
       objURL: {
         list: "http://120.76.160.41:3000/crossList?page=mabang-member"
@@ -180,11 +182,16 @@ export default {
   beforeCreate() {
     //------------如果已经登录------------
     if (localStorage.isLogin == 1) {
-       this.$message({
-                  message: "您已登录,请勿重新登录",
-                  type: "warning"
-                });
-      this.$router.push({ path: "/home" }); //跳转到后台首页
+      ak47=false;
+      this.$message({
+        message: "您已登录,请勿重新登录",
+        type: "warning",
+        duration: 1200
+      });
+      setTimeout(() => {
+        this.$router.push({ path: "/home" });
+      }, 1500);
+      //跳转到后台首页
     }
     // } else {
     //   this.$router.push({ path: "/home" });

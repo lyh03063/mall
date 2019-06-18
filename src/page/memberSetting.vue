@@ -116,9 +116,9 @@ export default {
     };
   },
   methods: {
-    getProList() {
+    async getMemberMessage() {
       //获取产品列表函数
-      axios({
+      let response = await axios({
         //请求接口
         method: "post",
         url: "http://120.76.160.41:3000/crossList?page=mabang-member",
@@ -127,9 +127,10 @@ export default {
                  userName: localStorage.loginUserName
            }
         }
-      })
-        .then(response => {
-          //这有函数，不知道this指向谁
+      }).catch(function(error) {
+          alert("异常:" + error);
+        });
+        
           console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
           this.memberMessage = list;
@@ -147,14 +148,10 @@ export default {
           this.messageInput[5].value = this.memberMessage[0].area;
           this.messageInput[6].value = this.memberMessage[0].wechat;
           console.log("第一次请求结果", this.memberMessage,this.messageInput);
-          
-        })
-        .catch(function(error) {
-          alert("异常:" + error);
-        });
+        
     },
-    modifyMessage(){
-      axios({
+    async modifyMessage(){
+      let response = await axios({
       //请求接口
       method: "post",
       url: "http://120.76.160.41:3000/crossModify?page=mabang-member",
@@ -165,18 +162,12 @@ export default {
         
         modifyJson: this.memberMessage[0]
       } //传递参数
-    })
-      .then(response => {
-        // console.log("第一次请求结果", this.memberMessage),
-        // this.$message({
-        //   message: "修改产品成功",
-        //   duration: 1500,
-        // });
-        this.getProList();
-      })
-      .catch(function(error) {
+    }).catch(function(error) {
         alert("异常:" + error);
       });
+     
+        this.getMemberMessage();
+      
     },
     closeCity(cityArray) {
       this.messageInput[5].tooltip.isShowTooltip = false;
@@ -230,13 +221,11 @@ export default {
    
   },
    mounted() {
-    this.getProList(); 
+    this.getMemberMessage(); 
     
   },
   beforeCreate() {
-    if(localStorage.isLogin == "0"){
-      this.$router.push({ path:"/login"})
-    }
+   util.cheackLogin(this)
   }
 }
 </script>
