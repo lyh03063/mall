@@ -19,6 +19,7 @@
     </div>
     <space height="15"></space>
 
+ <!-----------------商品詳情--------------------->
     <div class="BC_fff">
       <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
@@ -94,10 +95,10 @@
           <span class="C_f00">￥{{cartTotal}}</span>
         </span>
 
-        <el-button @click="JumpDetail" type="danger">提交订单</el-button>
+        <el-button style="margin-right:10px" @click="JumpDetail" round>提交订单</el-button>
       </div>
     </div>
-    <div>
+    <!--------------配送时间弹窗------------->
       <el-dialog title="选择配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
         <div style="text-align:center">
           <el-button
@@ -114,12 +115,15 @@
           <span type="primary" @click="delivery=false">确 定</span>
         </div>
       </el-dialog>
-    </div>
+    
   </div>
 </template>
 
 
+
 <script>
+
+
 import timePicker from "../components/cart/timePicker";
 export default {
   components: {
@@ -186,11 +190,6 @@ export default {
         this.$message.error("请选择收货人，收货地址");
       }
     },
-
-    //------------------点击收货地址的函数
-    // Jumpaddress() {
-    //   // this.$router.push({ path: "/memberAddress?memberOrder=1" });
-    // },
 
     //------------------新增订单axios请求接口函数
     getAddorder() {
@@ -262,17 +261,12 @@ export default {
   },
 
   beforeCreate() {
-    //------------如果未登录------------
-    // console.log("用戶手機", localStorage.loginUserName)
+
     if (localStorage.isLogin == 0) {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
   }
 
-  // destroyed() {
-  //   console.log("this.$router.path==离开了", this.$router.path);
-  //   console.log(" this.$router==离开了", this.$router);
-  // }
 };
 </script>
 
