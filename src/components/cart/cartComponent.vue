@@ -55,7 +55,6 @@ export default {
       this.closeDialogFun();
 
       this.cartTotal = (this.doc.price * this.doc.byCount).toFixed(2); //计算商品的总价格
-      
 
       //把数据拼接在购物车数据列表
       let cartData = [];
@@ -201,6 +200,7 @@ header {
 }
 
 .footer-bt {
+  cursor: pointer;
   width: 50%;
   height: 50px;
   background-color: #f85;

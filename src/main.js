@@ -93,7 +93,8 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     doc: {//存放购物车插件的对象
       byCount: null,
-      isCart: true
+      isCart: true,
+       prop:[]
     },
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
@@ -170,8 +171,8 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.activeCellphoneVerify = activeCellphoneVerify
     },
     changeActiveProduce(state, activeProduceId) {//获取当前商品详情
-      console.log("changeActiveProduce--state.doc", state.doc)
-      console.log("changeActiveProduce--activeProduceId", activeProduceId)
+      console.log("changeActiveProduce--state.doc", state.doc.P1)
+      console.log("changeActiveProduce--activeProduceId", activeProduceId.P1)
       Object.assign(state.doc, activeProduceId);
       state.activeProduceId = activeProduceId;
     },

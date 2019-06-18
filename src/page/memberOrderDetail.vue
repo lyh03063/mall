@@ -1,10 +1,10 @@
 <template>
   <div class="order-main">
-    <div v-for="row in OrderList" :key="row.P1">
+    <div>
       <!------------------------ 订单完成情况开始 ---------------------------->
       <div class="order-status-main">
         <!-- 订单交易失败开始 -->
-        <div v-if="row.status==1">
+        <div v-if="Order.status==1">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/31/85f176382a5babc1eeed69ab34eac3ab.png"
           >
@@ -12,7 +12,7 @@
           <p>亲，您的订单超时未付款，订单自动关闭</p>
         </div>
         <!-- 等待买家付款 -->
-        <div v-else-if="row.status==2">
+        <div v-else-if="Order.status==2">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/31/6eb5418154ef15f9454b0500c800cfcb.png"
           >
@@ -20,7 +20,7 @@
           <p>亲，您的订单已成功付款</p>
         </div>
         <!-- 订单交易成功开始 -->
-        <div v-else-if="row.status==3">
+        <div v-else-if="Order.status==3">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/30/345a61fbbf62d65a3a8c528272426666.png"
           >
@@ -29,7 +29,7 @@
         </div>
 
         <!-- 订单交易成功开始 -->
-        <div v-else-if="row.status==4">
+        <div v-else-if="Order.status==4">
           <img
             src="https://img.yzcdn.cn/public_files/2018/08/30/345a61fbbf62d65a3a8c528272426666.png"
           >
@@ -65,10 +65,10 @@
         <div class="order-cap-logistics">
           <div class="order-address-content">
             <div>
-              <p class="order-address-name">收货人：{{row.postAddress.name}}</p>
-              <p class="order-address-tel">{{row.postAddress.phone}}</p>
+              <p class="order-address-name">收货人：{{Order.postAddress.name}}</p>
+              <p class="order-address-tel">收货人电话:{{Order.postAddress.phone}}</p>
             </div>
-            <p class="order-address-detail">收货地址：{{row.postAddress.address}}</p>
+            <p class="order-address-detail">收货地址：{{Order.postAddress.address}}</p>
           </div>
         </div>
       </div>
@@ -85,27 +85,24 @@
             <!-- 订单列表中的内容 -->
             <div
               class="order-cap-order-item__body"
-              v-for="order in row.commodityList"
-              :key="order.id"
+              v-for="commodity in Order.commodityList"
+              :key="commodity.id"
             >
               <!-- 订单列表中的头部订单编号 -->
-              <div class="order-cap-order-item__head">{{row._id}}</div>
+              <div class="order-cap-order-item__head">{{Order._id}}</div>
               <div class="order-card">
                 <div class="order-card__header">
                   <a class="order-card__thumb">
-                    <img
-                      src="https://img.yzcdn.cn/upload_files/2016/09/29/ForFFyDV_trRjCVprENBUvCuKYef.jpg!small.jpg"
-                      class="order-card__img"
-                    >
+                    <img :src="commodity.freight" class="order-card__img">
                   </a>
                   <div class="order-card__content">
-                    <div class="order-card__title">{{order.name}}</div>
-                    <div class="order-card__desc order-ellipsis">{{row.leaveMsg}}</div>
+                    <div class="order-card__title">{{commodity.name}}</div>
+                    <div class="order-card__desc order-ellipsis">{{Order.leaveMsg}}</div>
                     <div></div>
 
                     <div class="order-card__bottom">
-                      <div class="order-card__price" style="color:red">￥{{order.price}}</div>
-                      <div class="order-card__num">X{{order.byCount}}</div>
+                      <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
+                      <div class="order-card__num">X{{commodity.byCount}}</div>
                     </div>
                   </div>
                 </div>
@@ -115,7 +112,7 @@
             <div class="order-cap-order-item__footer">
               <div class="order-cap-order-item__total-price">
                 商品小计 ：
-                <span>{{getTotalMoney(row.commodityList)}}</span>
+                <span>{{totalMoney}}</span>
               </div>
             </div>
           </div>
@@ -132,7 +129,7 @@
             <!---->
           </div>
           <div class="order-cell__value">
-            <p class="order-cap-express-way__fee">{{row.freigh}}</p>
+            <p class="order-cap-express-way__fee">{{Order.freigh}}</p>
             <p class="order-cap-express-way__type">快递发货</p>
           </div>
         </div>
@@ -143,7 +140,7 @@
           <span>买家留言</span>
         </div>
         <div class="order-cell__value">
-          <span>{{row.leaveMsg}}</span>
+          <span>{{Order.leaveMsg}}</span>
         </div>
       </div>
 
@@ -156,14 +153,11 @@
           <div class="order-cell__value order-cell__value--alone">
             <div class="order-goods-pay__cell">
               <p class="order-goods-pay__cell-title">商品金额</p>
-              <p class="order-goods-pay__cell-value">{{getTotalMoney(row.commodityList)}}</p>
+              <p class="order-goods-pay__cell-value">{{totalMoney}}</p>
             </div>
             <div class="order-goods-pay__cell">
               <p class="order-goods-pay__cell-title">运费</p>
-              <p
-                class="order-goods-pay__cell-value"
-                v-if="row.commodityList.freight=!0?'免运费':row.commodityList.freight"
-              >{{row.commodityList.freight}}</p>
+              <p class="order-goods-pay__cell-value">{{totalFreight}}</p>
             </div>
           </div>
         </div>
@@ -172,7 +166,7 @@
           <div class="order-cell__value order-cell__value--alone">
             <div class="order-goods-pay__real-price__paid">
               实付款：
-              <span>¥ {{getActualmoney(row.commodityList)}}</span>
+              <span>¥ {{totalAllMoney}}</span>
             </div>
           </div>
         </div>
@@ -186,7 +180,7 @@
         <div class="order-cell__title">
           <p>
             订单编号：
-            <span>{{row._id}}</span>
+            <span>{{Order._id}}</span>
             <el-button plain size="mini">
               <input
                 type="button"
@@ -199,27 +193,27 @@
 
           <p>
             创建时间：
-            <span>{{row.CreateTime | formatDate}}</span>
+            <span>{{Order.CreateTime | formatDate}}</span>
           </p>
 
           <p>
             付款时间：
-            <span>{{row.UpdateTime | formatDate}}</span>
+            <span>{{Order.UpdateTime | formatDate}}</span>
           </p>
 
           <p>
             发货时间：
-            <span>{{row.UpdateTime | formatDate}}</span>
+            <span>{{Order.UpdateTime | formatDate}}</span>
           </p>
 
           <p>
             完成时间：
-            <span>{{row.UpdateTime | formatDate}}</span>
+            <span>{{Order.UpdateTime | formatDate}}</span>
           </p>
 
           <a href="javascript:;" class="order-base-info__question">对此订单有疑问？</a>
 
-          <div>{{row.commodityList.freight}}</div>
+          <!-- <div>{{Order.commodityList.freight}}</div> -->
         </div>
       </div>
 
@@ -352,10 +346,18 @@ export default {
         .then(response => {
           console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
-          this.OrderList = list;
-          this.page = page;
-          this.allCount = page.allCount; //更改总数据量
-          this.orderlistdata = response.data;
+
+          var i = 0;
+
+          this.Order.commodityList.forEach(commodityListEach => {
+            for (let a = 0; a < list.length; a++) {
+              if (commodityListEach.P1 == list[i].P1) {
+                commodityListEach.freight = list[i].album[0].url;
+              }
+              i++;
+            }
+            i = 0;
+          });
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -364,7 +366,7 @@ export default {
     // 复制订单编号
     copy() {
       // data 获取的数据
-      var data = this.ordernumber;
+      var data = this.Order._id;
       var oInput = document.createElement("input");
       oInput.value = data;
       document.body.appendChild(oInput);
@@ -376,7 +378,7 @@ export default {
     }
   },
   created() {
-    this.queryName = localStorage.loginnickName;
+    this.queryName = localStorage.loginUserName;
     this.requestorder();
     this.addstyle();
   },
