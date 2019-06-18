@@ -88,7 +88,7 @@ export default {
         {img:"el-icon-present W20",value:"赠品",url:"/memberCenter"},
         {img:"el-icon-goods W20",value:"心愿单",url:"/memberCenter"},
         {img:"el-icon-house W20",value:"收货地址",url:"/memberAddress"},
-        {img:"el-icon-s-custom W20",value:"修改密码",url:'/xiugaimm'},
+        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword'},
         {img:"el-icon-user W20",value:"个人信息",url:"/memberSetting"},
         {img:"el-icon-user W20",value:"退出登录",url:"#",click:true},
         ],
@@ -107,7 +107,7 @@ export default {
     logout() {
       localStorage.isLogin = "0";
       localStorage.loginUserName = null;
-      this.$router.push({ path: "/home" });
+      this.$router.push({ path: "/login" });
     },
     async getMember() {
       //获取产品列表函数
@@ -135,16 +135,8 @@ export default {
     }
   },
   beforeCreate() {
-    //  console.log("第二次请求结果", localStorage.loginUserName); 
-    if (localStorage.isLogin != "1") {
-      this.$router.push({ path:"/login"})
-    this.$message({
-              message: "您还没有登录，请先登录",
-              duration: 1500,
-              type: "success"
-            });
-    
-    }
+    // localStorage.isLogin=0;
+ util.cheackLogin(this)
   }
 };
 </script>

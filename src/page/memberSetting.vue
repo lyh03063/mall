@@ -225,9 +225,7 @@ export default {
     
   },
   beforeCreate() {
-    if(localStorage.isLogin != "1"){
-      this.$router.push({ path:"/login"})
-    }
+   util.cheackLogin(this)
   }
 }
 </script>

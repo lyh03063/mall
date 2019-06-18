@@ -28,9 +28,8 @@ import listAddModify from "./components/list-address/listAddModify";
 import changPassword from "./page/changPassword";
 import setting from "./page/memberSetting";
 
-
-
-
+import util from "./assets/js/util";
+window.util = util;
 
 
 

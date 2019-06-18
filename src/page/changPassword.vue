@@ -200,9 +200,7 @@ export default {
   // },
   beforeCreate() {
     //------------如果未登录------------
-    if (localStorage.isLogin == 0) {
-      this.$router.push({ path: "/home" }); //跳转到后台首页
-    }
+   util.cheackLogin(this)
     // } else {
     //   this.$router.push({ path: "/home" });
     // }
