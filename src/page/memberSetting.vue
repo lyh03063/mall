@@ -1,90 +1,47 @@
 <template>
   <div class="H500" style="background-color: rgb(248, 248, 248)" v-if="memberMessage!=''">
     <div class="H50" style="color:rgb(153,153,153);line-height: 50px; padding-left:1%">基本信息</div>
-    <div class="memberSetting-message" style="cursor:pointer" @click=" isShowHeadPortrait = true">
+    <div class="memberSetting-message" style="cursor:pointer" @click=" message.tooltip.isShowTooltip = true" v-for="(message,index) in messageInput" :key="index">
       <div class="message-box">
-        <div style="float: left; margin-left:0px;">头像</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">&nbsp;></div>
-      </div>
-    </div>
-
-    <div class="memberSetting-message" style="cursor:pointer" @click="isShowName = true">
-      <div class="message-box">
-        <div style="float: left; margin-left:0px;">姓名</div>
-        <div
-          style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[0].nickName}}&nbsp;></div>
-      </div>
-    </div>
-    <div class="memberSetting-message" style="cursor:pointer">
-      <div class="message-box">
-        <div style="float: left; margin-left:0px;">手机号</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[0].userName}}</div>
-      </div>
-    </div>
-    <div class="memberSetting-message" style="cursor:pointer" @click="isShowGender = true">
-      <div class="message-box">
-        <div style="float: left; margin-left:0px;">性别</div>
-        <div
-          style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[0].gender=setGender(memberMessage[0].sex)}}&nbsp;></div>
-      </div>
-    </div>
-    <div class="memberSetting-message" style="cursor:pointer" @click="isShowBirthday= true">
-      <div class="message-box">
-        <div style="float: left; margin-left:0px;">生日</div>
-        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{memberMessage[0].birthday}}&nbsp;></div>
-      </div>
-    </div>
-    <div class="memberSetting-message" style="cursor:pointer" @click="isShowCity = true">
-      <div class="message-box">
-        <div style="float: left; margin-left:0px;">地区</div>
-        <div
-          style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[0].area}}&nbsp;></div>
-      </div>
-    </div>
-    <div class="memberSetting-message" style="cursor:pointer" @click="isShowWechat=true">
-      <div class="message-box">
-        <div style="float: left; margin-left:0px;">微信号</div>
-        <div
-          style="float: right; color: rgb(138, 138, 138);font-size:15px;"
-        >{{memberMessage[0].wechat}}&nbsp;></div>
+        <div style="float: left; margin-left:0px;">{{message.message}}</div>
+        <div style="float: right" v-if="!message.arrows">&nbsp;></div>
+        <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">{{message.value}}</div>
+        
       </div>
     </div>
     <router-link to="/memberAddress">
       <div class="memberSetting-message" style="cursor:pointer">
         <div class="message-box">
           <div style="float: left; margin-left:0px;">收货地址</div>
-          <div style="float: right; color: rgb(138, 138, 138);font-size:15px;">&nbsp;></div>
+          <div style="float: right; color: rgb(138, 138, 138);font-size:15px;"></div>
         </div>
       </div>
     </router-link>
     
     <!-- 头像弹框 -->
-    <el-dialog :visible.sync="isShowHeadPortrait" width="100%" top="150px" @close="modifyMessage">
-      <div @click="isShowHeadPortrait=false" class="headPortrait-box">是否使用微信头像</div>
-      <div @click="isShowHeadPortrait=false" class="headPortrait-box">取消</div>
+    <el-dialog :visible.sync="messageInput[0].tooltip.isShowTooltip" width="100%" top="150px" @close="modifyMessage">
+      <div @click="messageInput[0].tooltip.isShowTooltip=false" class="headPortrait-box">是否使用微信头像</div>
+      <div @click="messageInput[0].tooltip.isShowTooltip=false" class="headPortrait-box">取消</div>
     </el-dialog>
     <!-- 姓名弹框 -->
-    <el-dialog title="请输入您的姓名" :visible.sync="isShowName" width="100%" top="150px" @close="modifyMessage">
+    <el-dialog title="请输入您的姓名" :visible.sync="messageInput[1].tooltip.isShowTooltip" width="100%" top="150px" @close="modifyMessage">
       <el-input placeholder="请输入您的姓名" v-model="name" ></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isShowName=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage[0].nickName=closeName(isShowName,name)">确 定</el-button>
+        <el-button @click="messageInput[1].tooltip.isShowTooltip=false">取 消</el-button>
+        <el-button type="primary" @click="messageInput[1].value=closeName(name)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 性别弹框 -->
-    <el-dialog title="请选择您的性别" :visible.sync="isShowGender" width="100%" top="150px" @close="modifyMessage">
+    <el-dialog title="请选择您的性别" :visible.sync="messageInput[3].tooltip.isShowTooltip" width="100%" top="150px" @close="modifyMessage">
       <el-radio v-model="memberMessage[0].sex" label="1">男</el-radio>
       <el-radio v-model="memberMessage[0].sex" label="0">女</el-radio>
       <el-radio v-model="memberMessage[0].sex" label="2">保密</el-radio>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="memberMessage[0].gender=closeGender(isShowGender,memberMessage[0].sex)">确 定</el-button>
+        <el-button type="primary" @click="messageInput[3].value=closeGender(memberMessage[0].sex)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 生日弹框 -->
-    <el-dialog title="请选择您的生日" :visible.sync="isShowBirthday" width="100%" top="0px" @close="modifyMessage">
+    <el-dialog title="请选择您的生日" :visible.sync="messageInput[4].tooltip.isShowTooltip" width="100%" top="0px" @close="modifyMessage">
       <el-select v-model="birthday[0]" placeholder="请选择">
     <el-option
       v-for="month in months"
@@ -102,29 +59,29 @@
     </el-option>
   </el-select>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isShowBirthday=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage[0].birthday=closeBirthday(isShowBirthday,birthday)">确 定</el-button>
+        <el-button @click="messageInput[4].tooltip.isShowTooltip=false">取 消</el-button>
+        <el-button type="primary" @click="messageInput[4].value=closeBirthday(birthday)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 城市弹框 -->
-    <el-dialog title="请选择您的城市" :visible.sync="isShowCity" width="100%" top="50px" @close="modifyMessage">
+    <el-dialog title="请选择您的城市" :visible.sync="messageInput[5].tooltip.isShowTooltip" width="100%" top="50px" @close="modifyMessage">
       <div class="block">
         <el-cascader v-model="cityArray" :options="options"></el-cascader>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isShowCity=false">取 消</el-button>
+        <el-button @click="isShowTooltip=false">取 消</el-button>
         <el-button
           type="primary"
-          @click="memberMessage[0].area=closeCity(isShowCity,cityArray)"
+          @click="messageInput[5].value=closeCity(cityArray)"
         >确 定</el-button>
       </span>
     </el-dialog>
     <!-- 微信号弹框 -->
-    <el-dialog title="请输入您的微信号" :visible.sync="isShowWechat" width="100%" top="150px" @close="modifyMessage">
+    <el-dialog title="请输入您的微信号" :visible.sync="messageInput[6].tooltip.isShowTooltip" width="100%" top="150px" @close="modifyMessage">
       <el-input  placeholder="请输入您的微信号" v-model="myWeChat"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isShowWechat=false">取 消</el-button>
-        <el-button type="primary" @click="memberMessage[0].wechat=closeWechat(isShowWechat,myWeChat)">确 定</el-button>
+        <el-button @click="isShowTooltip=false">取 消</el-button>
+        <el-button type="primary" @click="messageInput[5].value=closeWechat(myWeChat)">确 定</el-button>
       </span>
     </el-dialog>
     <portal></portal>
@@ -141,19 +98,21 @@ export default {
       myWeChat:"",
       birthday:["",""],
       cityArray: [],
-      isShowName: false,
-      isShowHeadPortrait: false,
-      isShowGender: false,
-      isShowBirthday: false,
-      isShowCity: false,
-      isShowTooltip: false,
-      isShowWechat: false,
       months:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",],
       days:["一号","二号","三号","四号","五号","六号","七号","八号","九号","十号",
       "十一号","十二号","十三号","十四号","十五号","十六号","十七号","十八号","十九号","二十号",
       "二十一号","二十二号","二十三号","二十四号","二十五号","二十六号","二十七号","二十八号","二十九号","三十号","三十一号"],
       memberMessage: [],
-     
+     messageInput:[
+       {message:"头像",tooltip:{isShowTooltip:false},value:""},
+       {message:"姓名",tooltip:{isShowTooltip:false},value:""},
+       {message:"手机号",tooltip:{},value:"",arrows:true},
+       {message:"性别",tooltip:{isShowTooltip:false},value:""},
+       {message:"生日 ",tooltip:{isShowTooltip:false},value:""},
+       {message:"地区",tooltip:{isShowTooltip:false},value:""},
+       {message:"微信号",tooltip:{isShowTooltip:false},value:""},
+
+     ]
     };
   },
   methods: {
@@ -171,9 +130,24 @@ export default {
       })
         .then(response => {
           //这有函数，不知道this指向谁
-          // console.log("第一次请求结果", response.data);
+          console.log("第一次请求结果", response.data);
           let { list } = response.data; //解构赋值
           this.memberMessage = list;
+          this.messageInput[1].value = this.memberMessage[0].nickName;
+          this.messageInput[2].value = this.memberMessage[0].userName;
+          if(this.memberMessage[0].sex=="男"){
+            this.messageInput[3].value = this.memberMessage[0].sex;
+          }else if(this.memberMessage[0].sex=="女"){
+            this.messageInput[3].value = this.memberMessage[0].sex;
+          }else{
+            this.memberMessage[0].sex = "保密";
+            this.messageInput[3].value = this.memberMessage[0].sex;
+          }       
+          this.messageInput[4].value = this.memberMessage[0].birthday;
+          this.messageInput[5].value = this.memberMessage[0].area;
+          this.messageInput[6].value = this.memberMessage[0].wechat;
+          console.log("第一次请求结果", this.memberMessage,this.messageInput);
+          
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -204,27 +178,33 @@ export default {
         alert("异常:" + error);
       });
     },
-    closeCity(isShowCity, cityArray) {
-      this.isShowCity = false;
+    closeCity(cityArray) {
+      this.messageInput[5].tooltip.isShowTooltip = false;
       let string = cityArray.join(" ");
+      this.memberMessage[0].area = string
       return string;
     },
-    closeBirthday(isShowBirthday,birthday){
-      this.isShowBirthday = false;
+    closeBirthday(birthday){
+      this.messageInput[4].tooltip.isShowTooltip = false;
       let string = birthday.join(" ");
+      this.memberMessage[0].birthday = string;
       return string;
     },
-    closeName(isShowName,name){
-      this.isShowName=false
+    closeName(name){
+      this.messageInput[1].tooltip.isShowTooltip=false
+      this.memberMessage[0].nickName = name;
           return name;
     },
-    closeGender(isShowGender,sex){
-      this.isShowGender =false;
+    closeGender(sex){
+     this.messageInput[3].tooltip.isShowTooltip =false;
       if(sex == "0"){
+        this.memberMessage[0].sex = "女";
         return "女"
       }else if(sex == "1"){
+        this.memberMessage[0].sex = "男"
         return "男"
       }else{
+        this.memberMessage[0].sex = "保密"
         return "保密"
       }
     },
@@ -237,8 +217,9 @@ export default {
         return "保密"
       }
     },
-    closeWechat(isShowWechat,weChat){
-      this.isShowWechat=false
+    closeWechat(isShowTooltip,weChat){
+      this.messageInput[6].tooltip.isShowTooltip=false
+      this.memberMessage[0].wechat = weChat;
       return weChat;
     }
   },
