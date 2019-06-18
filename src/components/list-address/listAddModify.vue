@@ -24,9 +24,9 @@
         <el-input type="textarea" v-model="modifyForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
       </el-form-item>
 
-      <button class="modifyAdd" @click="modifyAddress()">保存并使用</button>
+      <div class="modifyAdd" @click="modifyAddress()">保存并使用</div>
 
-      <button class="deleteButton" @click="deleteForm()">删除收货地址</button>
+      <div class="deleteButton" @click="deleteForm()">删除收货地址</div>
     </el-form>
   </div>
 </template>
@@ -131,15 +131,14 @@ export default {
           });
           // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
           if (this.$route.query.Address) {
-           
+            console.log(this.addForm,this.addForm )
             this.$router.push({
               path: "/memberAddress?Address=" + this.$route.query.Address + ""
             }); //跳转到memberAddress
           } else {
             // 如果没有，就直接跳转到memberAddress，不带id
-              
+               console.log(this.addForm,this.addForm )
             this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
-        
           }
         })
         .catch(function(error) {
@@ -158,7 +157,7 @@ export default {
 </script>
 
 <style lang="scss" >
-.modifyAdd {
+.modifyAdd,.deleteButton {
   display: block;
   margin: 0 auto;
   width: 98%;
@@ -166,14 +165,13 @@ export default {
   background-color: #f44;
   color: #fff;
   border: 0px;
+  text-align: center;
+  line-height:44px
 }
 .deleteButton {
-  display: block;
-  margin: 0 auto;
-  width: 98%;
-  height: 44px;
-  margin-top: 20px;
+ color: #000;
   background-color: #fff;
-  border: 0px;
+  margin-top: 20px;
+ 
 }
 </style>

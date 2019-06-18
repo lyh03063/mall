@@ -51,14 +51,11 @@
       <!-- 订单交易状态开始 -->
       <div class="order-flow order-color">
         <el-steps align-center>
-          <el-step
-            :title="item.title"
-            v-for="item in activesuccessList"
-            :key="item.title"
-            :status="activesuccess"  
-     
-          ></el-step>
+          <el-step title="订单取消" :status="activesuccess"></el-step>
           <el-step title="买家未付款" :status="activesuccess"></el-step>
+          <el-step title="买家已付款"></el-step>
+          <el-step title="商家已发货"></el-step>
+          <el-step title="交易完成"></el-step>
         </el-steps>
       </div>
 
@@ -255,14 +252,7 @@ export default {
       activepay: 2, //订单流程状态
       OrderList: {}, //订单列表
       ordernumber: 0, //订单号
-      totalCount: 0, //总共条数
-      activesuccessList: [
-        { title: "订单取消" },
-        { title: "买家未付款" },
-        { title: "买家已付款" },
-        { title: "商家已发货" },
-        { title: "交易完成" }
-      ]
+      totalCount: 0 //总共条数
     };
   },
   filters: {

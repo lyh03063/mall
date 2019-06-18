@@ -22,7 +22,7 @@
       <el-form-item label="详细地址" prop="extend">
         <el-input type="textarea" v-model="addForm.extend" placeholder="街道门牌、楼层房间号等信息"></el-input>
       </el-form-item>
-      <button class="preserve" @click="addedAddress()">保存并使用</button>
+      <div class="preserve" @click="addedAddress()">保存并使用</div>
     </el-form>
     <portal></portal>
   </div>
@@ -92,11 +92,14 @@ export default {
           });
           // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
           if (this.$route.query.Address) {
+            console.log(this.addForm,this.addForm )
             this.$router.push({
               path: "/memberAddress?Address=" + this.$route.query.Address + ""
             });
           } else {
+             console.log(this.addForm,this.addForm )
             this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+            
           }
         })
         .catch(function(error) {
@@ -126,5 +129,7 @@ export default {
   background-color: #f44;
   color: #fff;
   border: 0px;
+  text-align: center;
+  line-height:44px
 }
 </style>

@@ -39,6 +39,7 @@
             </div>
           </li>
         </ul>
+        <el-button type="text" @click="getList">查看更多商品</el-button>
       </el-tab-pane>
     </el-tabs>
     <portal></portal>
@@ -66,13 +67,15 @@ export default {
       commodityList: {}, //商品列表数据
       objCommodity: {
         category: 1 //显示首次加载的页面
-        
-      }
+      },
+      pageIndex: 1,
+      pageSize: 10
     };
   },
   methods: {
     switchClick(tab, event) {
       this.objCommodity.category = tab.index * 1 + 1;
+      this.pageSize = 10;
       this.getCommodityList();
     },
     //------跳转加入购物车--------
@@ -91,6 +94,7 @@ export default {
         .then(response => {
           let { list } = response.data; //解构赋值
           this.commoditySortList = list.reverse(); //数组翻转
+          this.pageSize = 10;
         })
         .catch(function(error) {
           alert("异常:" + error);
@@ -103,16 +107,24 @@ export default {
         method: "post",
         url: this.objURL.list,
         data: {
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize,
           findJson: { category: this.objCommodity.category }
         } //传递参数
       })
         .then(response => {
-          let { list } = response.data; //解构赋值
+          console.log("第一次请求结果", response.data);
+          let { list, page } = response.data; //解构赋值
           this.commodityList = list;
+          this.page = page;
         })
         .catch(function(error) {
           alert("异常:" + error);
         });
+    },
+    getList() {
+      this.pageSize += 10;
+      this.getCommodityList();
     }
   },
   mounted() {
@@ -220,6 +232,10 @@ export default {
   .el-tabs__item {
     height: 80px;
     line-height: 80px;
+  }
+  .el-button {
+    display: block;
+    margin: 0 auto;
   }
 }
 </style>
