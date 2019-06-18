@@ -177,7 +177,7 @@ export default {
         this.Objparma.postAddress.address = this.postAddress.area;
         this.Objparma.postAddress.phone = this.postAddress.phone;
         this.Objparma.postAddress.name = this.postAddress.name;
-        this.Objparma.userName = localStorage.loginnickName;
+        this.Objparma.userName = localStorage.loginUserName;
 
         console.log("this.Objparma", this.Objparma);
         this.getAddorder(); //调用请求接口函数

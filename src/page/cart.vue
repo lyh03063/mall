@@ -116,7 +116,7 @@ export default {
   methods: {
     // --------全选按钮函数---------
     AllshopCheckbox() {
-      this.allIsCart = !this.allIsCart; //当期选中状态取反
+      this.allIsCart = !this.allIsCart; //当前选中状态取反
       // 把列表的所有状态都变为选中状态或者不选中状态
       for (var i = 0; i < this.cartData.length; i++) {
         this.cartData[i].isCart = this.allIsCart;
@@ -213,6 +213,7 @@ export default {
       this.$router.push({ path: "/login" }); //跳转到后台首页
     }
     localStorage.confirmOrder = ""; //对订单数据进行清空
+
   }
 };
 </script >

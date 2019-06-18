@@ -1,38 +1,32 @@
  <template>
   <div class id="app">
-    <template v-for="shop in OrderList">
-      <div class="order-list-item" :key="shop.P1" v-if="shop.status==cf">
+    <template v-for="order in totalData">
+      <div class="order-list-item" :key="order.P1" v-if="order.status==cf">
         <!-- 订单头部店铺名称，交易情况 -->
-        <div class="order-list-item__header" type="list-item-header">
-          店铺：米柚生活 :
-          <span class="order-list-item__header__state">订单用户:{{shop.userName}}</span>
-        </div>
+        <div class="order-list-item__header" type="list-item-header">店铺：米柚生活 :</div>
         <!-- 订单列表 -->
-
         <div class="order-list-item__order-list" type="order-list">
           <div class="order-cap-order-item">
             <!-- 订单列表中的头部订单编号 -->
-            <div class="order-cap-order-item__head">订单编号:{{shop._id}}</div>
+            <div class="order-cap-order-item__head">订单编号:{{order._id}}</div>
             <!-- 订单列表中的内容 -->
             <div
               class="order-cap-order-item__body"
-              v-for="order in shop.commodityList"
-              :key="order.id"
+              v-for="commodity in order.commodityList"
+              :key="commodity.id"
             >
               <div class="order-card">
                 <div class="order-card__header">
                   <a class="order-card__thumb">
-                    <img id="order.id" 
-                    :src="order.freight"
-                    class="order-card__img">
+                    <img id="order.id" :src="commodity.freight" class="order-card__img">
                   </a>
                   <div class="order-card__content">
-                    <div class="order-card__title">{{order.name}}</div>
-                    <div>{{order.description}}"description": "新疆库尔勒香梨，3个仅售9.9元！",</div>
+                    <div class="order-card__title">{{commodity.name}}</div>
+                    <div class="order-card__description">{{commodity.description}}</div>
 
                     <div class="order-card__bottom">
-                      <div class="order-card__price" style="color:red">￥{{order.price}}</div>
-                      <div class="order-card__num">X{{order.byCount}}</div>
+                      <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
+                      <div class="order-card__num">X{{commodity.byCount}}</div>
                     </div>
                   </div>
                 </div>
@@ -41,62 +35,64 @@
             <!-- 订单列表中的页脚 -->
           </div>
         </div>
+
         <!-- 查看全部商品数量 -->
         <!-- <div
           class="order-cap-order-item__more"
           v-if="shop.commodityList.length>=1? true:false"
         >查看全部{{shop.commodityList.length}}件商品</div>-->
 
+        
+
         <!-- 订单页脚 -->
         <div class="order-list-item__footer order-hairline--top" type="list-item-footer">
           <div class="order-button__text">
             <div class="order-cap-order-item__total-price">
               合计 ：
-              <span style="color:red">{{getTotalMoney(shop.commodityList)}}</span>
+              <span style="color:red">{{getTotalMoney(order.commodityList)}}</span>
             </div>
 
             <div class="order-cap-order-item__total-price">
               运费 ：
-              <span style="color:red">{{shop.freight}}</span>
+              <span style="color:red">{{order.freight}}</span>
             </div>
           </div>
           <!-- 订单按钮 -->
           <div class="order-button__footer">
             <router-link
               class="order-buttonstyle"
-              to="/memberOrderDetail"
+              :to="'/memberOrderDetail?P1='+order.P1"
               icon="el-icon-notebook-2"
             >
-              <el-button type="primary" plain @click="getlist(shop)" size="mini" round>查看订单详情</el-button>
+              <el-button type="primary" plain size="mini" round>查看订单详情</el-button>
             </router-link>
-
-            <router-link
+            <el-button
               class="order-buttonstyle"
-              to="/memberOrderpay"
-              icon="el-icon-notebook-2"
-              v-if="shop.status==1"
-            >
-              <el-button type="primary" plain @click="getlist(shop)" size="mini" round>去支付</el-button>
-            </router-link>
+              type="primary"
+              plain
+              @click="Paymented(order.P1,2)"
+              size="mini"
+              v-if="order.status==1"
+              round
+            >去支付</el-button>
 
             <!-- 弹框取消 -->
             <el-button
               class="order-buttonstyle"
               type="primary"
               plain
-              @click="cancelorder(shop.P1)"
+              @click="cancelOrder(order.P1,5)"
               size="mini"
-              v-if="shop.status==1"
+              v-if="order.status==1"
               round
             >取消</el-button>
           </div>
         </div>
+   
       </div>
     </template>
   </div>
 </template>
-
-
 
 <script>
 export default {
@@ -105,14 +101,13 @@ export default {
     return {
       tabPosition: "top",
       allCount: null, //总记录数
-      OrderList: {}, //订单列表
+      totalData: {}, //订单列表
       page: {},
       totalMoney: 0,
       totalCount: 0,
-      orderlistdata: [], //指向vuex的对应的字段
-      queryName: "",
-      imgId: [],
-      imgUrl: []
+      totalDatadata: [], //指向vuex的对应的字段
+      userName: "",
+      imgId: []
     };
   },
   methods: {
@@ -124,14 +119,52 @@ export default {
       });
       return money;
     },
-    getlist(data) {
-      //将列表信息传递到列表详情页面
-      // let aaa = JSON.stringify(data);
-      // alert(aaa);
-      this.$store.commit("orderlistdetail", data);
+    //修改成已支付
+    Paymented(P1, status) {
+      this.$confirm("此操作将支付订单, 是否继续?", "提示", {
+        confirmButtonText: "确定支付",
+        cancelButtonText: "关闭",
+        type: "warning"
+      })
+        .then(() => {
+          axios({
+            //请求接口
+            method: "post",
+            // url: this.objURL.list,
+            url: "http://120.76.160.41:3000/crossModify?page=mabang-order",
+            data: {
+              findJson: {
+                P1: P1
+              },
+              modifyJson: {
+                status: status
+              }
+            } //传递参数
+          })
+            .then(response => {
+              console.log("第一次请求结果", response.data);
+              let { code, message } = response.data; //解构赋值
+              this.gettotalData();
+            })
+            .catch(function(error) {
+              alert("异常:" + error);
+            });
+
+          this.$message({
+            type: "success",
+            message: "已支付订单!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "未支付订单"
+          });
+        });
     },
+
     //取消订单
-    cancelorder(P1) {
+    cancelOrder(P1, status) {
       this.$confirm("此操作将取消订单, 是否继续?", "提示", {
         confirmButtonText: "确定取消",
         cancelButtonText: "关闭",
@@ -148,14 +181,14 @@ export default {
                 P1: P1
               },
               modifyJson: {
-                status: 5
+                status: status
               }
             } //传递参数
           })
             .then(response => {
               console.log("第一次请求结果", response.data);
               let { code, message } = response.data; //解构赋值
-              alert(message);
+              this.gettotalData();
             })
             .catch(function(error) {
               alert("异常:" + error);
@@ -173,7 +206,10 @@ export default {
           });
         });
     },
-    getorderList() {
+    //获取所有商品数据
+    getcommoditydata() {},
+    //获取所有数据
+    gettotalData() {
       axios({
         //请求接口
         method: "post",
@@ -181,17 +217,17 @@ export default {
         url: "http://120.76.160.41:3000/crossList?page=mabang-order",
         data: {
           findJson: {
-            //userName: this.queryName
+            userName: this.userName
           }
         } //传递参数
       })
         .then(response => {
           console.log("第一次请求结果", response.data);
           let { list, page } = response.data; //解构赋值
-          this.OrderList = list;
+          this.totalData = list;
           this.page = page;
           this.allCount = page.allCount; //更改总数据量
-          this.orderlistdata = response.data;
+          this.totalDatadata = response.data;
 
           list.forEach(listEach => {
             listEach.commodityList.forEach(commodityListEach => {
@@ -204,6 +240,7 @@ export default {
           alert("异常:" + error);
         });
     },
+    //获取图片
     queryimg() {
       axios({
         //请求接口
@@ -221,13 +258,11 @@ export default {
           let { list, page } = response.data; //解构赋值
 
           var i = 0;
-          this.OrderList.forEach(OrderListEach => {
-            OrderListEach.commodityList.forEach(commodityListEach => {
+          this.totalData.forEach(totalDataEach => {
+            totalDataEach.commodityList.forEach(commodityListEach => {
               for (let a = 0; a < list.length; a++) {
                 if (commodityListEach.P1 == list[i].P1) {
-                  commodityListEach.freight = list[i].album[0].url
-                    
-                 
+                  commodityListEach.freight = list[i].album[0].url;
                 }
                 i++;
               }
@@ -241,13 +276,9 @@ export default {
     }
   },
   beforeCreate() {},
-  //  activated() {
-  //   this.queryName = localStorage.loginnickName;
-  //   this.getorderList();
-  // },
   mounted() {
-    this.queryName = localStorage.loginnickName;
-    this.getorderList();
+    this.userName = localStorage.loginUserName;
+    this.gettotalData();
   }
 };
 </script>

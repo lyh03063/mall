@@ -48,7 +48,22 @@
 
 
 /*----------------- 头部样式开始 ---------------- */
+.order-tip {
+    font-size : 14px;
+    text-align: center;
+}
 
+.order-button__text {
+    border: 1pxsolid #FF4444;
+}
+
+.order-button {
+    height      : 40px;
+    line-height : 38px;
+    min-width   : 100px;
+    color       : #f60;
+    border-color: #f60;
+}
 
 //订单列表
 .order-list-item__order-list {
@@ -90,8 +105,9 @@
 
 // 订单列表中的内容-----商品图片
 .order-card__header {
-    width : 100%;
-    height: 100px;
+    width  : 100%;
+    height : 100px;
+    padding: 5px;
 }
 
 .order-card__thumb img {
@@ -101,13 +117,17 @@
 }
 
 // 订单列表中的内容-----商品描述
-.order-card__content {}
 
 .order-card__title {
     line-height: 16px;
     max-height : 32px;
     font-weight: 700;
     overflow   : hidden;
+    padding    : 10px;
+}
+
+.order-card__description {
+    padding-left: 10px;
 }
 
 .order-card__desc {
@@ -121,10 +141,23 @@
     text-overflow: ellipsis;
 }
 
-.order-card__bottom {}
+.order-card__price {
+    line-height : 16px;
+    max-height  : 32px;
+    overflow    : hidden;
+    padding-left: 10px;
+}
+
+.order-card__bottom {
+    margin-top: 10px;
+}
 
 .order-card__num {
-    float: right;
+    float      : right;
+    line-height: 16px;
+    max-height : 32px;
+    overflow   : hidden;
+    padding    : 10px;
 }
 
 .order-cap-order-item__more {
