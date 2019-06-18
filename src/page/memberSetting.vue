@@ -42,22 +42,8 @@
     </el-dialog>
     <!-- 生日弹框 -->
     <el-dialog title="请选择您的生日" :visible.sync="messageInput[4].tooltip.isShowTooltip" width="100%" top="0px" @close="modifyMessage">
-      <el-select v-model="birthday[0]" placeholder="请选择">
-    <el-option
-      v-for="month in months"
-      :key="month"
-      :label="month"
-      :value="month">
-    </el-option>
-  </el-select>
-      <el-select v-model="birthday[1]"  placeholder="请选择">
-    <el-option
-      v-for="day in days"
-      :key="day "
-      :label="day"
-      :value="day ">
-    </el-option>
-  </el-select>
+            <el-cascader :options="birthdayOptions" v-model="birthday" placeholder="生日">
+            </el-cascader>
       <span slot="footer" class="dialog-footer">
         <el-button @click="messageInput[4].tooltip.isShowTooltip=false">取 消</el-button>
         <el-button type="primary" @click="messageInput[4].value=closeBirthday(birthday)">确 定</el-button>
@@ -80,8 +66,8 @@
     <el-dialog title="请输入您的微信号" :visible.sync="messageInput[6].tooltip.isShowTooltip" width="100%" top="150px" @close="modifyMessage">
       <el-input  placeholder="请输入您的微信号" v-model="myWeChat"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isShowTooltip=false">取 消</el-button>
-        <el-button type="primary" @click="messageInput[5].value=closeWechat(myWeChat)">确 定</el-button>
+        <el-button @click="messageInput[6].tooltip.isShowTooltip=false">取 消</el-button>
+        <el-button type="primary" @click="messageInput[6].value=closeWechat(myWeChat)">确 定</el-button>
       </span>
     </el-dialog>
     <portal></portal>
@@ -93,6 +79,7 @@ export default {
   components: { portal },
   data() {
     return {
+      birthdayOptions:birthdays,
       options:option,
       name:"",
       myWeChat:"",
@@ -177,7 +164,7 @@ export default {
     },
     closeBirthday(birthday){
       this.messageInput[4].tooltip.isShowTooltip = false;
-      let string = birthday.join(" ");
+      let string = birthday.join(" / ");
       this.memberMessage.birthday = string;
       return string;
     },
