@@ -262,9 +262,7 @@ export default {
 
   beforeCreate() {
 
-    if (localStorage.isLogin == 0) {
-      this.$router.push({ path: "/login" }); //跳转到后台首页
-    }
+  util.cheackLogin(this)
   }
 
 };
