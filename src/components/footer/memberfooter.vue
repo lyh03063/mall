@@ -7,7 +7,7 @@
           <router-link to="/home" class="all-hairline">店铺首页</router-link>
           <router-link to="/commodityList" class="all-hairline">所有商品</router-link>
           <router-link to="/cart" class="all-hairline">去购物车</router-link>
-          <router-link to="/memberall" class="all-hairline">购物订单</router-link>
+          <router-link to="/memberOrder" class="all-hairline">购物订单</router-link>
           <router-link to="/memberCenter" class="all-hairline">个人中心</router-link>
         </div>
       </div>
