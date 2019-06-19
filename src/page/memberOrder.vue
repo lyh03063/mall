@@ -14,43 +14,16 @@
                 v-for="item in Arrshoptab"
                 :key="item.value"
               >
-                <memberOrderList :cf="item.value"></memberOrderList>
+                <memberOrderList :cf="item"></memberOrderList>
               </el-tab-pane>
             </el-tabs>
-
-            <!-- 订单列表为空 -->
-            <div class="order-tip" style="padding-top: 60px;">
-              <div>
-                <h4>居然还没有订单</h4>
-                <p>好东西，手慢无</p>
-              </div>
-              <a class="order-button">
-                <span class>去逛逛</span>
-              </a>
-            </div>
           </div>
           <!-- 列表头部切换结束 -->
+
+          <memberfooter></memberfooter>
         </div>
       </el-col>
       <!------------------------ 订单列表头部结束 ---------------------------->
-
-      <space height="10"></space>
-
-      <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
-      <el-col :span="24">
-        <div class="order-footer">
-          <div class="order-footer__links">
-            <a href="javascript:;" class="order-hairline">店铺主页</a>
-            <a href="javascript:;" class="order-hairline">个人中心</a>
-            <a href="javascript:;" class="order-hairline">关注我们</a>
-            <a href="javascript:;" class="order-hairline">线下门店</a>
-            <a href="javascript:;" class="order-hairline">店铺信息</a>
-            <!---->
-          </div>
-        </div>
-      </el-col>
-      <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
-      <space height="10"></space>
     </el-row>
   </div>
 </template>
@@ -68,6 +41,7 @@ export default {
     return {
       activeName: this.$route.query.orderactiveName,
       Arrshoptab: [
+        { name: "全部订单", value: 0, newactive: "0" },
         { name: "已下单", value: 1, newactive: "1" },
         { name: "已付款", value: 2, newactive: "2" },
         { name: "已发货", value: 3, newactive: "3" },

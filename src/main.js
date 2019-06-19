@@ -1,6 +1,11 @@
 import Vue from 'vue'
 Vue.config.productionTip = false
 
+
+import footer from './components/footer/footer.js';   //默认情况下找的是index文件
+Vue.use(footer);   //必须有install
+
+
 import space from './components/space/index.js';   //默认情况下找的是index文件
 Vue.use(space);   //必须有install
 import VueRouter from 'vue-router'

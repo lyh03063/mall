@@ -66,7 +66,7 @@
           <div class="order-address-content">
             <div>
               <p class="order-address-name">收货人：{{Order.postAddress.name}}</p>
-              <p class="order-address-tel">收货人电话:{{Order.postAddress.phone}}</p>
+              <p class="order-address-tel">收货人手机号:{{Order.postAddress.phone}}</p>
             </div>
             <p class="order-address-detail">收货地址：{{Order.postAddress.address}}</p>
           </div>
@@ -216,32 +216,20 @@
 
       <!------------------------ 订单时间结束 ---------------------------->
     </div>
-    <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
-    <space height="10"></space>
-    <el-col :span="24">
-      <div class="order-footer">
-        <div class="order-footer__links">
-          <a href="javascript:;" class="order-hairline">店铺主页</a>
-          <a href="javascript:;" class="order-hairline">个人中心</a>
-          <a href="javascript:;" class="order-hairline">关注我们</a>
-          <a href="javascript:;" class="order-hairline">线下门店</a>
-          <a href="javascript:;" class="order-hairline">店铺信息</a>
-          <!---->
-        </div>
-      </div>
-    </el-col>
-    <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
 
     <!------------------------  底部固定栏开始 ---------------------------->
     <div class="order-submit-bar" v-if="Order.status==1">
       <div class="order-submit-bar__bar">
-        <div class="order-submit-pay">
-          <div class="order-pay-divcolor" @click="Paymented()">去支付</div>
-          <div>
-            <span class="prder-pay">合计:</span>
-            <span class="order-pay-color">¥{{totalAllMoney}}</span>
+       
+          <div class="order-submit-pay"> 
+            <!-- <router-link :to="'/memberOrderDetail?P1='+order.P1"> -->
+            <div class="order-pay-divcolor" @click="Paymented((Order.P1,2))">去支付</div>
+            <!-- </router-link> -->
+              <span class="prder-pay">合计:</span>
+              <span class="order-pay-color">¥{{totalAllMoney}}</span>
+            </div>
           </div>
-        </div>
+        
       </div>
     </div>
     <!------------------------  底部固定栏结束 ---------------------------->
@@ -288,8 +276,47 @@ export default {
       // }
     },
     //支付成功
-    Paymented() {
-      alert("支付成功");
+    Paymented(P1, status) {
+      //修改成已支付
+      this.$confirm("此操作将支付订单, 是否继续?", "提示", {
+        confirmButtonText: "确定支付",
+        cancelButtonText: "关闭",
+        type: "warning"
+      })
+        .then(() => {
+          axios({
+            //请求接口
+            method: "post",
+            // url: this.objURL.list,
+            url: "http://120.76.160.41:3000/crossModify?page=mabang-order",
+            data: {
+              findJson: {
+                P1: P1
+              },
+              modifyJson: {
+                status: status
+              }
+            } //传递参数
+          })
+            .then(response => {
+              console.log("第一次请求结果", response.data);
+              let { code, message } = response.data; //解构赋值
+            })
+            .catch(function(error) {
+              alert("异常:" + error);
+            });
+
+          this.$message({
+            type: "success",
+            message: "已支付订单!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "未支付订单"
+          });
+        });
     },
     //请求订单数据
     requestorder() {
@@ -405,7 +432,4 @@ export default {
   <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
 @import "../assets/css/memberorderDetail.scss"; //导入memberorderDetail订单详情样式文件
-body {
-  background-color: #f8f8f8;
-}
 </style>

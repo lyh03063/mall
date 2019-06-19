@@ -8,7 +8,7 @@
         <div class="member-center">
           <div class="menberCenter-head WP100">
             <div class="head-portrait"></div>
-            <div style="font-size:20px;font-weight: bold">{{list[0].userName}}</div>
+            <div style="font-size:20px;font-weight: bold">{{list.userName}}</div>
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
@@ -50,7 +50,7 @@
           </div>
           <div class="member-message WP90 BC_fff">
             <router-link :to="option.url" v-for="option in memberOptions" :key="option.value" >
-              <div @click="triggerEvent(option.click)">
+              <div @click="triggerEvent(option.click)" v-if=(!option.show)>
                 <div
                   :class="option.img"
                   style="float: left; font-size:20px;margin-left:0px;"
@@ -88,9 +88,9 @@ export default {
         {img:"el-icon-present W20",value:"赠品",url:"/memberCenter"},
         {img:"el-icon-goods W20",value:"心愿单",url:"/memberCenter"},
         {img:"el-icon-house W20",value:"收货地址",url:"/memberAddress"},
-        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword'},
+        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword',show:false},
         {img:"el-icon-user W20",value:"个人信息",url:"/memberSetting"},
-        {img:"el-icon-user W20",value:"退出登录",url:"#",click:true},
+        {img:"el-icon-user W20",value:"退出登录",url:"#",click:true,show:false},
         ],
      
       
@@ -115,35 +115,60 @@ export default {
       let response = await axios({
         //请求接口
         method: "post",
-        url: "http://120.76.160.41:3000/crossList?page=mabang-member",
+        url: "http://120.76.160.41:3000/crossDetail?page=mabang-member",
         data: {
-          findJson: {
-            userName: localStorage.loginUserName
-          }
-        } //传递参数
+         id: localStorage.loginUserName,
+        idKey: "userName"
+      }
       }).catch(function(error) {
           alert("异常:" + error);
         });
         console.log("第二次请求结果", response.data); 
-          let { list, page } = response.data; //解构赋值
-          this.list = list;
-         console.log("第二次请求结果", this.list); 
+          let  list = response.data; //解构赋值
+          this.list = list.Doc;
+         console.log("第三次请求结果", this.list); 
     },
+    async memberlogin(){
+        let data = await this.$confirm('您还没有登录，请先登录',{
+          confirmButtonText: "前往登录",
+          cancelButtonText: "暂不登录",
+          center:true,
+          customClass:"message-box-1"
+        }).catch(() => {});
+          console.log("第三次请求结果", data);
+          if(data=="confirm"){
+            this.$router.push({ path:"/login"})
+          }
+          // }else{
+          //   this.$router.push({ path:"/home"})
+          // } 
+      }
+   
   },
   mounted() {
+    if (localStorage.isLogin != "1"){
+        this.memberlogin();
+        this.memberOptions[6].show=true;
+        this.memberOptions[8].show=true;
+        //  console.log("第11次请求结果",this.memberOptions[6],this.memberOptions[8]);
+     }
     if (localStorage.isLogin == "1") {
     this.getMember();
     }
   },
   beforeCreate() {
-    // localStorage.isLogin=0;
- util.cheackLogin(this)
+    
   }
 };
 </script>
 
 
 <style lang="scss" >
+.message-box-1{
+  width: 100%;
+  margin-top:200px;
+  padding-right: 0px;
+}
 .logout {
   margin-left: 10px;
   padding-right: 10px;
