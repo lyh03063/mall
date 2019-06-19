@@ -204,10 +204,6 @@ export default {
               this.imgId.push(commodityListEach.P1);
             });
           });
-          
-
-        
-
           this.queryimg();
         })
         .catch(function(error) {
