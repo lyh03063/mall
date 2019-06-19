@@ -4,7 +4,7 @@
       <!-- 订单列表数据 -->
       <div>
         <!-- {{objlength}} -->
-        <div class="order-list-item" v-if="order.status==cf">
+        <div class="order-list-item" v-if="order.status==cf.value || cf.value==0">
           <!-- 订单头部店铺名称，交易情况 -->
           <div class="order-list-item__header" type="list-item-header">店铺：米柚生活 :</div>
           <!-- 订单列表 -->
@@ -28,7 +28,7 @@
                       <div class="order-card__title">{{commodity.name}}</div>
                       <div
                         class="order-card__description"
-                      >商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述</div>
+                      >商品详情</div>
 
                       <div class="order-card__bottom">
                         <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
@@ -95,12 +95,12 @@
     </div>
     <!-- {{objlength}} -->
     <!-- 订单列表为空-->
-    <div class="order-empty-tip">
+    <div class="order-empty-tip" v-if="totalData.length == 0 ">
       <div class="order-empty-tip__desc">
         <h4>居然还没有订单</h4>
         <p>好东西，手慢无</p>
       </div>
-      <router-link to="/home" class="order-empty-span">去逛逛</router-link>
+      <router-link to="/home" class="order-empty-span" >去逛逛</router-link>
     </div>
   </div>
 </template>
@@ -186,7 +186,8 @@ export default {
         url: "http://120.76.160.41:3000/crossList?page=mabang-order",
         data: {
           findJson: {
-            userName: this.userName
+            userName: this.userName,
+            status:this.cf.value
           }
         } //传递参数
       })
@@ -203,21 +204,9 @@ export default {
               this.imgId.push(commodityListEach.P1);
             });
           });
+          
 
-          //获取订单状态，加入数组
-          list.forEach(listEach => {
-            console.log("11", listEach.status);
-            this.statusnumber.push(listEach.status);
-            console.log("statusnumber", this.statusnumber);
-
-            var objlength = {};
-            for (let i = 0; i < this.statusnumber.length; i++) {
-              let itemlength = this.statusnumber[i];
-              objlength[itemlength] = objlength[itemlength] + 1 || 1;
-            }
-            console.log("objlength", objlength);
-            return objlength;
-          });
+        
 
           this.queryimg();
         })

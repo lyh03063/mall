@@ -14,7 +14,7 @@
                 v-for="item in Arrshoptab"
                 :key="item.value"
               >
-                <memberOrderList :cf="item.value"></memberOrderList>
+                <memberOrderList :cf="item"></memberOrderList>
               </el-tab-pane>
             </el-tabs>
           </div>
