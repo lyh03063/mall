@@ -26,9 +26,7 @@
 
                     <div class="order-card__content">
                       <div class="order-card__title">{{commodity.name}}</div>
-                      <div
-                        class="order-card__description"
-                      >商品详情</div>
+                      <div class="order-card__description">{{commodity.CreateUser}}</div>
 
                       <div class="order-card__bottom">
                         <div class="order-card__price" style="color:red">￥{{commodity.price}}</div>
@@ -58,7 +56,7 @@
 
               <div class="order-cap-order-item__total-price">
                 运费 ：
-                <span style="color:red">{{order.freight}}</span>
+                <span style="color:red">{{totalFreight}}</span>
               </div>
             </div>
             <!-- 订单按钮 -->
@@ -95,12 +93,12 @@
     </div>
     <!-- {{objlength}} -->
     <!-- 订单列表为空-->
-    <div class="order-empty-tip" v-if="totalData.length == 0 ">
+    <div class="order-empty-tip" v-if="totalData.length == 0">
       <div class="order-empty-tip__desc">
         <h4>居然还没有订单</h4>
         <p>好东西，手慢无</p>
       </div>
-      <router-link to="/home" class="order-empty-span" >去逛逛</router-link>
+      <router-link to="/home" class="order-empty-span">去逛逛</router-link>
     </div>
   </div>
 </template>
@@ -116,10 +114,11 @@ export default {
       page: {},
       totalMoney: 0,
       totalCount: 0,
+      totalFreight: 0,
       totalDatadata: [], //指向vuex的对应的字段
       userName: "",
-      imgId: [],
-      statusnumber: [] //状态元素
+      imgId: [], //商品图片
+      descriptionId: [] //商品图片描述
     };
   },
   methods: {
@@ -187,7 +186,7 @@ export default {
         data: {
           findJson: {
             userName: this.userName,
-            status:this.cf.value
+            status: this.cf.value
           }
         } //传递参数
       })
@@ -198,12 +197,29 @@ export default {
           this.page = page;
           this.allCount = page.allCount; //更改总数据量
           this.totalDatadata = response.data;
-
+          //商品图片数组
           list.forEach(listEach => {
             listEach.commodityList.forEach(commodityListEach => {
               this.imgId.push(commodityListEach.P1);
             });
           });
+          //商品描述数组
+          list.forEach(listEach => {
+            listEach.commodityList.forEach(commodityListEach => {
+              this.descriptionId.push(commodityListEach.P1);
+            });
+          });
+
+          //计算运费
+          list.forEach(listEach => {
+            listEach.commodityList.forEach(commodityListEach => {
+              //总运费  this.totalFreight += commodityListEach.freight;
+              if (this.totalFreight == 0) {
+                this.totalFreight = "免运费";
+              }
+            });
+          });
+
           this.queryimg();
         })
         .catch(function(error) {
@@ -233,6 +249,9 @@ export default {
               for (let a = 0; a < list.length; a++) {
                 if (commodityListEach.P1 == list[i].P1) {
                   commodityListEach.freight = list[i].album[0].url;
+                }
+                if (commodityListEach.P1 == list[i].P1) {
+                  commodityListEach.CreateUser = list[i].description;
                 }
                 i++;
               }
