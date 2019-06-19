@@ -25,7 +25,7 @@ import register from "./page/register";
 import confirmOrder from "./page/confirmOrder";
 import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
-import xiugaimm from "./page/xiugaimm";
+import changPassword from "./page/changPassword";
 import setting from "./page/memberSetting";
 
 
@@ -55,7 +55,7 @@ const router = new VueRouter({
     { path: '/memberOrderpay', component: memberOrderpay },
     { path: '/memberOrderDetail', component: memberOrderDetail },
     { path: '/register', component: register },
-    { path: '/xiugaimm', component: xiugaimm },//a
+    { path: '/changPassword', component: changPassword },//a
     { path: '/listAdded', component: listAdded },//新增收货地址
     { path: '/listAddModify', component: listAddModify },//修改删除收货地址
 
@@ -68,7 +68,8 @@ const router = new VueRouter({
 
 
 
-
+import util from "./assets/js/util";
+window.util = util;
 
 
 
@@ -94,7 +95,8 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     doc: {//存放购物车插件的对象
       byCount: null,
       isCart: true,
-       prop:[]
+       prop:[],
+      extend: {}
     },
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
@@ -123,7 +125,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
-      console.log("this.AddressModify_item", this.AddressModify_item);
+      console.log("this.AddressModify_item", state.AddressModify_item);
     },
     // getForm(state, param) {//单个会员列表对象
     //   console.log("123123", param);

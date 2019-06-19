@@ -3,9 +3,9 @@
     <div class="main-cfo">
       <div style="background-color:white">
         <router-link to="./memberAddress?Address=confirmOrder">
-        <!-- :cf="title" -->
-         <!-- @click="$store.commit('selection');" -->
-          <ul  class="address">
+          <!-- :cf="title" -->
+          <!-- @click="$store.commit('selection');" -->
+          <ul class="address">
             <!--勾选显示 -->
             <i class="el-icon-arrow-right"></i>
             <p>{{postAddress.phone}}</p>
@@ -19,7 +19,7 @@
     </div>
     <space height="15"></space>
 
- <!-----------------商品詳情--------------------->
+    <!-----------------商品詳情--------------------->
     <div class="BC_fff">
       <div class="FS15" style="padding:20px 2.5%;height:60px;">
         <i class="iconfont iconshangcheng"></i>
@@ -99,31 +99,28 @@
       </div>
     </div>
     <!--------------配送时间弹窗------------->
-      <el-dialog title="选择配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
-        <div style="text-align:center">
-          <el-button
-            type="danger"
-            style="background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);;width:95%"
-            round
-          >同城配送 免运费</el-button>
-        </div>
-        <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">预约送达时间</p>
+    <el-dialog title="选择配送方式" :visible.sync="delivery" width="100%" custom-class="abc">
+      <div style="text-align:center">
+        <el-button
+          type="danger"
+          style="background:-webkit-linear-gradient(left, #FF9000 0%, #FF5000 98%);;width:95%"
+          round
+        >同城配送 免运费</el-button>
+      </div>
+      <p class="FS15" style="margin:10px 0;border-bottom:1px solid gray;color:black">预约送达时间</p>
 
-        <timePicker @gotiem="gotiem"></timePicker>
+      <timePicker @gotiem="gotiem"></timePicker>
 
-        <div class="footer">
-          <span type="primary" @click="delivery=false">确 定</span>
-        </div>
-      </el-dialog>
-    
+      <div class="footer">
+        <span type="primary" @click="delivery=false">确 定</span>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 
 
 <script>
-
-
 import timePicker from "../components/cart/timePicker";
 export default {
   components: {
@@ -134,7 +131,7 @@ export default {
     return {
       confirmOrder: [], //确认订单的数据列表
       delivery: false, //控制配送方式的弹窗
-      postAddress:{},
+      postAddress: {},
       Objparma: {
         status: "1", //订单状态
         money: null, //总价钱
@@ -142,7 +139,8 @@ export default {
         leaveMsg: "", //留言
         extend: {
           //配送时间段
-          distribution: {}
+          distribution: {},
+          prop: []
         },
         commodityList: [
           //商品数组
@@ -172,7 +170,11 @@ export default {
 
     //------------------跳转订单列表
     JumpDetail() {
-      if (this.postAddress.phone && this.postAddress.name && this.postAddress.area) {
+      if (
+        this.postAddress.phone &&
+        this.postAddress.name &&
+        this.postAddress.area
+      ) {
         this.Objparma.commodityList = this.confirmOrder.map(item => {
           let { byCount, freight, price, name, P1 } = item;
           return { byCount, freight, price, name, P1 };
@@ -182,17 +184,22 @@ export default {
         this.Objparma.postAddress.phone = this.postAddress.phone;
         this.Objparma.postAddress.name = this.postAddress.name;
         this.Objparma.userName = localStorage.loginUserName;
-
-        console.log("this.Objparma", this.Objparma);
+        this.confirmOrder.forEach(item => {
+          this.Objparma.extend.prop = item.extend.prop;
+      
+        });
+      
         this.getAddorder(); //调用请求接口函数
         this.$router.push({ path: "/memberOrder?orderactiveName=1" });
       } else {
         this.$message.error("请选择收货人，收货地址");
       }
+      
     },
 
     //------------------新增订单axios请求接口函数
     getAddorder() {
+     
       axios({
         method: "post",
         url: "http://120.76.160.41:3000/crossAdd?page=mabang-order",
@@ -233,7 +240,7 @@ export default {
         stock += item.price * item.byCount; //
       });
       return stock.toFixed(2);
-    },
+    }
 
     //------------------ 收货地址
     // title() {
@@ -261,10 +268,8 @@ export default {
   },
 
   beforeCreate() {
-
-  util.cheackLogin(this)
+    util.cheackLogin(this);
   }
-
 };
 </script>
 

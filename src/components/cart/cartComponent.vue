@@ -21,10 +21,16 @@
         </header>
         <!------------------规格-------------------->
         <main class="main">
-          <div v-for="item in  doc.prop" :key="item.value">
+          <div v-for="(item,index) in  doc.prop" :key="index">
             <span>{{item.title}}:</span>
             <span class="main-btn">
-              <el-button type="danger" size="mini">{{item.value}}</el-button>
+              <el-button
+                :class="{'isprop-bt':index+'-'+key==isProp[index]}"
+                size="mini"
+                v-for="(option,key) in  item.options"
+                :key="key"
+                @click="clickProp(item.title,option,index,key)"
+              >{{option}}{{isProp[index]}}</el-button>
             </span>
           </div>
         </main>
@@ -45,7 +51,40 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      cartTotal: 1,
+      prop: [{ title: "", option: "" }, { title: "", option: "" }],
+      isProp: [0 + "-" + 0, 1 + "-" + 0],
+      isPropKey: null,
+      isPropKey1: null
+      // isPropIndex: 1,
+      // isPropKey: 1
+    };
+  },
   methods: {
+    clickProp(title, option, index, key) {
+      // this.isPropIndex = index;
+      // this.isPropKey = key;
+
+      let isProp = [ this.isPropKey,  this.isPropKey1];
+
+      if (index == 0) {
+        this.isPropKey = index + "-" + key;
+      } else if (index == 1) {
+        this.isPropKey1 = index + "-" + key;
+      }
+      isProp[index] = index + "-" + key;
+      this.isProp = isProp;
+      console.log("this.isProp", this.isProp);
+      console.log("isProp", isProp);
+      // console.log("购物车规格", title, option);
+      // console.log("doc", this.doc);
+      // console.log("购物车规格index,key", index, key);
+      this.prop[index] = { title: title + ":", option: option };
+      this.doc.extend.prop = this.prop;
+      // console.log("doc", this.doc);
+    },
     //------------------关闭购物车弹窗函数----------------
     closeDialogFun() {
       this.$store.commit("isCartComClose");
@@ -88,11 +127,7 @@ export default {
       this.$router.push({ path: "/confirmOrder" }); //跳转到确认订单
     }
   },
-  data() {
-    return {
-      cartTotal: 1
-    };
-  },
+
   computed: {
     //计算属性
 
@@ -107,7 +142,14 @@ export default {
       return this.$store.state.isCartCom;
     }
   },
-
+  watch: {
+    // isProp: {
+    //   handler: function() {
+    //     alert("s");
+    //   },
+    //   deep: true //深度监听
+    // }
+  },
   beforeCreate() {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
@@ -181,6 +223,10 @@ header {
   .main-btn {
     display: block;
     margin: 15px 0;
+  }
+  .isprop-bt {
+    background-color: #f85;
+    color: #fff;
   }
 }
 // -----编辑状态计数器样式-----
