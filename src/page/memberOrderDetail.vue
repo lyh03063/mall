@@ -47,17 +47,19 @@
       <!------------------------ 订单完成情况结束 ---------------------------->
 
       <!------------------------ 交易流程开始 ---------------------------->
+
       <div class="order-flow order-color">
-        <el-steps align-center finish-status="success">
-          <el-step
-            v-show="Order.status != 5"
-            :title="item.name"
-            :status="item.activesuccess"
-            v-for="item in stepTitle"
-            :key="item.name"
-          ></el-step>
+        <el-steps align-center finish-status="success" v-if="Order.status!=5">
+          <el-step title="已下单" :status="activeOne"></el-step>
+          <el-step title="已付款" :status="activeTwo"></el-step>
+          <el-step title="已发货" :status="activeThree"></el-step>
+          <el-step title="已完成" :status="activeFout"></el-step>
+        </el-steps>
+        <el-steps align-center finish-status="success" v-else>
+          <el-step title="已取消" icon="el-icon-error"></el-step>
         </el-steps>
       </div>
+
       <!------------------------ 交易流程结束 ---------------------------->
 
       <!------------------------ 收货人信息开始 ---------------------------->
@@ -66,7 +68,7 @@
           <div class="order-address-content">
             <div>
               <p class="order-address-name">收货人：{{Order.postAddress.name}}</p>
-              <p class="order-address-tel">收货人电话:{{Order.postAddress.phone}}</p>
+              <p class="order-address-tel">收货人手机号:{{Order.postAddress.phone}}</p>
             </div>
             <p class="order-address-detail">收货地址：{{Order.postAddress.address}}</p>
           </div>
@@ -97,9 +99,7 @@
                   </a>
                   <div>
                     <div class="order-card__title">{{commodity.name}}</div>
-                    <div
-                      class="order-card__description"
-                    >商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述商品详情描述</div>
+                    <div class="order-card__description">{{commodity.CreateUser}}</div>
                   </div>
 
                   <div class="order-card__bottom">
@@ -181,15 +181,14 @@
         <div class="order-cell__title">
           <p>
             订单编号：
-            <span>{{Order._id}}</span>
-            <el-button plain size="mini">
-              <input
-                type="button"
-                v-on:click="copy()"
-                value="点击复制订单号"
-                style="border: 0;background-color: transparent;outline: none;"
-              >
-            </el-button>
+            <span class="order-cell__id">{{Order._id}}</span>
+
+            <input
+              type="button"
+              v-on:click="copy()"
+              value="复制订单号"
+              style="border:0 ;background-color: transparent;outline: none;"
+            >
           </p>
 
           <p>
@@ -202,49 +201,30 @@
             <span>{{Order.UpdateTime | formatDate}}</span>
           </p>
 
-          <p>
+          <p v-if="Order.status==3">
             发货时间：
-            <span>{{Order.UpdateTime | formatDate}}</span>
-          </p>
-
-          <p>
-            完成时间：
-            <span>{{Order.UpdateTime | formatDate}}</span>
+            <span></span>
           </p>
         </div>
       </div>
 
       <!------------------------ 订单时间结束 ---------------------------->
     </div>
-    <!------------------------ 订单列表有赞版权页脚开始 ---------------------------->
-    <space height="10"></space>
-    <el-col :span="24">
-      <div class="order-footer">
-        <div class="order-footer__links">
-          <a href="javascript:;" class="order-hairline">店铺主页</a>
-          <a href="javascript:;" class="order-hairline">个人中心</a>
-          <a href="javascript:;" class="order-hairline">关注我们</a>
-          <a href="javascript:;" class="order-hairline">线下门店</a>
-          <a href="javascript:;" class="order-hairline">店铺信息</a>
-          <!---->
-        </div>
-      </div>
-    </el-col>
-    <!------------------------ 订单列表有赞版权页脚结束 ---------------------------->
 
     <!------------------------  底部固定栏开始 ---------------------------->
     <div class="order-submit-bar" v-if="Order.status==1">
       <div class="order-submit-bar__bar">
         <div class="order-submit-pay">
-          <div class="order-pay-divcolor" @click="Paymented()">去支付</div>
-          <div>
-            <span class="prder-pay">合计:</span>
-            <span class="order-pay-color">¥{{totalAllMoney}}</span>
-          </div>
+          <div class="order-pay-divcolor" @click="Paymented((Order.P1,2))">去支付</div>
+          <span class="prder-pay">合计:</span>
+          <span class="order-pay-color">¥{{totalAllMoney}}</span>
         </div>
       </div>
     </div>
+
     <!------------------------  底部固定栏结束 ---------------------------->
+
+    <memberfooter></memberfooter>
   </div>
 </template>
   
@@ -255,19 +235,19 @@ export default {
     return {
       activepay: 2, //订单流程状态
       Order: {
-        postAddress: {}
+        postAddress: {} //订单地址
       },
       totalCount: 0, //总共条数
-      imgId: [],
-      totalMoney: 0,
-      totalAllMoney: 0,
-      totalFreight: 0,
-      stepTitle: [
-        { name: "已下单" },
-        { name: "已付款" },
-        { name: "已发货" },
-        { name: "已完成" }
-      ]
+      imgId: [], //商品图片
+      descriptionId: [], //商品图片描述
+      totalMoney: 0, //总价格
+      totalAllMoney: 0, //总价格+总运费
+      totalFreight: 0, //总运费
+      //判断订单状态，添加样式
+      activeOne: "success",
+      activeTwo: "",
+      activeThree: "",
+      activeFout: ""
     };
   },
   filters: {
@@ -282,14 +262,50 @@ export default {
     }
   },
   methods: {
-    //根据流程状态，添加成功样式
-    addstyle() {
-      // for (var i = 0; i < this.stepTitle.length; i++) {
-      // }
-    },
     //支付成功
-    Paymented() {
-      alert("支付成功");
+    Paymented(P1, status) {
+      //修改成已支付
+      this.$confirm("此操作将支付订单, 是否继续?", "提示", {
+        confirmButtonText: "确定支付",
+        cancelButtonText: "关闭",
+        type: "warning"
+      })
+        .then(() => {
+          axios({
+            //请求接口
+            method: "post",
+            // url: this.objURL.list,
+            url: "http://120.76.160.41:3000/crossModify?page=mabang-order",
+            data: {
+              findJson: {
+                P1: this.$route.query.P1,
+                userName: this.userName
+              },
+              modifyJson: {
+                status: 2
+              }
+            } //传递参数
+          })
+            .then(response => {
+              console.log("第一次请求结果", response.data);
+              let { code, message } = response.data; //解构赋值
+              this.requestorder();
+            })
+            .catch(function(error) {
+              alert("异常:" + error);
+            });
+
+          this.$message({
+            type: "success",
+            message: "已支付订单!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "未支付订单"
+          });
+        });
     },
     //请求订单数据
     requestorder() {
@@ -300,7 +316,8 @@ export default {
         url: "http://120.76.160.41:3000/crossList?page=mabang-order",
         data: {
           findJson: {
-            P1: this.$route.query.P1
+            P1: this.$route.query.P1,
+            userName: this.userName
           }
         } //传递参数
       })
@@ -310,20 +327,14 @@ export default {
           this.Order = list[0];
 
           //根据订单状态，修改样式状态
-          if (this.Order.status == 1) {
-            this.stepTitle[0].activesuccess = "success";
-          } else if (this.Order.status == 2) {
-            for (let i = 0; i < 2; i++) {
-              this.stepTitle[i].activesuccess = "success";
-            }
-          } else if (this.Order.status == 3) {
-            for (let i = 0; i < 3; i++) {
-              this.stepTitle[i].activesuccess = "success";
-            }
-          } else {
-            for (let i = 0; i < 4; i++) {
-              this.stepTitle[i].activesuccess = "success";
-            }
+          if (this.Order.status >= 2) {
+            this.activeTwo = "success";
+          }
+          if (this.Order.status >= 3) {
+            this.activeThree = "success";
+          }
+          if (this.Order.status >= 4) {
+            this.activeFout = "success";
           }
 
           this.Order.commodityList.forEach(commodityListEach => {
@@ -334,6 +345,7 @@ export default {
             this.totalFreight += commodityListEach.freight;
             //需要的商品图片ID
             this.imgId.push(commodityListEach.P1);
+            this.descriptionId.push(commodityListEach.P1);
           });
           //商品总金额+总运费
           this.totalAllMoney = this.totalMoney + this.totalFreight;
@@ -370,6 +382,9 @@ export default {
               if (commodityListEach.P1 == list[i].P1) {
                 commodityListEach.freight = list[i].album[0].url;
               }
+              if (commodityListEach.P1 == list[i].P1) {
+                commodityListEach.CreateUser = list[i].description;
+              }
               i++;
             }
             i = 0;
@@ -396,7 +411,6 @@ export default {
   created() {
     this.queryName = localStorage.loginUserName;
     this.requestorder();
-    this.addstyle();
   },
   mounted() {}
 };
@@ -405,7 +419,4 @@ export default {
   <style lang="scss" >
 @import "../assets/css/util.scss"; //导入公共样式文件
 @import "../assets/css/memberorderDetail.scss"; //导入memberorderDetail订单详情样式文件
-body {
-  background-color: #f8f8f8;
-}
 </style>
