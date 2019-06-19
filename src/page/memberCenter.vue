@@ -132,6 +132,8 @@ export default {
         let data = await this.$confirm('您还没有登录，请先登录',{
           confirmButtonText: "前往登录",
           cancelButtonText: "暂不登录",
+          center:true,
+          customClass:"message-box-1"
         }).catch(() => {});
           console.log("第三次请求结果", data);
           if(data=="confirm"){
@@ -162,6 +164,11 @@ export default {
 
 
 <style lang="scss" >
+.message-box-1{
+  width: 100%;
+  margin-top:200px;
+  padding-right: 0px;
+}
 .logout {
   margin-left: 10px;
   padding-right: 10px;
