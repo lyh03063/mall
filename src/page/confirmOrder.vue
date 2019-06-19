@@ -34,9 +34,16 @@
         </a>
         <div class="title-details">
           <p>{{item.name}}</p>
-          <p style="color:#999;font-size:12px">{{item.description}}</p>
+          <p style="color:#999;font-size:12px;margin: 5px 0;">{{item.description}}</p>
+          <template v-if="item.extend.prop">
+            <span
+              :key="eachprop.title"
+              class="details-prop"
+              v-for="eachprop in  item.extend.prop"
+            >{{eachprop.title}}{{eachprop.option}}</span>
+          </template>
           <div>
-            <span style="color:#f44">￥{{item.price}}</span>
+            <span style="color:#f44; margin: 5px 0;">￥{{item.price}}</span>
             <span style="float:right">X{{item.byCount}}</span>
           </div>
         </div>
@@ -186,20 +193,18 @@ export default {
         this.Objparma.userName = localStorage.loginUserName;
         this.confirmOrder.forEach(item => {
           this.Objparma.extend.prop = item.extend.prop;
-      
         });
-      
+
         this.getAddorder(); //调用请求接口函数
         this.$router.push({ path: "/memberOrder?orderactiveName=1" });
       } else {
         this.$message.error("请选择收货人，收货地址");
       }
-      
     },
 
     //------------------新增订单axios请求接口函数
     getAddorder() {
-     
+      console.log(" this.Objparma--新增订单axios请求接口函数", this.Objparma);
       axios({
         method: "post",
         url: "http://120.76.160.41:3000/crossAdd?page=mabang-order",
@@ -439,5 +444,10 @@ export default {
 .el-dialog.abc .el-dialog__body {
   padding: 0;
   padding-top: 10px;
+}
+.details-prop {
+  color: #999;
+  font-size: 12px;
+      margin-right:10px;
 }
 </style>

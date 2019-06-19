@@ -30,7 +30,7 @@
                 v-for="(option,key) in  item.options"
                 :key="key"
                 @click="clickProp(item.title,option,index,key)"
-              >{{option}}{{isProp[index]}}</el-button>
+              >{{option}}</el-button>
             </span>
           </div>
         </main>
@@ -58,17 +58,13 @@ export default {
       isProp: [0 + "-" + 0, 1 + "-" + 0],
       isPropKey: null,
       isPropKey1: null
-      // isPropIndex: 1,
-      // isPropKey: 1
+
     };
   },
   methods: {
     clickProp(title, option, index, key) {
-      // this.isPropIndex = index;
-      // this.isPropKey = key;
-
+ 
       let isProp = [ this.isPropKey,  this.isPropKey1];
-
       if (index == 0) {
         this.isPropKey = index + "-" + key;
       } else if (index == 1) {
@@ -76,11 +72,7 @@ export default {
       }
       isProp[index] = index + "-" + key;
       this.isProp = isProp;
-      console.log("this.isProp", this.isProp);
-      console.log("isProp", isProp);
-      // console.log("购物车规格", title, option);
-      // console.log("doc", this.doc);
-      // console.log("购物车规格index,key", index, key);
+    
       this.prop[index] = { title: title + ":", option: option };
       this.doc.extend.prop = this.prop;
       // console.log("doc", this.doc);
