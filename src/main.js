@@ -11,9 +11,6 @@ Vue.use(space);   //必须有install
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-
-
-
 import Home from "./page/home";
 import login from "./page/login";
 import commodityList from "./page/commodityList";
@@ -35,10 +32,6 @@ import setting from "./page/memberSetting";
 
 import util from "./assets/js/util";
 window.util = util;
-
-
-
-
 
 
 // 3. 创建 router 实例，然后传 `routes` 配置
@@ -66,16 +59,6 @@ const router = new VueRouter({
 
   ]
 })
-
-
-
-
-
-
-
-
-
-
 import axios from "axios";
 window.axios = axios;
 
