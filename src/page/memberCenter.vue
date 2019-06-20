@@ -12,7 +12,7 @@
           </div>
           <div class="myorder WP90">
             <div class="myorder-title">
-              <router-link to="/memberOrder?orderactiveName=1">
+              <router-link to="/memberOrder?orderactiveName=0">
                 <div style="float:left">
                   <h3>我的订单</h3>
                 </div>
@@ -50,7 +50,7 @@
           </div>
           <div class="member-message WP90 BC_fff">
             <router-link :to="option.url" v-for="option in memberOptions" :key="option.value" >
-              <div @click="triggerEvent(option.click)">
+              <div @click="triggerEvent(option.click)" v-if=(!option.show)>
                 <div
                   :class="option.img"
                   style="float: left; font-size:20px;margin-left:0px;"
@@ -88,9 +88,9 @@ export default {
         {img:"el-icon-present W20",value:"赠品",url:"/memberCenter"},
         {img:"el-icon-goods W20",value:"心愿单",url:"/memberCenter"},
         {img:"el-icon-house W20",value:"收货地址",url:"/memberAddress"},
-        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword'},
+        {img:"el-icon-s-custom W20",value:"修改密码",url:'/changPassword',show:false},
         {img:"el-icon-user W20",value:"个人信息",url:"/memberSetting"},
-        {img:"el-icon-user W20",value:"退出登录",url:"#",click:true},
+        {img:"el-icon-user W20",value:"退出登录",url:"#",click:true,show:false},
         ],
      
       
@@ -131,20 +131,26 @@ export default {
     async memberlogin(){
         let data = await this.$confirm('您还没有登录，请先登录',{
           confirmButtonText: "前往登录",
-          cancelButtonText: "返回首页",
+          cancelButtonText: "暂不登录",
+          center:true,
+          customClass:"message-box-1"
         }).catch(() => {});
           console.log("第三次请求结果", data);
           if(data=="confirm"){
             this.$router.push({ path:"/login"})
-          }else{
-            this.$router.push({ path:"/home"})
-          } 
+          }
+          // }else{
+          //   this.$router.push({ path:"/home"})
+          // } 
       }
    
   },
   mounted() {
     if (localStorage.isLogin != "1"){
         this.memberlogin();
+        this.memberOptions[6].show=true;
+        this.memberOptions[8].show=true;
+        //  console.log("第11次请求结果",this.memberOptions[6],this.memberOptions[8]);
      }
     if (localStorage.isLogin == "1") {
     this.getMember();
@@ -158,6 +164,11 @@ export default {
 
 
 <style lang="scss" >
+.message-box-1{
+  width: 100%;
+  margin-top:200px;
+  padding-right: 0px;
+}
 .logout {
   margin-left: 10px;
   padding-right: 10px;

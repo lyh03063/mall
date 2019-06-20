@@ -18,7 +18,6 @@
 
 .order-grid-content {
     border-radius: 4px;
-    min-height   : 50px;
 }
 
 .order-row-bg {
@@ -28,6 +27,10 @@
 
 .order-tab {
     background-color: #ffffff
+}
+
+.order-tab .el-tabs__header {
+    margin: 0;
 }
 
 @media screen and (min-width: 375px) {
@@ -48,9 +51,38 @@
 
 
 /*----------------- 头部样式开始 ---------------- */
-.order-tip {
-    font-size : 14px;
-    text-align: center;
+//订单为空提示
+.order-empty-tip {
+    font-size       : 14px;
+    text-align      : center;
+    padding-top     : 40px;
+    background-color: #FAFAFA
+}
+
+.order-empty-tip__desc h4 {
+    font-size    : 16px;
+    font-weight  : 400;
+    line-height  : 24px;
+    color        : #666;
+    margin-bottom: 10px;
+
+}
+
+.order-empty-tip__desc p {
+    font-size  : 12px;
+    color      : #999;
+    line-height: 20px;
+
+}
+
+.order-empty-span {
+    line-height     : 70px;
+    min-width       : 100px;
+    color           : #f60;
+    padding         : 11px 28px;
+    border          : 1px solid #f60;
+    background-color: #fff;
+
 }
 
 .order-button__text {
@@ -83,7 +115,7 @@
     font-size  : 14px;
     line-height: 24px;
     background : #fff;
-    color      : #743333;
+    color      : #666;
 }
 
 .order-list-item__header__state {
@@ -112,9 +144,11 @@
 }
 
 .order-card__thumb img {
-    width : 90px;
-    height: 90px;
-    float : left
+    width        : 90px;
+    height       : 90px;
+    float        : left;
+    font-size    : 14px;
+    margin-bottom: 10px;
 }
 
 // 订单列表中的内容-----商品描述
@@ -190,12 +224,15 @@
 }
 
 .order-button__footer {
-    margin-right: 10px;
-    clear       : both;
+    clear: both;
 }
 
 .order-buttonstyle {
     margin-right: 10px;
+}
+
+.order-buttonstyle-last {
+    margin-left: 10px;
 }
 
 /*----------------- 头部样式结束 ---------------- */
@@ -239,17 +276,3 @@
 }
 
 /*------------------------  底部固定栏结束 ----------------------------*/
-/*----------------- 订单列表有赞版权页脚开始 ---------------- */
-.order-footer {
-    text-align      : center;
-    background-color: #f8f8f8;
-    color           : #999;
-    font-size       : 12px;
-    line-height     : 16px;
-}
-
-.order-footer__links a {
-    padding-right: 20px;
-}
-
-/*----------------- 订单列表有赞版权页脚结束 ---------------- */

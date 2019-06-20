@@ -74,6 +74,7 @@ export default {
   methods: {
     //---------- 新增函数
     addedAddress() {
+<<<<<<< HEAD
      this.addForm.area = this.cityArray.join(" ");
 if (
 this.addForm.name &&
@@ -114,6 +115,39 @@ alert("异常:" + error);
 this.$message.error("请正确填写：姓名、手机号码、地区、详细地址等");
 }
 }
+=======
+      this.addForm.area = this.cityArray.join(" ");
+      console.log("this.addForm.area", this.addForm.area);
+      axios({
+        //请求新增接口
+        method: "post",
+        // url: this.objURL.list,
+        url: this.objURL.add,
+        data: { data: this.addForm } //传递参数
+      })
+        .then(response => {
+          this.$message({
+            message: "新增成功",
+            duration: 1500,
+            type: "success"
+          });
+          // 如果有路由id，就会跳转到memberAddress的同时，并传递路由id
+          if (this.$route.query.Address) {
+            console.log(this.addForm,this.addForm )
+            this.$router.push({
+              path: "/memberAddress?Address=" + this.$route.query.Address + ""
+            });
+          } else {
+             console.log(this.addForm,this.addForm )
+            this.$router.push({ path: "/memberAddress" }); //跳转到memberAddress
+            
+          }
+        })
+        .catch(function(error) {
+          alert("异常:" + error);
+        });
+    }
+>>>>>>> 7f7a42182c535fbff55055dc5fd463d48337f1af
   },
   created() {
     // this.addedForm();

@@ -49,4 +49,9 @@ export default {};
 .cart .el-dialog__header span {
   border-bottom: 0;
 }
+.listAddModify .el-message-box{
+ background-color: #f44;
+  width:0px;
+  height: 100px;
+}
 </style>
