@@ -40,7 +40,13 @@
         <div class="cart-main">
           <div class="cart-name">
             <div @click="shopCheckbox(item)" v-if="!isedit">{{item.name}}</div>
+
             <el-input-number v-else v-model="item.byCount" :min="1" size="mini"></el-input-number>
+          </div>
+          <div v-if="!isedit">
+            <template v-for="eachprop in  item.extend.prop">
+              <div :key="eachprop.title" class="cart-prop">{{eachprop.title}}{{eachprop.option}}</div>
+            </template>
           </div>
           <!-- 商品介绍、价格、数量 -->
           <div @click="shopCheckbox(item)">
@@ -209,9 +215,8 @@ export default {
   beforeCreate() {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
-    util.cheackLogin(this)
+    util.cheackLogin(this);
     localStorage.confirmOrder = ""; //对订单数据进行清空
-
   }
 };
 </script >
@@ -294,6 +299,7 @@ export default {
 }
 .cart-product-box .cart-img {
   float: left;
+  margin-right: 10px;
 }
 .cart-img img {
   width: 90px;
@@ -314,6 +320,9 @@ export default {
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.cart-prop {
+  color: #999;
 }
 .cart-intro {
   height: 20px;

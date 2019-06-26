@@ -30,8 +30,9 @@ import listAddModify from "./components/list-address/listAddModify";
 import changPassword from "./page/changPassword";
 import setting from "./page/memberSetting";
 
-import util from "./assets/js/util";
-window.util = util;
+
+
+
 
 
 // 3. 创建 router 实例，然后传 `routes` 配置
@@ -59,6 +60,17 @@ const router = new VueRouter({
 
   ]
 })
+
+
+
+
+
+
+import util from "./assets/js/util";
+window.util = util;
+
+
+
 import axios from "axios";
 window.axios = axios;
 
@@ -80,7 +92,9 @@ const store = new Vuex.Store({//定义Vuex的存储对象
 
     doc: {//存放购物车插件的对象
       byCount: null,
-      isCart: true
+      isCart: true,
+       prop:[],
+      extend: {}
     },
     isCartCom: false,//控制购物车弹窗
     cartData: [],//用于存放购物车的总数据
@@ -109,7 +123,7 @@ const store = new Vuex.Store({//定义Vuex的存储对象
     //----cdx-----
     memberAddressModify(state, param) {
       state.AddressModify_item = param
-      console.log("this.AddressModify_item", this.AddressModify_item);
+      console.log("this.AddressModify_item", state.AddressModify_item);
     },
     // getForm(state, param) {//单个会员列表对象
     //   console.log("123123", param);
@@ -157,8 +171,8 @@ const store = new Vuex.Store({//定义Vuex的存储对象
       state.activeCellphoneVerify = activeCellphoneVerify
     },
     changeActiveProduce(state, activeProduceId) {//获取当前商品详情
-      console.log("changeActiveProduce--state.doc", state.doc)
-      console.log("changeActiveProduce--activeProduceId", activeProduceId)
+      console.log("changeActiveProduce--state.doc", state.doc.P1)
+      console.log("changeActiveProduce--activeProduceId", activeProduceId.P1)
       Object.assign(state.doc, activeProduceId);
       state.activeProduceId = activeProduceId;
     },

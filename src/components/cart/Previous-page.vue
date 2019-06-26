@@ -21,16 +21,10 @@
         </header>
         <!------------------规格-------------------->
         <main class="main">
-          <div v-for="(item,index) in  doc.prop" :key="index">
+          <div v-for="item in  doc.prop" :key="item.value">
             <span>{{item.title}}:</span>
             <span class="main-btn">
-              <el-button
-                :class="{'isprop-bt':index+'-'+key==isProp[index]}"
-                size="mini"
-                v-for="(option,key) in  item.options"
-                :key="key"
-                @click="clickProp(item.title,option,index,key)"
-              >{{option}}</el-button>
+              <el-button type="danger" size="mini">{{item.value}}</el-button>
             </span>
           </div>
         </main>
@@ -51,32 +45,7 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      cartTotal: 1,
-      prop: [{ title: "", option: "" }, { title: "", option: "" }],
-      isProp: [0 + "-" + 0, 1 + "-" + 0],
-      isPropKey: null,
-      isPropKey1: null
-
-    };
-  },
   methods: {
-    clickProp(title, option, index, key) {
- 
-      let isProp = [ this.isPropKey,  this.isPropKey1];
-      if (index == 0) {
-        this.isPropKey = index + "-" + key;
-      } else if (index == 1) {
-        this.isPropKey1 = index + "-" + key;
-      }
-      isProp[index] = index + "-" + key;
-      this.isProp = isProp;
-    
-      this.prop[index] = { title: title + ":", option: option };
-      this.doc.extend.prop = this.prop;
-      // console.log("doc", this.doc);
-    },
     //------------------关闭购物车弹窗函数----------------
     closeDialogFun() {
       this.$store.commit("isCartComClose");
@@ -86,6 +55,7 @@ export default {
       this.closeDialogFun();
 
       this.cartTotal = (this.doc.price * this.doc.byCount).toFixed(2); //计算商品的总价格
+      
 
       //把数据拼接在购物车数据列表
       let cartData = [];
@@ -119,7 +89,11 @@ export default {
       this.$router.push({ path: "/confirmOrder" }); //跳转到确认订单
     }
   },
-
+  data() {
+    return {
+      cartTotal: 1
+    };
+  },
   computed: {
     //计算属性
 
@@ -134,14 +108,7 @@ export default {
       return this.$store.state.isCartCom;
     }
   },
-  watch: {
-    // isProp: {
-    //   handler: function() {
-    //     alert("s");
-    //   },
-    //   deep: true //深度监听
-    // }
-  },
+
   beforeCreate() {
     //------------如果未登录------------
     // console.log("用戶手機", localStorage.loginUserName)
@@ -216,10 +183,6 @@ header {
     display: block;
     margin: 15px 0;
   }
-  .isprop-bt {
-    background-color: #f85;
-    color: #fff;
-  }
 }
 // -----编辑状态计数器样式-----
 .el-input-number--mini {
@@ -238,7 +201,6 @@ header {
 }
 
 .footer-bt {
-  cursor: pointer;
   width: 50%;
   height: 50px;
   background-color: #f85;
