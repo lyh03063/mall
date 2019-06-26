@@ -12,7 +12,7 @@
         <el-carousel-item v-for="item in 3" :key="item">
           <div>
             <router-link :to="'/commodityDetail?id=' + item">
-              <div  class="box-item"></div>
+              <div class="box-item"></div>
             </router-link>
           </div>
         </el-carousel-item>
@@ -105,6 +105,13 @@ export default {
         .catch(function(error) {
           alert("异常:" + error);
         });
+    },
+    mocklist() {
+      axios("/api/test", {
+        params: {}
+      }).then(response => {
+        console.log("response.data", response.data);
+      });
     }
   },
   computed: {
@@ -115,6 +122,7 @@ export default {
   mounted() {
     //mounted：等待模板加载后，
     this.getProList(); //第一次加载此函数，页面才不会空
+    this.mocklist();
   },
   computed: {
     //   activeProduceId() {
@@ -179,7 +187,7 @@ export default {
 .img-box {
   width: 167.5px;
   height: 175.5px;
-  position:relative;
+  position: relative;
 }
 .box-commodity {
   width: 167.5px;
@@ -187,16 +195,16 @@ export default {
   background-size: 167.5px 167.5px;
   background-repeat: no-repeat;
   margin: 0 4px;
-  position:absolute;
-  top:0;
-  left:0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-.img-logo{
-  width:32px;
-  height:32px;
-  position:absolute;
-  top:0;
-  left:10px;
+.img-logo {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 0;
+  left: 10px;
 }
 .box-title {
   height: 40px;

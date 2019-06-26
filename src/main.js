@@ -29,6 +29,8 @@ import listAdded from "./components/list-address/listAdded";
 import listAddModify from "./components/list-address/listAddModify";
 import changPassword from "./page/changPassword";
 import setting from "./page/memberSetting";
+import "./mock.js";
+
 
 
 
