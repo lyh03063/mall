@@ -1,6 +1,6 @@
 <template>
   <div class="bigg">
-    <div class="box-topbox">码帮商城</div>
+    <div class="box-topbox">码帮商城123</div>
     <!-- <div class="box-top">
       <img
         class="box-top-img"
